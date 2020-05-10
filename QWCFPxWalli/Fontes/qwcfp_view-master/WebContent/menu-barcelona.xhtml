@@ -1,0 +1,248 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pa="http://primefaces.org/barcelona">
+
+	<style>
+.ui-tree {
+	width: 230px;
+	position: relative;
+	display: inline-grid;
+	overflow: overlay;
+}
+
+.MenuSideMainLinkMyGrupo {
+	overflow-y: hidden !important;
+
+/* overflow-x: auto;
+overflow-y: hidden;
+ */
+	/* background-color: #313b3f;
+	width: 100%;
+	border: 0px;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	overflow: -moz-hidden-unscrollable !important;
+    overflow: -webkit-paged-x !important; */
+}
+
+  .layout-wrapper .layout-sidebar .layout-tabmenu .layout-tabmenu-contents {
+      height: 80vh !important;
+      }
+
+#grps {
+	height: 83vh;
+}
+</style>
+	<div
+		class="layout-sidebar #{guestPreferences.darkMenu ? 'layout-sidebar-dark': ''}">
+
+		<div id="MENUSIDE" class="ps-container">
+
+			<f:ajax render=":formDIV">
+				<p:growl id="treeGrowl" life="#{loginBean.messageTime}" showDetail="true" />
+				<h:form id="formMenu">
+					<p:remoteCommand name="updateCtxMenu" update="formMenu:grpsCtxMenu" />
+					
+				
+				<pa:tabMenu>
+					<pa:tab icon="&#xE871;" title="Meus Grupos">
+							<p:tree value="#{treeBean.root}" id="grps" var="node"
+								dynamic="true" selectionMode="single"
+								selection="#{treeBean.selectedNode}"
+								styleClass="MenuSideMainLinkMyGrupo">
+
+								<p:ajax event="select" listener="#{treeBean.onNodeSelect}" />
+								<p:ajax event="contextMenu" listener="#{treeBean.onActivateContextMenu}" update="formMenu:grpsCtxMenu" oncomplete="PF('wgrpsCtxMenu').show(currentEvent);"/>
+
+								<p:treeNode type="#{treeBean.getCategoryGroupSubordinated()}"
+									expandedIcon="ui-icon ui-icon-folder-open yellow i"
+									collapsedIcon="ui-icon ui-icon-folder-collapsed yellow i"
+									styleClass="corfontemenu">
+									<h:outputText value="#{node.tagetName}" />
+								</p:treeNode>
+
+								<p:treeNode type="#{treeBean.getCategoryGroupRoot()}"
+									expandedIcon="ui-icon ui-icon-folder-open yellow"
+									collapsedIcon="ui-icon ui-icon-folder-collapsed yellow"
+									styleClass="corfontemenu">
+									<h:outputText value="#{node.tagetName}" style="font-size:17px;" />
+								</p:treeNode>
+
+								<p:treeNode type="#{treeBean.getCategoryBlindNode()}"
+									expandedIcon="ui-icon ui-icon-lock "
+									collapsedIcon="ui-icon ui-icon-lock "
+									styleClass="corfontemenu">
+									<h:outputText value="#{node.tagetName}" />
+								</p:treeNode>
+								
+								
+								<!-- 
+								<i class="material-icons">settings_overscan</i>
+								<i class="material-icons">&#xE8C4;</i>  -->
+
+								<p:treeNode type="#{treeBean.getCategoryAreaSubordinated()}"
+									expandedIcon="ui-icon  ui-icon-grade"
+									collapsedIcon="ui-icon  ui-icon-grade"
+									styleClass="corfontemenu">
+									<h:outputText value="#{node.tagetName}" />
+								</p:treeNode>
+
+								<p:treeNode type="#{treeBean.getCategoryAreaRoot()}"
+									expandedIcon="ui-icon  ui-icon-grade"
+									collapsedIcon="ui-icon  ui-icon-grade"
+									styleClass="corfontemenu">
+									<h:outputText value="#{node.tagetName}" />
+								</p:treeNode>
+							</p:tree>
+							<p:contextMenu id="grpsCtxMenu" for="grps" widgetVar="wgrpsCtxMenu">
+								<p:menuitem value="Visualizar" update="treeGrowl"
+									actionListener="#{treeBean.onNodeSelect}" icon="ui-icon-search" />
+								<p:menuitem value="Configuração" update="treeGrowl"
+									actionListener="#{treeBean.onNodeSelectConfig}" rendered="#{!treeBean.area}"
+									icon="fa fa-fw fa-gears" />
+								<p:menuitem value="Copiar Grupo" update="treeGrowl"
+									actionListener="#{treeBean.onNodeSelectCopyGroup('COPY')}" rendered="#{!treeBean.area}"
+									icon="fa fa-fw fa-copy" />
+								<p:menuitem value="Criar Sub-Grupo" update="treeGrowl"
+									actionListener="#{treeBean.onNodeSelectCopyGroup('SUB')}"
+									icon="fa fa-fw fa-plus" />
+							</p:contextMenu>
+					</pa:tab>
+					<pa:tab icon="inbox" title="Áreas" >
+						<h:form id="menu-Area">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addArea" rendered="#{loginBean.isGi()}" value="Criar Área" icon="&#xe145;"
+									outcome="/gestor/addArea.faces" />
+								<p:menuitem id="listArea" value="Listar Área" icon="&#xE8EE;"
+									outcome="/listArea.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="people" title="Usuários">
+						<h:form id="menu-Usuario">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addUsuario" value="Criar Usuário"
+									icon="&#xe145;" outcome="/gestor/addUsuario.faces"
+									rendered="#{loginBean.isGi()}" />
+								<p:menuitem id="listUsuario" value="Listar Usuário"
+									icon="&#xE8EE;" outcome="/listUser.faces"
+									rendered="#{!loginBean.isInvited()}" />
+								<p:menuitem id="editUsuario" value="Editar meu perfil"
+									icon="&#xE254;" outcome="/alterarUser.faces" />
+								<p:menuitem id="privUsuario" value="Meus Privilégios"
+									icon="&#xE89C;" outcome="/privilegios.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="widgets" title="Grupos">
+						<h:form id="menu-Grupos">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addGrupo" value="Criar Grupo" icon="&#xe145;"
+									outcome="/addGrupo.faces" />
+								<p:menuitem id="listGrupo" value="Listar Grupo" icon="&#xE8EE;"
+									outcome="/listGrupos.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+					
+					<pa:tab icon="developer_board" title="Útil">
+						<h:form id="menu-Relatorio">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="validador" value="Validador" icon="&#xe065;" action="#{layoutBean.setCookies}"  process="@this"  oncomplete="redirect()" />
+								<p:menuitem id="addRel" rendered="#{loginBean.isGi()}" value="Gerar Relatórios" icon="&#xe85c;" outcome="/gestor/listRelatorios.faces" />
+								<p:menuitem id="listURL" value="Listar URLS" icon="&#xe048;" rendered="#{loginBean.isGi()}" outcome="/gestor/listURL.faces" />
+								<p:menuitem id="graficosURL" value="Gráficos" icon="&#xe048;" rendered="#{loginBean.isGi()}" outcome="/gestor/graficos.faces" />
+							</pa:menu>
+								<h:inputHidden id="campoEscondidoParaRedirecionar" value="#{loginBean.urlQvdtApp}" />
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="device_hub" title="Nós"
+						rendered="#{loginBean.isGi()}">
+						<h:form id="menu-Nos">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addNos" value="Criar Nó" icon="&#xe145;"
+									outcome="/gestor/addNode.faces" />
+								<p:menuitem id="listNos" value="Listar Nó" icon="&#xE8EE;"
+									outcome="/gestor/listNode.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="storage" title="Volumes"
+						rendered="#{loginBean.isGi()}">
+						<h:form id="menu-Volumes">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addVols" value="Criar Volume" icon="&#xe145;"
+									outcome="/gestor/addVolume.faces" />
+								<p:menuitem id="listVols" value="Listar Volume" icon="&#xE8EE;"
+									outcome="/gestor/listVolume.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="settings" title="Configurações"
+						rendered="#{loginBean.isGi()}">
+						<h:form id="menu-Settings">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addConf" value="Criar Regra" icon="&#xe145;"
+									outcome="/gestor/addRegra.faces" />
+								<p:menuitem id="listConf" value="Listar Regras" icon="&#xE8EE;"
+									outcome="/gestor/listRegras.faces" />
+								<p:menuitem id="Config" value="Configurar Sistema"
+									icon="&#xE8b9;" outcome="/gestor/configSistema.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+
+					<pa:tab icon="today" title="Histórico"
+						rendered="#{loginBean.isGi()}">
+						<h:form id="menu-Historico">
+							<pa:menu widgetVar="me">
+								<p:menuitem id="addHist" value="Pesquisar Histórico"
+									icon="&#xe8b6;" outcome="/gestor/historico.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+					<!--  Adicionado pelo Anderson para dar Suporte ao 
+					      QWCFP Bailarina.
+					      
+					      ATENÇÃO!
+					      ======= 
+					      COMENTAR ESTE mENU PARA CLIENTES, COMO SERPRO E MS
+					<pa:tab  icon="developer_board" title="Bailarina"
+						rendered="#{loginBean.isGi()}">
+						<h:form id="menu-Relatorio2">
+							<pa:menu widgetVar="me">							
+								<p:menuitem id="listURL" value="Listar" icon="&#xe048;"
+									outcome="/gestor/listURL.faces" />
+							</pa:menu>
+						</h:form>
+					</pa:tab>
+				     -->
+				</pa:tabMenu>
+				</h:form>
+			</f:ajax>
+		</div>
+	</div>
+	
+	<script type="">
+			
+
+	function redirect() {
+		window.location.href =  document.getElementById("formMenu:menu-Relatorio:campoEscondidoParaRedirecionar").value ;//"http://stackoverflow.com";
+	} 
+	
+
+
+	</script>
+
+</ui:composition>

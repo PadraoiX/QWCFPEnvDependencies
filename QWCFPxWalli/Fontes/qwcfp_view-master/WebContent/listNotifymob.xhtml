@@ -1,0 +1,194 @@
+<HTML 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<ui:composition template="/templates/template3.xhtml">
+	<ui:define name="conteudo">
+		<style>
+		.iconarea{
+			background-image: url("/resources/images/iconAreaOn.png");
+		}
+		</style>
+		
+		<h3> Notificações</h3>
+  	
+			<p:tabView id="tabViewMobile">
+				<p:tab  title="Grupos">
+					<p:dataTable 
+				  		id="listGP"
+	      				var="car"       				
+	      				value="#{groupBean.gruposPendentes}" 
+	      				rows="10"
+	      				paginator="true"
+	      				emptyMessage="Não há grupos pendentes!"
+	      				rowsPerPageTemplate="5,10,15"
+	      				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"  
+						currentPageReportTemplate="(Pág. {currentPage}/{totalPages})" 
+	      				paginatorPosition="bottom">
+  
+				        <p:column  headerText="Nome" style="font-weight: bold" filterBy="#{car.nome}"  >
+				            <h:outputText value="#{car.nome}"  style="font-weight: normal"/>
+				        </p:column>				
+				        
+				         <p:column headerText="Tamanho" style="font-weight: bold;width:100px;">
+				            <h:outputText value="#{groupBean.convertByte(car.sizeInBytes)}"  style="font-weight: normal"/>
+				        </p:column>
+				 
+				         <p:column style="width:25px;text-align: center">
+				         	<p:commandButton oncomplete="PF('carDialog').show();" update=":formDIV:carDetail" icon="ui-icon-check" title="Ativar grupo">
+				                <f:setPropertyActionListener value="#{car}" target="#{groupBean.group}" />
+				            </p:commandButton> 
+				
+				        </p:column>  
+				    </p:dataTable>				
+				</p:tab>
+				
+				<p:tab title="Membros">	
+					<p:dataTable 
+						id="listUP" 
+						var="car" 
+					   	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"  
+						currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Usuários)" 
+						value="#{memberBean.memberPendente}"
+						emptyMessage="Não há usuários pendentes!"	
+						paginatorPosition="bottom"
+						rowsPerPageTemplate="5,10,15" 
+						rows="10" 
+						paginator="true">
+		
+						<p:column headerText="Usuario"  style="font-weight: bold;">
+							<h:outputText value="#{car.memberName}"	style="font-weight: normal;" />
+						</p:column>
+		
+						<p:column headerText="Status" style="font-weight: bold; width:100px">
+							<h:outputText value="#{memberBean.getStatusMember(car.statusMemberDomFk)}" style="font-weight: normal;" />
+						</p:column>
+		
+						<p:column style="width:25px;text-align: center" rendered="#{loginBean.isGi()}">
+							<p:commandButton icon="ui-icon-check"	action="#{memberBean.altStatus(true,car)}" update="formDIV:tabViewMobile:listUP" ajax="true" />
+						</p:column>
+					</p:dataTable>										
+				</p:tab>	
+				
+				
+				<p:tab title="Arquivos">	
+					<p:dataTable 
+				 		id="listFile"
+				 		resizableColumns="true"
+				 		var="car" 
+				 		value="#{fileBean.filesPurgue}"			 		
+				 		paginator="true"			 	
+				 		paginatorPosition="bottom"
+				 		rowsPerPageTemplate="5,10,15" 
+				 		rows="10"
+				 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"  
+						currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} arquivos)" 
+		                emptyMessage="Não há arquivos para expurgo!">
+		                 
+					    
+		                 	<p:column headerText="Nome" style="font-weight: bold">
+								<h:outputText value="#{car.fileName.toUpperCase()}" style="font-weight: normal;" />
+							</p:column>
+																																									
+							<p:column headerText="Data Criação" style="font-weight: bold;  width:120px">
+								<h:outputText value="#{car.creationDate}" converter="converteData"  style="font-weight: normal;" />
+							</p:column>	
+							
+							<p:column style="font-weight: bold;  width:25px">
+								<p:commandButton icon="fa fa-fw fa-check-square-o" id="commandButtonAutrorizo"
+									action="#{fileBean.autorizarExpurgo(car)}" type="button"
+									update=":formDIV:tabViewMobile:listFile,:formDIV:tabViewMobile:messages" ajax="true"
+									title="Autorizar Expurgo" />
+							</p:column>
+	
+		            </p:dataTable>										
+				</p:tab>
+				
+				
+				<p:tab title="Áreas">	
+					<p:dataTable 
+						resizableColumns="true"
+						id="listSA" 
+				  		border="1" 
+				  		cellspacing="0"
+				  		cellpadding="2"
+				  		var="car" 
+				  		emptyMessage="Não há solicitação de área!"
+				  		value="#{notiBean.notifiesArea}" 
+				  		rowsPerPageTemplate="5,10,15" 
+				  		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"  
+						currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)" 
+						rows="10"
+				  		paginatorPosition="bottom"
+				  		paginator="true" >
+				
+				        <p:column headerText="Data"  style="width:120px">
+				        	  <h:outputText value="#{car.creationDate}"  style="font-weight: normal"  converter="converteData" />
+				        </p:column>
+				        
+				        <p:column headerText="Mensagem" >
+				        	  <h:outputText value="#{car.messageText}"  style="font-weight: normal"/>
+				        </p:column>     
+								
+				
+				       	 <p:column style="width:25px;text-align: center">                                       
+				             <p:commandButton update=":formDIV:tabViewMobile:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-check" title="Escolher privilégios para atribuir">
+				                <f:setPropertyActionListener value="#{car}" target="#{notiBean.notification}" />
+				            </p:commandButton>
+				        </p:column>
+				        
+				    </p:dataTable>										
+				</p:tab>								
+			</p:tabView> 
+			
+			 <p:dialog header="Ativar grupo #{groupBean.group.nome}" widgetVar="carDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" closeOnEscape="true">
+		        <p:outputPanel id="carDetail">
+		            <h:panelGrid  columns="1"  cellpadding="2" rendered="#{not empty areasBean.area}" columnClasses="label,value">
+		        
+		        		<h:inputHidden value="#groupBean.group.groupId}" />
+						<h:inputHidden value="#{groupBean.group.groupId}" />
+					
+						<h:inputHidden value="#{groupBean.group.nome}" />
+						<h:inputHidden value="#{groupBean.group.nome}" />
+						
+		            	<h:outputText value="Justificativa para ativar o grupo"  style="font-weight: normal"/>
+						<p:inputTextarea rows="5" cols="30" value="#{groupBean.group.justificativa}" counter="display" maxlength="1000" counterTemplate="{0} caracácteres disponíveis." autoResize="false" />
+		  				
+		  				
+		 			</h:panelGrid>
+		 			<h:outputText id="display" />
+					<p:commandButton value="Ativar"  icon="ui-icon-check" type="submit"	action="#{groupBean.ativarGrupo(groupBean.group)}"	update=":formDIV:tabViewMobile:listGP" oncomplete="handleDialogSubmit(args, 'carDialog')"  />
+		        </p:outputPanel>
+		    </p:dialog>
+		    
+		    <p:dialog id="dialog" header="Document Detail" showEffect="fade" widgetVar="documentDialog" modal="false" resizable="false">
+				<p:outputPanel id="documentPanel">
+					<p:panelGrid  columns="2" columnClasses="label,value" >
+						<h:outputLabel for="name" value="Name: " />
+						<h:outputText id="name"  style="font-weight:bold" />
+		 
+						<h:outputLabel for="size" value="Size: " />
+						<h:outputText id="size"  style="font-weight:bold" />
+		 
+						<h:outputLabel for="type" value="Type " />
+						<h:outputText id="type"  style="font-weight:bold" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+			
+		<script type="text/javascript">
+			    function handleDialogSubmit(args, dialogName) {
+			        if (!args.validationFailed) {
+			            PF(dialogName).hide();
+			        }
+			    }
+		</script>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

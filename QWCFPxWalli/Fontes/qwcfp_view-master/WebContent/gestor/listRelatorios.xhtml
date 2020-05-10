@@ -1,0 +1,42 @@
+<HTML 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+	<p:dialog modal="false" widgetVar="statusDialog" header="Gerando Relatório"  draggable="false" closable="true" resizable="false">
+    	<p:graphicImage library="images" name="bar180.gif" />
+	</p:dialog>
+	
+		<h:form id="form">
+			<p:growl life="#{loginBean.messageTime}" showDetail="true" />
+			<p:panel id="panel" styleClass="card card-w-title sombraPanel" >	
+		        <h1>Relatórios - QWCFP</h1>		        
+		      	<p:dataTable var="o" value="#{relatorioService.orderList}">		      	
+			      	<p:column headerText="Nome">
+						<h:outputText value="#{o.relatorio}" />
+					</p:column>				
+					
+					<p:column  style="width:150px" >
+						<p:commandButton icon="fa fa-fw fa-file-pdf-o" action="#{executeReport.imprimeRelatorio(o.obs)}" value="Gerar"  ajax="false" >
+							
+						</p:commandButton>
+					</p:column>				
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<script type="text/javascript">
+			function start() {
+			    PF('statusDialog').show();
+			}
+			 
+			function stop() {
+			    PF('statusDialog').hide();
+			}
+		</script>
+	</ui:define>
+</ui:composition>
+</HTML>

@@ -1,0 +1,91 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+
+
+		<p:growl id="messages" life="#{loginBean.messageTime}" widgetVar="messages" showDetail="true" />
+		
+		
+		<h:inputHidden value="#{brsBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{brsBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{brsBean.statusFile}" id="statusFile" />
+		
+		<h:inputHidden value="#{brsBean.httpUrlTransf}" id="urlHttpTransf" />
+		<h:inputHidden value="#{brsBean.ticket}" id="ticket" />
+		
+		
+		<p:contextMenu for="downloadSharedFile">
+			<p:menuitem value=" Download" update="messages, saveAs, fileName, statusFile, ticket, urlHttpTransf" 	icon="fa fa-fw fa-download" ajax="true"  oncomplete="getFile()" actionListener="#{brsBean.getInputStream()}" />
+		</p:contextMenu>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button" 
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+		<h:panelGrid columns="1" cellpadding="2" width="100%">
+			<p:row>
+				<h1>Arquivos Encontrados</h1>
+			</p:row>
+			<p:row>
+				<div id="filtro">			
+					
+				</div>
+			</p:row>
+		</h:panelGrid>		
+
+		<p:dataTable id="downloadSharedFile" var="car" value="#{brsBean.versionList}"
+			selection="#{brsBean.selectedVersions}" rowKey="#{car.id}"
+			selectionMode="multiple" resizableColumns="true" paginator="true"
+			paginatorPosition="bottom" rowsPerPageTemplate="5,10,15" rows="10"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} arquivos)" emptyMessage="Nada foi encontrado!">		
+	
+			<p:column headerText="Nome" style="font-weight: bold">
+				<h:outputText value="#{car.fileName}" style="font-weight: normal;" title="#{car.fileName}" />
+			</p:column>
+			
+			<p:column headerText="Grupo" style="font-weight: bold; width:120px;">
+				<h:outputText value="#{car.groupName}" style="font-weight: normal;"/>
+			</p:column>
+			
+			<p:column headerText="Versão" style="font-weight: bold; width:80px;">
+				<h:outputText value="#{car.version}ª" style="font-weight: normal;" />
+			</p:column>
+			
+			<p:column headerText="Tamanho" style="font-weight: bold; width:100px;">
+				<h:outputText value="#{groupBean.convertByte(car.sizeInBytes)}" style="font-weight: normal;" title="#{car.fileName}" />
+			</p:column>
+			<p:column headerText="Visualizar" style="font-weight: bold; width:100px;">
+				<p:commandButton icon="fa fa-fw fa-eye" />
+			</p:column>				
+		</p:dataTable>
+
+		<!-- <p:dialog header="Remover Arquivo" widgetVar="remover" modal="false"
+			showEffect="fade" hideEffect="fade" resizable="true" width="400"
+			height="100" closeOnEscape="true">
+			<p:outputPanel id="remover" style="text-align:center;">
+				<ui:repeat value="#{groupBean.myGroup}" var="car">
+					<h:outputText value="#{car.groupId} - #{car.nome}"
+						style="display:block" />
+				</ui:repeat>
+				<h2>Confirma a exclusão do arquivos?</h2>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar" oncomplete="PF('remover').hide()"
+					icon="ui-icon-cancel" />
+				<p:spacer width="10" />
+				<p:commandButton value="Excluir" oncomplete="PF('remover').hide()"
+					icon="ui-icon-closethick" update="messages" />
+			</div>
+		</p:dialog> -->
+
+	</ui:define>
+</ui:composition>
+</HTML>

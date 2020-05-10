@@ -1,0 +1,74 @@
+<HTML xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<link rel="stylesheet"
+		href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="resources/css/jquery.fileupload.css"/> 
+
+			<h:outputScript library="script" name="fileUpload3.js"/>
+
+	<style type="text/css">
+.percent {
+	position: absolute;
+	display: inline-block;
+	left: 40%;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<h:form id="formDIV">
+
+		<p:growl id="messages" life="#{loginBean.messageTime}" widgetVar="messages" showDetail="true" />
+
+		<h:inputHidden value="#{listArquivosBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{listArquivosBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{listArquivosBean.statusFile}" id="statusFile" />
+
+		<h:inputHidden value="#{listArquivosBean.httpUrlTransf}" id="urlHttpTransf" />
+		<h:inputHidden value="#{listArquivosBean.ticket}" id="ticket" />
+		
+		<h:inputHidden value="1007" id="idGrupo" />
+		
+		
+		Deseja substituir arquivo caso exista? 	<input type="checkbox"
+			id="substituir" />
+		<br />
+		<p:inputTextarea id="aditionalInformation"
+			placeholder="Comentários adicionais não obrigatórios..." rows="5"
+			style="width: 60%" />
+		<br />
+		<br />
+		<div id="divUpload" >
+		<span class="btn btn-info  fileinput-button">
+		 	<i class="glyphicon glyphicon-plus"></i> 
+			<span>Adicionar	arquivos...</span>
+			<input type="file" name="fileinput" id='fileinput' multiple="multiple" onchange="showFileSize();" />
+		</span>
+		
+		
+		
+		<button onclick="removeAll()" >
+			<span >
+			 	<i class="glyphicon glyphicon-remove"></i> 
+				<span>Cancelar Transaferências</span>
+			</span>
+		</button>
+		
+		<div id="divProgess"></div>
+		</div>
+	</h:form>
+</h:body>
+
+
+
+
+</HTML>

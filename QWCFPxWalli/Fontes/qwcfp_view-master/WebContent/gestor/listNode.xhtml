@@ -1,0 +1,198 @@
+<html 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+			
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<style>
+		
+		#filtro{
+			margin-bottom: 10px;
+		}
+	</style>
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel" >	 
+		    <p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" /> 
+			<h1>Lista de Nó - QWCFP</h1>
+        	<p:columnToggler datasource="editNO" trigger="toggler" />
+   			<div id="filtro" align="right" >
+	        	<p:commandButton id="toggler" type="button" value="Colunas"  icon="fa fa-fw fa-columns" styleClass="direitaAlinhar"  />
+	        	<p:menuButton id="opcoes"   value="Opções" styleClass="direitaAlinhar"> 
+					<p:menuitem value="Editar Nó" update=":formDIV:noDetail, :formDIV:noDialog" oncomplete="PF('noDialog').show()" icon="fa fa-fw fa-edit" title="Editar Nó" process="@this editNO" rendered="#{nodeBean.nodeEdit ne null}"></p:menuitem>
+					<p:menuitem value="Selecione um Nó na tabela" rendered="#{nodeBean.nodeEdit eq null}"></p:menuitem>
+				</p:menuButton>
+       		</div>
+		    
+		    <p:dataTable 
+		    	id="editNO" 
+		    	resizableColumns="true"
+		    	var="varNode" 
+		    	value="#{nodeBean.nodes}" 
+		    	selectionMode="single"
+		    	rowKey="#{varNode.nodeId}"
+		    	selection="#{nodeBean.nodeEdit}"
+		    	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+				currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Nós)" 
+		    	paginatorPosition="bottom"
+		    	rowsPerPageTemplate="10,15,20,25,50,100" 
+		    	rows="10" 
+		    	paginator="true" >
+		    	
+		    	<p:ajax event="rowSelect"  update=":formDIV:opcoes" />
+		   
+		        <p:column headerText="Nome" filterBy="#{varNode.name}" style="font-weight: bold" >
+		            <h:outputText value="#{varNode.name}"  style="font-weight: normal"/>
+		        </p:column>
+		        
+		        <p:column headerText="Apelido" style="font-weight: bold">
+		            <h:outputText value="#{varNode.apelido}"  style="font-weight: normal" />
+		        </p:column>
+		        
+		        <p:column headerText="Host" style="font-weight: bold">
+		            <h:outputText value="#{varNode.ipAddress}"  style="font-weight: normal"/>
+		        </p:column>
+		         
+		        <p:column headerText="Status" style="font-weight: bold">
+		            <h:outputText value="#{nodeBean.getStatus(varNode.status)}"  style="font-weight: normal"/>
+		        </p:column>
+		    </p:dataTable>
+		    
+		     <p:contextMenu for="editNO" id="ctxMenuListNoId" widgetVar="ctxMenuListNo">
+				<p:menuitem value="Editar Nó" update=":formDIV:noDetail, :formDIV:noDialog" oncomplete="PF('noDialog').show()" icon="fa fa-fw fa-edit" title="Editar Nó" process="@this editNO"></p:menuitem>
+			</p:contextMenu>
+		
+		 </p:panel>
+		 
+		    <p:dialog id="noDialog"  header="Editar Nó - QWCFP" width="450px" height="500px" widgetVar="noDialog" style="overflow: auto;" modal="false" resizable="false" closeOnEscape="true" responsive="true" closable="true" fitViewport="true"  >
+		        <p:outputPanel id="noDetail">
+		            <h:panelGrid  columns="1"  rendered="#{not empty nodeBean.nodeEdit}" style="width:100%;overflow: auto;" cellpadding="3" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+		                <f:facet name="header">                   
+		                </f:facet> 		                
+		                
+		                <h:inputHidden value="#{nodeBean.nodeEdit.nodeId}"  style="font-weight: normal;" />
+			 			<h:inputHidden value="#{nodeBean.nodeEdit.nodeId}"  style="font-weight: normal;" />		
+		              
+		                <h:panelGroup styleClass="md-inputfield">
+		                	<p:inputText value="#{nodeBean.nodeEdit.name}"  required="true" maxlength="50" requiredMessage="O campo nome do nó é obrigatório"/>
+		                	<label>Nome do Nó</label>
+		                </h:panelGroup>		                
+			 			<div class="EmptyBox20"></div>
+			 			
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_ACRONYM" value="#{nodeBean.nodeEdit.apelido}"   required="true" maxlength="20" requiredMessage="O campo apelido do nó é obrigatório"/>
+			            	<label>Sigla, única para identificar o Nó</label>
+			            </h:panelGroup>
+			            <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_IP_ADDRESS" value="#{nodeBean.nodeEdit.ipAddress}" required="true" maxlength="16" requiredMessage="O campo endereço do IP do host é obrigatório" />
+			            	<label>Endereço IP do Host</label>
+			            </h:panelGroup>			            
+			            <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_OS_QWARE_USER" value="#{nodeBean.nodeEdit.osQwareUser}" required="true" maxlength="30" requiredMessage="O campo Usuário Q-ware no S.O. é obrigatório"/>
+			            	<label>Usuário Q-Ware no S.O.</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:password id="OS_QWARE_PASWD_ENC" value="#{nodeBean.nodeEdit.osQwarePaswdEnc}"  redisplay="true" maxlength="30" required="true" requiredMessage="O campo Senah do usuário Q-ware ecriptada é obrigatório."/>
+			            	<label>Senha do Usuário Q-Ware encriptitada</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_QWARE_USER" value="#{nodeBean.nodeEdit.qwareUser}"  required="true" maxlength="30" requiredMessage="O campo Usuário administrador do Q-Ware é obrigatório."/>
+			            	<label>Usuário administrador do Q-Ware</label>
+			            </h:panelGroup>
+			            <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:password id="NO_QWARE_PASSWD_ENC" value="#{nodeBean.nodeEdit.qwarePasswdEnc}" redisplay="true"   maxlength="30" required="true" requiredMessage="O campo Senha administrador do Q-Ware é obrigatório"/>
+			            	<label>Senha administrador Q-Ware</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_PORT_CONNECTION" label="Number" value="#{nodeBean.nodeEdit.portConnection}" required="true"  requiredMessage="O campo Porta de conexão com o Q-Warew Server é obrigatório" >
+				            	<f:validateDoubleRange minimum="0" />
+			            	</p:inputText>
+			            	<label>Porta de conexão com o Q-Ware Server</label>			            
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+						<p:selectOneMenu id="STATUS_NO_ADD" value="#{nodeBean.nodeEdit.status}" style="width:100%" effect="fade" required="true" requiredMessage="Por favor escolha o status">
+							<f:selectItem itemLabel="Indicador de status do nó:" />
+							<f:selectItems value="#{nodeBean.statusList}"  var="domain" itemValue="#{domain.id}" itemLabel="#{domain.description}"/>
+						</p:selectOneMenu>   
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_ROOT_FULL_PATH_4_FILES" value="#{nodeBean.nodeEdit.rootFullPath4Files}" maxlength="1024" required="true" requiredMessage="O campo Caminho do ponto de mensagem é obrigatório."/>
+			            	<label>Caminho do ponto de montagem</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_QWARE_HOME_PATH" value="#{nodeBean.nodeEdit.qwareHomePath}"   required="true" maxlength="1024" requiredMessage="O campo Caminho da instalação do Q-Ware"/>
+			            	<label>Caminho da Instalação do Q-Ware</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_DB_USER_QWARELOGIN" value="#{nodeBean.nodeEdit.dbUserQwarelogin}"  required="true" maxlength="100" requiredMessage="O campo Esquema no banco usado pelo Q-Ware server do Nó é obrigatório."/>
+			            	<label>Esquema no Banco usado pelo Q-Ware Server do Nó</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:password id="NO_DB_PASSWD_QWARE_LOGIN" value="#{nodeBean.nodeEdit.dbPasswdQwareLogin}"  maxlength="100" redisplay="true" required="true" requiredMessage="O campo Senha do esquema no banco usado pelo Q-Ware server do nó."/>
+			            	<label>Senha do Esquema no Banco usado pelo Q-Ware Server do Nó</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:inputText id="NO_URI_JDBC_FOR_DB_CONECTION" value="#{nodeBean.nodeEdit.uriJdbcForDbConection}" maxlength="2000" required="true" requiredMessage="O campo URI de conexão JDBC com o banco"/>
+			            	<label>URI de conexão JDBC com o banco</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>
+			            
+			            <h:panelGroup styleClass="md-inputfield">
+			            	<p:password id="NO_QWARE_KEY_ENC" value="#{nodeBean.nodeEdit.qwareKeyEnc}" redisplay="true" required="true" maxlength="2000" requiredMessage="O campo Chave encriptada usada pelo Servidor Q-Ware"/>
+			            	<label>Chave encriptada usada pelo Servidor Q-Ware</label>
+			            </h:panelGroup>
+			             <div class="EmptyBox20"></div>		
+			            
+			         	<p:selectOneMenu id="NO_DEFAULT_INFOGRP_ID_FK" value="#{nodeBean.nodeEdit.defaultInfoGroup}" style="width:100%" effect="fade" requiredMessage="Por favor escolha o grupo defoult do Nó" required="true">
+							<f:selectItem itemLabel="Identificador únivoco do GRUPO DEFAULT" />
+							<f:selectItems value="#{listGroupsBean.groups}"  var="grupo" itemValue="#{grupo.groupId}" itemLabel="#{grupo.nome}"/>
+						</p:selectOneMenu>		
+						 <div class="EmptyBox20"></div>
+						 
+						  <h:panelGroup styleClass="md-inputfield">		                
+			            	<p:inputTextarea id="NO_DESCRIPTION" value="#{nodeBean.nodeEdit.description}" placeholder="Descrição" maxlength="2000"  required="true" requiredMessage="A descrição do nó é obrigatória."/>			            	
+			            </h:panelGroup>      
+			                       
+		            </h:panelGrid>
+		        </p:outputPanel>
+		            <div class="altura20"></div>
+		            <p:commandButton value="save" icon="fa fa-fw fa-save" action="#{nodeBean.editar()}" update=":formDIV:editNO, :formDIV:msgs, :formDIV:noDetail" oncomplete="handleDialogSubmit(args, 'noDialog')" />
+		    		<p:spacer width="20" />
+					<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('noDialog').hide()"  />
+		           <div class="altura20"></div>
+		       
+		    </p:dialog>   
+			
+		<script type="text/javascript">
+		    function handleDialogSubmit(args, dialogName) {
+		        if (!args.validationFailed) {
+		            PF(dialogName).hide();
+		        }
+		    }
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,37 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">		
+		<h:outputScript library="script" name="charts_jqplot.js"/>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pieRenderer.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.css" />
+	
+		<h:outputScript name="js/layout.js" library="barcelona-layout" />
+
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+
+		<h1>Total de Arquivos por Status</h1>
+	
+		<div align="center">
+		<p:chart  id="dbchart" type="pie" model="#{ChartJsViewDashBoard.pieModel1}"  styleClass="borde" responsive="true" />		
+		<p:poll interval="10" update="dbchart" />
+		<p:commandButton value="Voltar" icon="fa fa-fw fa-chevron-left" oncomplete="javascript:history.back()" style="margin-right:20px;" styleClass="ui-priority-primary"/>
+		</div>
+				
+	<style>
+		.borde{
+			width:800px;
+			height:600px;
+		}
+	</style>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

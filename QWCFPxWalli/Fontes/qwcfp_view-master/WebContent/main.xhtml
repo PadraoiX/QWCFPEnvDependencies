@@ -1,0 +1,353 @@
+<ui:composition template="/templates/template-barcelona.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="conteudo">
+		<script type="text/javascript">
+			function $id(id) {
+				return document.getElementById(id);
+			}
+			
+			$( document ).ready(function() {
+			    if (window.File  &#38;&#38; window.FileList &#38;&#38; window.FileReader) {
+					Init();
+				}
+			});
+			
+			function Init() {
+			
+				var filedrag = $id("filedrag");
+			
+				// is XHR2 available?
+				var xhr = new XMLHttpRequest();
+				if (xhr.upload) {
+				
+					// file drop
+					filedrag.addEventListener("dragover", FileDragHover, false);
+					filedrag.addEventListener("dragleave", FileDragHover, false);
+					filedrag.addEventListener("drop", showFileSize, false);
+					filedrag.style.display = "block";
+					
+					 
+				}
+			
+			}
+			
+			
+			function FileDragHover(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				e.target.className = (e.type == "dragover" ? "hover" : "");
+			}
+			
+			
+				function a(){
+				alert(server)
+					}
+		</script>
+		
+<style type="text/css">
+				
+.ui-datagrid-column {
+	padding: 10px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	position: relative !important;
+}
+
+label {
+	font-weight: bold;
+}
+
+div {
+	border: none;
+}
+
+#qwfileupload {
+	background-color: blue;
+}
+
+#filtroGrupos {
+	margin-bottom: 10px;
+	background: #e5e5e5;
+	padding: 10px;
+	box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.groupTitle {
+	font-weight: bold;
+	text-decoration: underline;
+	color: blue;
+}
+
+.SubMenuLink4:hover {
+	background: #C4C4C4
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0.8),
+		rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
+	color: #4682B4;
+}
+
+.colorRed  .ui-widget-header {
+	background: #fc9e70
+		-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+		0.8)), to(rgba(255, 255, 255, 0)));
+	background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600
+		75%, #c72200 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%,
+		#ff6600 75%, #c72200 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600
+		75%, #c72200 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd',
+		endColorstr='#c72200', GradientType=0); /* IE6-9 */
+}
+
+.ui-widget-header {
+	margin: 0.2px !important;
+}
+
+.qwfileuploadcss {
+	height: 300px;
+	width: 800px";
+}
+
+.progress {
+	color: #000000;
+}
+
+.botoes {
+	margin-right: .1em;
+	text-decoration: none !important;
+	cursor: pointer;
+	text-align: center;
+	zoom: 1;
+	overflow: visible;
+	font-family: 'Roboto', sans-serif !important;
+	font-size: 15px;
+	border-radius: 2px !important;
+	height: 30px !important;
+}
+
+.ContentSideSections {
+	border-bottom: none !important;
+}
+
+
+#filtroGrupos {
+	display: block;
+}
+
+.alinharDireita {
+	float: right;
+}
+
+/* body .ui-button.ui-button-icon-only {
+	-moz-border-radius: 15%;
+	-webkit-border-radius: 15%;
+	border-radius: 15%;
+} */
+
+.qwfileupload_modal{
+	z-index: 1000 !important;
+}
+</style>
+
+	<!-- 	<div id="filtroGrupos" align="center">
+			<h:panelGroup styleClass="md-inputfield"
+				style="width: 30%;  margin-top: 20px;">
+				<p:inputText id="groupFilterValue" value="#{myGroupsBean.filterValue}" />
+				<label>Pesquisar...</label>
+			</h:panelGroup>
+			<p></p>
+			<DIV class="EmptyBox10"></DIV>
+
+			<p:commandButton type="submit" value="Pesquisa Grupo" title="Filtrar"
+				actionListener="#{myGroupsBean.updateListMyGroups()}"
+				update=":formDIV:MeusGrupos" styleClass="botoes" />
+			<p:spacer width="10" />
+			<p:commandButton type="submit" value="Pesquisa Textual"
+				title="Filtrar" action="#{myGroupsBean.redirectBrs()}"
+				update=":formDIV:MeusGrupos" styleClass="botoes" />
+
+		</div> -->
+
+		<p:growl id="messages" widgetVar="messages" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:remoteCommand id="updateTable" name="updateTable"
+			actionListener="#{myGroupsBean.updateListMyGroups}" process="@this"
+			update=":formDIV:MeusGrupos" />
+		<p:remoteCommand id="validSession" name="validSession"
+			actionListener="#{loginBean.validSession}" process="@this"
+			update=":formDIV:MeusGrupos" />
+		<p:remoteCommand id="invalidSession" name="invalidSession"
+			actionListener="#{loginBean.invalidSession}" process="@this"
+			update=":formDIV:MeusGrupos" />
+
+	 	<h3>Meus Grupos</h3> 
+		<p:dataGrid widgetVar="MeusGrupos" lazy="true" var="car"
+			value="#{myGroupsBean.myGroupsEx}" columns="3"
+			emptyMessage="Você ainda não tem grupos para acessar!" layout="grid"
+			rows="9" paginator="true" id="MeusGrupos" paginatorPosition="bottom"
+			styleClass="MeusGrupos_content" rowsPerPageTemplate="9,18,27,36">
+
+			<p:panel id="painelGrupo">
+				<f:facet name="header">
+
+					<p:commandLink type="submit"
+						action="#{groupBean.setarId(car, false)}">
+						<h:outputText id="groupTitle"
+							value="#{car.myGroupsEx.groupName.toUpperCase()}"
+							styleClass="SubMenuLink4" />
+						<!-- <f:setPropertyActionListener value="#{car.memberd}"   target="#{groupBean.myGroup}" /> -->
+					</p:commandLink>
+
+					<p:commandButton type="submit" icon="fa fa-fw fa-gear"
+						title="Configurações" action="#{groupBean.setarIdRegraGrupo(car)}"
+						styleClass="alinharDireita" id="escodeBotao">
+						<!-- <f:setPropertyActionListener target="#{groupBean.myGroup}" value="#{car}"/> -->
+					</p:commandButton>
+
+					<p:commandButton type="submit" icon="fa fa-fw fa-folder-open"
+						title="Gerênciar Arquivos" styleClass="alinharDireita"
+						action="#{groupBean.setarId(car, false)}">
+						<!-- <f:setPropertyActionListener value="#{car}"   target="#{groupBean.myGroup}" /> -->
+					</p:commandButton>
+
+					<p:commandButton onclick="PF('uploadFile').show();"
+						update="formDIV:idGrupo" icon="fa fa-fw fa-upload" title="Upload"
+						disabled="#{!car.canUpload()}" styleClass="alinharDireita"
+						action="#{groupBean.setarId(car, true)}">
+						<!-- <f:setPropertyActionListener value="#{car}" target="#{groupBean.myGroup}" /> -->
+					</p:commandButton>
+					
+					<p:commandButton type="submit" icon="fa fa-fw fa-dashboard"
+						title="Dashboard" action="#{groupBean.goToDashBoard(car)}" rendered="#{(loginBean.dashBoardCfg eq true) and (not empty car.myGroupsEx.groupMetadataId)}"
+						styleClass="alinharDireita" id="dashboard">
+						<!-- <f:setPropertyActionListener target="#{groupBean.myGroup}" value="#{car}"/> -->
+					</p:commandButton>
+				
+
+				</f:facet>
+
+				<p:scrollPanel mode="native"
+					style="width:100%;height:142px;border: none;">
+					<h:panelGrid columns="2" style="width:100%" cellpadding="0">
+						<p:panelGrid style="border: none;">
+							<h:graphicImage id="downIcon" library="images"
+								name="#{car.getDownloadName()}" styleClass="iconpriv" />
+							<p:tooltip for="downIcon" value="#{car.getDownloadTitle()}"
+								trackMouse="true" />
+							<h:graphicImage id="upIcon" library="images"
+								name="#{car.getUploadName()}" styleClass="iconpriv" />
+							<p:tooltip for="upIcon" value="#{car.getUploadTitle()}"
+								trackMouse="true" />
+						</p:panelGrid>
+						<p:outputLabel value="" />
+						<h:outputLabel
+							value="Compartilhado:#{groupBean.convertByte(car.myGroupsEx.groupChildreanSpace)} / #{groupBean.convertByte(car.myGroupsEx.groupTotalSpace)}" />
+						<p:outputLabel value="" />
+						<p:progressBar id="progressBarS"
+							value="#{groupBean.getSharedSpaceBarValue(car.myGroupsEx)}"
+							labelTemplate="{value}%" displayOnly="true" />
+						<p:outputLabel value="" />
+						<h:outputLabel
+							rendered="#{car.myGroupsEx.groupSubordinatedId ne null}"
+							value="Limite do grupo:  #{groupBean.convertByte(groupBean.getOcupiedSpace(car.myGroupsEx))} / #{groupBean.convertByte(car.myGroupsEx.groupOriginalSpaceLimit)}" />
+						<p:outputLabel
+							rendered="#{car.myGroupsEx.groupSubordinatedId ne null}" value="" />
+						<p:progressBar
+							rendered="#{car.myGroupsEx.groupSubordinatedId ne null}"
+							id="progressBarG"
+							value="#{groupBean.getGroupSpaceBarValue(car.myGroupsEx)}"
+							labelTemplate="{value}%" displayOnly="true" />
+						<p:outputLabel
+							rendered="#{car.myGroupsEx.groupSubordinatedId ne null}" value="" />
+
+						<h:outputText value="Dono: #{car.myGroupsEx.groupCreator}" />
+						<p:outputLabel value="" />
+						<h:outputText styleClass="Apelido" value="Apelido: #{car.myGroupsEx.groupAlias}" />
+						<p:outputLabel value="" />
+
+					</h:panelGrid>
+					<!-- <h:outputText value="Apelido:  #{car.apelido}" /> <p:outputLabel value=""/> -->
+				</p:scrollPanel>
+
+			</p:panel>
+
+		</p:dataGrid>
+
+		<br />
+
+		<h:inputHidden value="#{listArquivosBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{listArquivosBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{listArquivosBean.statusFile}" id="statusFile" />
+
+		<h:inputHidden value="#{listArquivosBean.httpUrlTransf}"
+			id="urlHttpTransf" />
+		<h:inputHidden value="#{listArquivosBean.ticket}" id="ticket" />
+		<h:inputHidden value="#{groupBean.grupoId}" id="idGrupo" />
+
+
+		<p:dialog 
+			dynamic="false" 
+			widgetVar="uploadFile" 
+			resizable="true" 
+			modal="true" 
+			appendTo="@(body)" 
+			loseOnEscape="true" 
+			minimizable="true" 
+			maximizable="true" 
+			hideEffect="explode"
+			width="500" 
+			showEffect="explode"
+			styleClass="qwfileupload_modal sembordas qwfileuploadcss" 
+			id="qwfileupload">
+			<f:facet name="header">
+				<span id="countBytes">Upload Arquivos</span>
+			</f:facet>
+			<div id="filedrag">
+				Deseja substituir arquivo caso exista? 
+				<input type="checkbox" id="substituir" />
+				<h:panelGrid columns="1">
+					<p:inputTextarea id="aditionalInformation" placeholder="Comentários adicionais não obrigatórios..." rows="5" style="width:100%" />
+					<input type="file" name="fileinput" id='fileinput' multiple="multiple" onchange="showFileSize();" />
+                	
+                    
+					<br />
+					<br />
+				</h:panelGrid>
+			</div>
+			<div id="divProgessContainer"></div>
+		</p:dialog>
+
+		<!-- <p:dialog dynamic="false" widgetVar="uploadFile" resizable="true"
+			modal="true" appendTo="@(body)" loseOnEscape="true"
+			minimizable="true" maximizable="true" hideEffect="explode"
+			width="650" showEffect="explode"
+			styleClass="sembordas qwfileuploadcss"
+			value="#{fileUploadView.file}" id="qwfileupload">
+
+		 	<f:facet name="header">
+				<span id="countBytes">Upload Arquivos</span>
+			</f:facet>
+			<div id="filedrag" style="width=100%">
+			Deseja substituir arquivo caso exista? <input type="checkbox"
+					id="substituir" />
+					
+				<h:panelGrid columns="1">
+					<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}"
+						mode="advanced" dragDropSupport="true" multiple="true" widgetVar="uploadFile"
+						update="messages" style="width:100%" ></p:fileUpload>
+				</h:panelGrid>
+			</div> 
+
+		</p:dialog> -->
+
+	</ui:define>
+</ui:composition>
+

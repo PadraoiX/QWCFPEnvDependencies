@@ -1,0 +1,93 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+
+
+		<p:growl id="messages" life="#{loginBean.messageTime}" widgetVar="messages" showDetail="true" />
+		
+		
+		<h:inputHidden value="#{sharedBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{sharedBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{sharedBean.statusFile}" id="statusFile" />
+		
+		<h:inputHidden value="#{sharedBean.httpUrlTransf}" id="urlHttpTransf" />
+		<h:inputHidden value="#{sharedBean.ticket}" id="ticket" />
+		
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button" 
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+		<h:panelGrid columns="1" cellpadding="2" width="100%">
+			<p:row>
+				<h1>Arquivos Compartilhados</h1>
+			</p:row>
+			<p:row>
+				<div id="filtro">			
+					
+				</div>
+			</p:row>
+		</h:panelGrid>
+		
+		<!--  <p:commandButton id="btn" value="Download" icon="fa fa-fw fa-download" type="submit" oncomplete="getFile()" update="messages, saveAs, fileName, statusFile, ticket, urlHttpTransf"  actionListener="#{sharedBean.getInputStream()}"   /> -->
+
+		<p:remoteCommand name="updateTable" action="#{sharedBean.updateList}" update="downloadSharedFile" process="downloadSharedFile"/>		
+		<p:dataTable id="downloadSharedFile" var="car" value="#{sharedBean.sharedfileList}"
+			selection="#{sharedBean.selectedSharedList}" rowKey="#{car.versionId}"
+			selectionMode="multiple" resizableColumns="true" paginator="true"
+			paginatorPosition="bottom" 	rowsPerPageTemplate="10,15,20,25,50,100" rows="10"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Arquivos Compartilhados)" emptyMessage="Não há arquivos compartilhados contigo!">		
+	
+			<p:column headerText="Nome" style="font-weight: bold">
+				<h:outputText value="#{car.fileName}" style="font-weight: normal;" title="#{car.fileName}" />
+			</p:column>
+			
+			<p:column headerText="Data de Criação" style="font-weight: bold; width:120px;">
+				<h:outputText value="#{car.creationDate}" converter="converteData" style="font-weight: normal;"/>
+			</p:column>
+			
+			<p:column headerText="Versão" style="font-weight: bold; width:80px;">
+				<h:outputText value="#{car.version}ª" style="font-weight: normal;" />
+			</p:column>
+			
+			<p:column headerText="Tamanho" style="font-weight: bold; width:100px;">
+				<h:outputText value="#{groupBean.convertByte(car.sizeInBytes)}" style="font-weight: normal;" title="#{car.fileName}" />
+			</p:column>			
+		</p:dataTable>
+		<pe:tooltip for="downloadSharedFile"  value="Pressione (Shift ou Ctrl) + Click para selecionar vários arquivos. E Click Direito para acessar o menu de contexto"  mouseTracking="true" myPosition="top left" adjustX="10" adjustY="10" />
+		
+		<p:contextMenu for="downloadSharedFile">
+			<p:menuitem value=" Download" update="messages, saveAs, fileName, statusFile, ticket, urlHttpTransf" icon="fa fa-fw fa-download" ajax="true"  oncomplete="getFile()" actionListener="#{sharedBean.getInputStream()}" />
+		</p:contextMenu> 
+	</p:panel>
+		<!-- <p:dialog header="Remover Arquivo" widgetVar="remover" modal="false"
+			showEffect="fade" hideEffect="fade" resizable="true" width="400"
+			height="100" closeOnEscape="true">
+			<p:outputPanel id="remover" style="text-align:center;">
+				<ui:repeat value="#{groupBean.myGroup}" var="car">
+					<h:outputText value="#{car.groupId} - #{car.nome}"
+						style="display:block" />
+				</ui:repeat>
+				<h2>Confirma a exclusão do arquivos?</h2>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar" oncomplete="PF('remover').hide()"
+					icon="ui-icon-cancel" />
+				<p:spacer width="10" />
+				<p:commandButton value="Excluir" oncomplete="PF('remover').hide()"
+					icon="ui-icon-closethick" update="messages" />
+			</div>
+		</p:dialog> -->
+
+	</ui:define>
+</ui:composition>
+</HTML>

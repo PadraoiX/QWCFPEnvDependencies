@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/iconCFP.png"/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>QWCFP - #{loginBean.teamName}</title>
+	<h:outputScript name="js/ripple.js" library="barcelona-layout" />
+	<h:outputScript name="js/layout.js" library="barcelona-layout" />
+	<h:outputStylesheet name="geral.css" library="css" />
+
+	<h:outputScript library="script" name="jquery.mask.js" />
+	<h:outputScript library="script" name="ajax.js" />
+	<script>        	  	
+            function validatePhone() {
+                var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+                    maskBehavior = function(val, e, field, options) {
+                        return val.length > 14 ? masks[0] : masks[1];
+                    };
+
+                $('.phone').mask(maskBehavior, {onKeyPress:
+                            function(val, e, field, options) {
+                                field.mask(maskBehavior(val, e, field, options), options);
+                            }
+                });
+            }
+            $(document).ready(function() {
+            	validatePhone();
+            }
+            );
+    	</script>
+	<script type="text/javascript">
+
+			function mascara(o, f) {
+				v_obj = o
+				v_fun = f
+				setTimeout("execmascara()", 1)
+			}
+		
+			function execmascara() {
+				v_obj.value = v_fun(v_obj.value)
+			}
+			
+			function mtel(v) {
+				v = v.replace(/D/g, ""); //Remove tudo o que não é dígito
+				v = v.replace(/^(d{2})(d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+				v = v.replace(/(d)(d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+				return v;
+			}
+			
+			function id(el) {
+				return document.getElementById(el);
+			}
+
+			/* window.onload = function() {
+				id('telefone').onkeypress = function() {
+					mascara(this, mtel);
+				}
+			} */
+
+
+
+			
+		</script>
+	<style>
+.ui-g-12 {
+	width: 100% !important;
+}
+
+.dialogoWidth {
+	width: 20% !important;
+}
+
+.ui-button-size {
+	width: 100% !important;
+}
+
+.EmptyBox10 {
+	height: 10px;
+}
+
+#form {
+	height: 70vh;
+}
+
+.login-panel {
+	margin-top: 10% !important;
+}
+
+.login-body {
+	padding-top: 0px !important;
+}
+</style>
+
+<h:outputStylesheet name="css/layout-blue.css" library="barcelona-layout" />
+<h:outputStylesheet name="css/ripple.css" library="barcelona-layout" />
+
+</h:head>
+
+<h:body styleClass="login-body">
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" />
+
+		<div class="login-panel ui-fluid">
+			<div class="ui-g">
+				<div class="ui-g-12 login-header" style="width: 70px;">
+					<!-- <h1>LOGIN</h1>
+	                    <h2>Bem-vindo ao QWCFP</h2> -->
+					<p:graphicImage name="logoCFP_Branco.png" library="images" />
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield"  >
+						<p:inputText id="user" value="#{loginBean.usuario}" required="true" requiredMessage="Por favor preencha o usuário" style="margin-left: -5%;width: 100%;" />
+						<label style="margin-left: -5%" >CPF ou E-mail</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="pass" value="#{loginBean.pass}" required="true" requiredMessage="Por favor preencha a senha"  style="margin-left: -5%;width: 100%;"/>
+						<label style="margin-left: -5%">Senha</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-10" style="margin-left: 10%" >
+					<p:commandButton value="Entrar" icon="fa fa-fw fa-sign-in"
+						update="growl" action="#{loginBean.conectar}" styleClass="cyan-btn"
+						style="width:auto;margin-bottom:10px;" />
+						
+					<h:panelGroup>
+						<label>Esqueceu sua senha?</label>
+						<p:commandLink id="recsenha"
+							oncomplete="PF('documentDialogSenha').show()" value=" Redefinir."
+							style=" margin-left: auto; margin-right:auto;" />
+					</h:panelGroup>
+				</div>		
+				
+				<div class="ui-g-10" style="margin-left: 10%">
+					<p:commandButton id="loginCertDigital" onclick="certificado()"  
+							value="Acesso via certificado digital" style="width:auto;"
+							icon="ui-icon-fingerprint" />
+				</div>
+				
+				 <div class="ui-g-12" >
+					<h:panelGroup>
+						<label style="margin-left: -5%;font-weight: bold;" >Não tem conta? </label>
+						<p:commandLink id="novousuario" 
+					oncomplete="#{loginBean.authenticationLdap ? 'PF(\'dialogLogin\').show()' : 'PF(\'documentDialogCad\').show()' }" value="Cadastrar" process="@this"
+						style="width:auto;margin-bottom:10px;" icon="ui-icon-person"
+						styleClass=".ui-button-size" update="formCadastroUsuario" />
+					</h:panelGroup>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+	
+	<h:form id="formLogin">
+	
+	<p:dialog id="dialogLogin" header="Insira seu usuário da rede para realizar o cadastro"
+		widgetVar="dialogLogin"  resizable="false" draggable="true" responsive="true" styleClass="dialogoWidth"  >
+		<p:growl id="growlLdap" showDetail="true" />
+
+		<div class="ui-g form-group" >
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield"  >
+						<p:inputText id="user" value="#{loginBean.usuario}" required="true" requiredMessage="Por favor preencha o usuário" style="margin-left: -5%;width: 100%;" />
+						<label style="margin-left: -5%" >Usuário da rede</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="pass" value="#{loginBean.pass}" required="true" requiredMessage="Por favor preencha a senha"  style="margin-left: -5%;width: 100%;"/>
+						<label style="margin-left: -5%">Senha</label>
+					</h:panelGroup>
+				</div>
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar-se" icon="ui-icon-person"
+						update="growlLdap, formCadastroUsuario:AREA_ID_FK" action="#{loginBean.connectLdap}" onerror="showMsg()"  oncomplete="handleDialogSubmit(args, 'documentDialogCad', 'dialogLogin')"  style="width:auto;margin-bottom:10px;" />
+				</f:facet>	
+			</div>
+		</div>
+	</p:dialog>
+	</h:form>
+
+	<p:dialog id="dialogSenha" header="Esqueci minha senha"
+		widgetVar="documentDialogSenha" modal="false" resizable="false"
+		height="150px">
+		<h:form>
+			<p:growl id="growl" showDetail="true" />
+			<h:panelGrid cellpadding="2" columns="1">
+				<div class="EmptyBox10"></div>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="email" value="#{memberBean.member.memberEmail}" required="true" requiredMessage="O e-mail é obrigatório" size="30" />
+					<label>E-mail</label>
+				</h:panelGroup>
+			</h:panelGrid>
+			<br />
+			<br />
+			<h:panelGroup>
+				<p:commandButton value="Enviar" update="growl"
+					actionListener="#{memberBean.recuperarSenha()}" type="submit"
+					icon="fa fa-fw fa-envelope"
+					oncomplete="PF('documentDialogSenha').hide()" />
+				<p:spacer width="20" height="10" />
+				<p:commandButton value="Fechar" icon="fa fa-fw fa-close"
+					oncomplete="PF('documentDialogSenha').hide()" />
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+	
+	
+	<h:form id="dialogAreaForm">
+	<p:dialog id="dialogArea" header="Sugestão de Criação de Área"
+		widgetVar="dialogArea"  resizable="false" draggable="true" responsive="true" styleClass="dialogoWidth"  >
+			<p:growl id="growlArea" showDetail="true" />
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="nome" value="#{memberBean.member.memberName}"
+							required="true" size="30" />
+						<label>Seu Nome</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="MEMBER_MAIL_AREA"
+							requiredMessage="O e-mail é obrigatório."
+							validatorMessage="E-mail inválido" maxlength="128"
+							value="#{memberBean.member.memberEmail}" required="true" size="30">
+							<f:validator validatorId="validateEmail" for="MEMBER_MAIL_AREA" />
+							<p:ajax event="change" update="MEMBER_MAIL_AREA,growlArea" process="@this" />
+						</p:inputText>
+						<label>Seu E-Mail</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<p:selectOneMenu id="countryCodeArea" value="#{memberBean.code}"
+						filter="true" filterMatchMode="startsWith"  
+						effect="fade">
+						<f:selectItem itemLabel="Código País" />
+						<f:selectItems value="#{memberBean.codigoPais}" />
+						<p:ajax update="telefone1Area" event="change"
+							listener="#{memberBean.getValueHasMap()}" process="@this" />
+					</p:selectOneMenu>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup>
+						<h:inputHidden value="#{memberBean.valueHasMap}" />
+						<h:panelGroup styleClass="md-inputfield">
+							<h:panelGroup>
+								<p:inputMask id="telefone1Area" value="#{memberBean.valueHasMap}"
+									mask="#{memberBean.mask()}" disabled="true" maxlength="2"
+									required="true" size="2" style="width:10% !important" />
+								<p:inputText name="telefone" id="telefoneArea"
+									value="#{memberBean.member.numberPhone1}" styleClass="phone"
+									requiredMessage="Telefone é Obrigatório"
+									validatorMessage="Telefone inválido." converter="converterFone"
+									required="true"  />
+								<label>Telefone</label>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="nomeArea" value="#{memberBean.member.memberEmailPersonal}"
+							required="true" size="30" />
+						<label>Nome da Área</label>
+					</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputTextarea id="MEMBER_JUSTIFY_AREA" requiredMessage="A justificativa é obrigatória." rows="3" cols="30" value="#{memberBean.member.justificativa}" title="Explique melhor o motivo do cadastro da área" maxlength="2000"  />
+						<label>Justificativa</label>
+						<p:tooltip id="toolTipFocus" for="MEMBER_JUSTIFY_AREA" showEvent="focus" hideEvent="blur" />
+					</h:panelGroup>
+				</div>
+				
+				<f:facet name="footer">
+						<p:commandButton   id="submitArea" value="Enviar"  process="@this dialogAreaForm" action="#{memberBean.sendNotificationArea}" oncomplete="PF('dialogArea').hide()" type="submit" icon="fa fa-fw fa-envelope" validateClient="true" update="growlArea" />
+				</f:facet>
+			</div>
+	</p:dialog>
+		</h:form>
+	
+	<h:form id="formCadastroUsuario">
+
+	<p:dialog id="dialogCad" header="Cadastrar Usuário"	widgetVar="documentDialogCad" resizable="false" draggable="false" responsive="true" styleClass="dialogoWidth"  >
+			<input type="hidden" name="hidden1" value="CadExterno" />
+			<p:growl id="growl" showDetail="true" />
+
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+			
+				<div class="ui-g-12" style="#{!(loginBean.authenticationLdap) ? 'display: none;' : '' }">				
+					<p:selectOneMenu  filter="true" filterMatchMode="startsWith" id="AREA_ID_FK" value="#{memberBean.member.areaIdFk}" required="false" requiredMessage="A Área Institucional é obrigatória" style="width:100%" effect="fade">
+						<f:selectItem itemLabel="Área Institucional" /> 
+						<f:selectItems value="#{listAreasSuggestBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+					</p:selectOneMenu>
+				</div>
+				
+				<div class="ui-g-12" style="#{!(loginBean.authenticationLdap) ? 'display: none;' : '' }" >
+				<h:panelGroup >
+						<label style="font-weight: bold;" >Não encontrou sua área? </label>
+						<p:commandLink id="dialogAreaId" 
+						oncomplete="PF('dialogArea').show();PF('documentDialogCad').hide()"  value="Sugira sua criação" process="@this"
+						style="width:auto;margin-bottom:10px;" icon="ui-icon-person"
+						styleClass=".ui-button-size" update="dialogAreaForm" />
+				</h:panelGroup>
+				</div>
+			
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="MEMBER_USER" style="width:100%"
+							requiredMessage="Nome do Usuário é Obrigatório"
+							value="#{memberBean.member.memberName}" required="true" size="30" maxlength="100" />
+						<label>Nome do Usuário*</label>
+					</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputMask id="MEMBER_CPF" requiredMessage="CPF é Obrigatório" style="width:100%"
+							validatorMessage="CPF Inválido."
+							value="#{memberBean.member.loginCpfId}" autocomplete="false" required="#{loginBean.cpfRequired}"
+							mask="999.999.999-99" maxlength="15"
+							converter="converterCpf">
+							<f:validator validatorId="validCpf" for="MEMBER_CPF" />
+							<p:ajax event="change" update="MEMBER_CPF,growl" process="@this" />
+						</p:inputMask>
+						<label>CPF*</label>
+					</h:panelGroup>
+				</div>
+			
+				<!--  <div class="ui-g-12"  style="#{!(loginBean.authenticationLdap) ? 'display: none;' : '' }"  >
+					<p:selectBooleanCheckbox id="checkLdap" value="#{memberBean.authenticationUserLdap}"  onchange="toggle()" >
+						 <p:ajax event="change" listener="#{memberBean.checkLdap()}" process="@this" update="formCadastroUsuario:MEMBER_LDAP,formCadastroUsuario:MEMBER_PASS,formCadastroUsuario:MEMBER_PASS2 , formCadastroUsuario:submitCadastroEx"  />
+					</p:selectBooleanCheckbox>
+					<label style="color: #9c9c9c">Utilizar protocolo Ldap para autenticação?</label>
+				</div>  -->
+				
+				<div class="ui-g-12" id="userIdLdap" style="#{!(loginBean.authenticationLdap) ? 'display: none;' : '' }" >
+						<h:panelGroup styleClass="md-inputfield" >
+							<p:inputText id="MEMBER_LDAP" style="width:100%" value="#{memberBean.member.ldapKeyForCorpAuth}" requiredMessage="A identificação do usuário no Ldap é obrigatória"  required="#{loginBean.authenticationLdap}" size="30" />
+							<label>Usuário da Rede*</label>
+						</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12" id="senhaC" style="#{loginBean.authenticationLdap ? '' : 'display: none;' }" >
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="MEMBER_PASS3" value="#{memberBean.member.qwarePasswordEnc}" style="width:100%" redisplay="true"
+							required="#{loginBean.authenticationLdap}"
+							promptLabel="Informe um senha." feedback="true" weakLabel="Fraca" 
+							goodLabel="Razoável" strongLabel="Forte" autocomplete="false" 
+							requiredMessage="A senha é obrigatória." >
+						</p:password>
+						<label>Senha*</label>
+					</h:panelGroup>
+				</div>
+					
+				<div class="ui-g-12" id="senhaA" style="#{loginBean.authenticationLdap ? 'display: none;' : '' }" >
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="MEMBER_PASS" value="#{memberBean.pass}" style="width:100%" redisplay="true"
+							label="Senha"  	 
+							required="#{!loginBean.authenticationLdap}"
+							promptLabel="Informe um senha." feedback="true" weakLabel="Fraca" 
+							goodLabel="Razoável" strongLabel="Forte" autocomplete="false" 
+							requiredMessage="A senha é obrigatória." binding="#{startComponent}" >
+						</p:password>
+						<label>Senha*</label>
+					</h:panelGroup>
+				</div>
+				
+				
+				<div class="ui-g-12" id="senhaB" style="#{loginBean.authenticationLdap ? 'display: none;' : '' }">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="MEMBER_PASS2"  style="width:100%"  
+							requiredMessage="Confirmação de senha é obrigatória." redisplay="true"
+							value="#{memberBean.member.qwarePasswordEnc}" 
+							required="#{!loginBean.authenticationLdap}"
+							autocomplete="false" >
+							<f:validator validatorId="passwordValidator" for="MEMBER_PASS2" />
+						 	<f:attribute name="startComponent" value="#{startComponent}" />
+						 	<p:ajax event="change" update="MEMBER_PASS, MEMBER_PASS2,growl" process="@this MEMBER_PASS" />
+						 </p:password>
+						 	
+						<label>Confirmar Senha*</label>
+					</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="MEMBER_MAIL" style="width:100%"
+							requiredMessage="O e-mail é obrigatório."
+							validatorMessage="E-mail inválido" maxlength="128"
+							value="#{memberBean.member.memberEmail}" required="true" size="30">
+							<f:validator validatorId="validateEmail" for="MEMBER_MAIL" />
+							<p:ajax event="change" update="MEMBER_MAIL,growl" process="@this" />
+						</p:inputText>
+						<label>E-Mail*</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<p:selectOneMenu id="countryCode" value="#{memberBean.code}" style="width:100%"
+						filter="true" filterMatchMode="startsWith"  
+						effect="fade">
+						<f:selectItem itemLabel="Código País *" />
+						<f:selectItems value="#{memberBean.codigoPais}" />
+						<p:ajax update=":formCadastroUsuario:telefone1" event="change"
+							listener="#{memberBean.getValueHasMap()}" process="@this" />
+					</p:selectOneMenu>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup>
+						<h:inputHidden value="#{memberBean.valueHasMap}" />
+						<h:panelGroup styleClass="md-inputfield">
+							<h:panelGroup>
+								<p:inputMask id="telefone1" value="#{memberBean.valueHasMap}" 
+									mask="#{memberBean.mask()}" disabled="true" maxlength="2"
+									required="true" size="2" style="width:10% !important" /> 
+								<p:inputText name="telefone" id="telefone"  style="width:85%"
+									value="#{memberBean.member.numberPhone1}" styleClass="phone"
+									requiredMessage="Telefone é Obrigatório"
+									validatorMessage="Telefone inválido." converter="converterFone"
+									required="true"  />
+								<label>Telefone*</label>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+								<p:inputText id="MEMBER_ADDRESS" style="width:100%"
+									requiredMessage="Endereço é Obrigatório"
+									value="#{memberBean.member.phisicalAddress}" required="true"
+									size="30" />
+								<label>Endereço*</label>
+							</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputMask id="MEMBER_CEP" requiredMessage="CEP é Obrigatório" required="true"
+							validatorMessage="Cep inválido." style="width:100%"
+							value="#{memberBean.member.zipCode}"
+							mask="99.999-999" maxlength="10" size="10"
+							converter="converterCpf" />
+						<label>CEP*</label>
+					</h:panelGroup>
+				</div>
+				
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputTextarea id="MEMBER_JUSTIFY" style="width:100%" requiredMessage="A justificativa é obrigatória." rendered="true" rows="3" cols="30" value="#{memberBean.member.justificativa}"  maxlength="2000"  />
+						<label>Justificativa de cadastro*</label>
+					</h:panelGroup>
+				</div>
+				<div style="font-size: 12px">
+					Todos os campos são obrigatórios*
+				</div>	
+				<f:facet name="footer">
+					<p:commandButton id="submitCadastroEx" value="Salvar"  process="@this #{memberBean.elementosProcessar}" action="#{memberBean.salvar('true')}" oncomplete="PF('documentDialogCad').hide()" type="submit" icon="fa fa-fw fa-save" validateClient="true" update="growl formCadastroUsuario" />
+				</f:facet>
+			</div>
+		</p:dialog>
+	</h:form>
+	
+	<div id="copyright">&#9400; 2017 PIX - QWCFP Cloud Computing</div>
+	
+	<script type="text/javascript">
+
+			var passou = true;
+	
+			function handleDialogSubmit(args, dialogShow, dialogHide) {
+		        if (!args.validationFailed &#38;&#38; passou) {
+		            PF(dialogShow).show();
+		            PF(dialogHide).hide();
+		        }
+
+		        passou = true;
+		    }
+
+			function showMsg(){
+				//PF('growlLdap').renderMessage({'summary':'Erro',  'detail':'Somente usuários com login na rede podem ser cadastrados',  'severity':'error'});
+				alert("Somente usuários com login na rede podem ser cadastrados");
+				passou = false;
+			}
+
+			
+		    
+
+	</script>
+</h:body>
+</html>

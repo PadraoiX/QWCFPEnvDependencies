@@ -1,0 +1,99 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	<h:outputScript library="script" name="charts_jqplot.js"/>
+	
+<style>
+	#filtro {
+		margin-bottom: 10px;
+	}
+	
+	.inputSize100{
+		width:100% !important;
+	}
+	.dialogoWidth40 {
+		width: 42% !important;
+	}
+	.dialogoWidth60 {
+		width: 60% !important;
+	}
+	
+	.alinharDireita {
+		float: right;
+	}
+	.fontLabel{
+	    top: -20px;
+	    font-size: 12px;
+	    color: #1976d2;
+	}
+	.sombra{
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	}
+	.parameterTable{
+		float: left;
+	}
+	
+		padding: 12px 16px;
+	}
+	
+	.tamanhoDialogOperation{
+		width: 50% !important;
+	}
+	
+	.borde{
+			width:800px;
+			height:600px;
+	}
+	
+</style>
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel">
+				<h1>Gráficos WebServices - QWCFP</h1>
+					
+			<p:panelGrid columns="3" styleClass="ui-panelgrid-blank form-group" style="width:15%">
+				<p:column>
+					<p:selectOneMenu value="#{bailarinaChart.selectedFilter}">
+						<f:ajax></f:ajax>
+						<f:selectItems value="#{bailarinaChart.filterList}" />
+					</p:selectOneMenu>				
+				</p:column>
+				<p:column >
+					<p:outputLabel for="date"  value="Data:" styleClass="fontLabel"/>				
+				</p:column>
+				<p:column>
+					<p:calendar id="date" pattern="dd/MM/yyyy" value="#{bailarinaChart.selectedDate}" size="10" locale="pt" converter="converteData"/>
+				</p:column>
+			</p:panelGrid>	
+			
+			<div align="center">
+				<p:chart  id="dbchart" type="pie" model="#{bailarinaChart.pieModel1}"  styleClass="borde" responsive="true" />
+				<p:poll id="chartPoll" interval="40"
+					listener="#{bailarinaChart.liveModelPutData()}"
+					update="formDIV:dbchart" />
+			</div>
+		</p:panel>
+		
+		
+
+		<!--  FIM De Adicionado pelo ANDERSON -->
+
+	<script type="text/javascript">
+		function handleDialogSubmit(args, dialogName) {
+			if (!args.validationFailed) {
+				PF(dialogName).hide();
+			}
+		}
+	</script>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

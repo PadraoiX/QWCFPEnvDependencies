@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14368976999470" configfile="/qwcfpView/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="562" id="pf14368977242491" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14368977242493 pf14388031314360 pf14423458329180" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="erro.xhtml" x="338" y="178" id="pf14368977242495" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14368977242493" path="/erro.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="562" id="pf14388031314461" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14388031314360" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="mobile.xhtml" x="338" y="946" id="pf14423458329181" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14423458329180" path="/mobile.xhtml"/>
+  <links id="pf14368977242493" target="pf14368977242495" source="pf14368977242491" outcome="erroPage"/>
+  <links id="pf14388031314360" target="pf14388031314461" source="pf14368977242491" outcome="loginPage"/>
+  <links id="pf14423458329180" target="pf14423458329181" source="pf14368977242491" outcome="loginPageMobile"/>
+</pageflow:Pageflow>

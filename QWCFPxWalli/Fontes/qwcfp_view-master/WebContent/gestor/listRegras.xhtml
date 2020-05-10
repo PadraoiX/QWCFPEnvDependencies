@@ -1,0 +1,160 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+		<link href="/QWCFPBETA/resources/primefaces-extensions/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="/QWCFPBETA/resources/primefaces-extensions/codemirror/lib/codemirror.js" />
+		
+		<style>
+			#gridregra_content {
+				border: 3px solid #fff;
+			}
+			.md-inputfield{
+				height: 20px;
+			}
+			
+.altura10 {
+	height: 10px !important;
+}
+
+.altura20 {
+	height: 20px !important;
+}
+
+.altura30 {
+	height: 30px !important;
+}
+
+.altura40 {
+	height: 40px !important;
+}
+
+.altura50 {
+	height: 50px !important;
+}
+
+		#filtro{
+			margin-bottom: 10px;
+		}
+	</style>
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel"  > 
+				<h1>Regras e Filtros - QWCFP</h1>
+				
+					<p:columnToggler datasource="listRegras" trigger="toggler" />
+				<div id="filtro" align="right">
+					<p:commandButton id="toggler" type="button" value="Colunas"	icon="fa fa-fw fa-columns" />
+					
+					<p:menuButton id="opcoes" disabled="#{rulesBean.disable}" value="Opções" > 
+						<p:menuitem  oncomplete="PF('ruleEditDialog').show()" value="Editar Regra" update=":formDIV:ruleEditPanel, :formDIV:ruleEditDialogId" icon="fa fa-fw fa-edit" title="Editar Regra" process="@this listRegras">
+							<p:resetInput target="ruleEditDialogId"></p:resetInput>
+						</p:menuitem>
+					</p:menuButton>
+				</div>
+
+		<p:dataTable id="listRegras" var="rule" resizableColumns="true" selectionMode="single"    	rowKey="#{rule.ruleID}"  		selection="#{rulesBean.rule}"	
+			value="#{rulesBean.rules}" rows="10" paginator="true" paginatorPosition="bottom" rowsPerPageTemplate="5,10,15,20,25,50,100"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Regras)" emptyMessage="Não há regras cadastradas!">
+			
+			<p:ajax event="rowSelect" oncomplete="#{rulesBean.setDisable('false')}" update=":formDIV:opcoes" />
+
+			<p:column headerText="Nome" sortBy="#{rule.name}">
+				<h:outputText value="#{rule.name}" style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Descrição" sortBy="#{rule.description}">
+				<h:outputText value="#{rule.description}"
+					style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Status">
+				<h:outputText value="#{rulesBean.getRuleDomain(rule.status)}"
+					style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Condição" sortBy="#{rule.condition}">
+				<h:outputText value="#{rulesBean.getRuleDomain(rule.condition)}"
+					style="font-weight: normal;" />
+			</p:column>
+		</p:dataTable>
+		
+			<p:contextMenu for="listRegras" id="ctxMenuListRuleId" widgetVar="ctxMenuListRule">
+				<p:menuitem  oncomplete="PF('ruleEditDialog').show()" value="Editar Regra"
+					update=":formDIV:ruleEditPanel, :formDIV:ruleEditDialogId" icon="fa fa-fw fa-edit"
+					title="Editar Regra" process="@this listRegras">
+						<p:resetInput target="ruleEditDialogId"></p:resetInput>
+					</p:menuitem>
+			</p:contextMenu>
+		
+		
+		</p:panel>
+		<p:dialog id="ruleEditDialogId" header="Editar Regra\Filtros - QWCFP" widgetVar="ruleEditDialog"  modal="false" styleClass="sembordas"
+			showEffect="fade" hideEffect="fade" width="70%"  resizable="false" closeOnEscape="true">
+			<p:outputPanel id="ruleEditPanel" style="padding: 20px;" styleClass="card card-w-title ">
+			
+				<h:inputHidden value="#{rulesBean.rule.ruleID}"	style="font-weight: normal;" />
+				<h:panelGrid columns="1" layout="grid" style="width: 100%;height: 100%;" styleClass="ui-panelgrid-blank form-group" id="gridregra">
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText  style="width: 70%;" id="rulename" value="#{rulesBean.rule.name}" maxlength="50" required="true" requiredMessage="O nome da regra é obrigatório" />
+						<label>Nome da Regra</label>										
+					</h:panelGroup>
+					<div class="altura20"></div>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText style="width: 70%;" id="ruleparmtype" value="#{rulesBean.rule.jsonStringParm}" maxlength="3000" required="true" requiredMessage="Os parâmetros JSON da regra são obrigatórios" validator="validateJsonPars"/>
+						<label>Parâmetros da regra (Json)</label>
+					</h:panelGroup>		
+								
+					<div class="altura10"></div>
+					
+					<p:selectOneMenu id="rulecondition" style="width:70%;" value="#{rulesBean.rule.condition}" required="true" requiredMessage="A condição da regra é obrigatória">
+						<f:selectItem   itemLabel="Escolha uma condição" />
+						<f:selectItems value="#{rulesBean.getDomainList(1)}" var="rule" itemValue="#{rule.id}" itemLabel="#{rule.abbreveation}" />
+					</p:selectOneMenu>					
+					
+					<div class="altura10"></div>
+					
+					<p:selectOneMenu id="rulestatus" style="width:70%;" value="#{rulesBean.rule.status}" required="true" requiredMessage="O status da regra é obrigatório" >
+						<f:selectItem   itemLabel="Escolha um status" />
+						<f:selectItems value="#{rulesBean.getDomainList(0)}" var="rule" itemValue="#{rule.id}" itemLabel="#{rule.abbreveation}" />
+					</p:selectOneMenu>					
+
+					<pe:codeMirror  id="codeMirror" mode="text/x-java" theme="eclipse" value="#{rulesBean.rule.sourceRuleJexl}" lineNumbers="true" required="true"  /> 
+					
+					<!-- <p:inputTextarea id="rulesource"  placeholder="Código da regra" value="#{rulesBean.rule.sourceRuleJexl}" required="true" />  -->
+				
+					<div class="altura20"></div>
+					<p:inputTextarea id="ruledesc" requiredMessage="A descrição da regra é obrigatória" maxlength="2000" rows="1" style="width: 70%;" placeholder="Descrição da regra" required="true" value="#{rulesBean.rule.description}" />
+				</h:panelGrid>
+				
+			</p:outputPanel>
+			
+			<div class="altura20"></div>
+			
+			<p:commandButton value="Salvar" icon="fa fa-fw fa-save" actionListener="#{rulesBean.editar()}" update=":formDIV:listRegras,:formDIV:msgs,:formDIV:ruleEditPanel"
+				oncomplete="if (args &amp;&amp; !args.validationFailed) PF('ruleEditDialog').hide())" process="@this ruleEditDialogId"/>
+			<p:spacer width="20" />
+			
+			<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('ruleEditDialog').hide()" />
+			<div class="altura20"></div>
+			
+		</p:dialog>
+		
+		<script type="text/javascript">
+		    function handleDialogSubmit(args, dialogName) {
+		        if (!args.validationFailed) {
+		            PF(dialogName).hide();
+		        }
+		    }
+		</script>
+	</ui:define>
+</ui:composition>
+</HTML>

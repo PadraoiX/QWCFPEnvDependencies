@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:pm="http://primefaces.org/mobile">
+     <f:view renderKitId="PRIMEFACES_MOBILE" />
+    <h:head>
+		<title >QWCFP - Padrão iX  </title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+		
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />	
+    	<meta name="msapplication-TileColor" content="#ffffff" />
+		<meta name="theme-color" content="#ffffff" />
+		<meta name="msapplication-TileImage" content="resources/images/icon_qwcfp_144x144.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />  		
+		
+		<link href="resources/images/icon_qwcfp_16x16.png" rel="shortcut icon"/> 
+		<link href="resources/images/icon_qwcfp_16x16.png" rel="icon"/>
+		<link href="icons/icon_qwcfp_96x96.png" rel="icon"/>
+		
+		<link rel="icon" type="image/png" sizes="16x16" href="resources/images/icon_qwcfp_16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="resources/images/icon_qwcfp_32x32.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="resources/images/icon_qwcfp_57x57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="resources/images/icon_qwcfp_60x60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="resources/images/icon_qwcfp_72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="resources/images/icon_qwcfp_76x76.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="resources/images/icon_qwcfp_96x96.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="resources/images/icon_qwcfp_114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="resources/images/icon_qwcfp_120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="resources/images/icon_qwcfp_144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="resources/images/icon_qwcfp_152_152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="resources/images/icon_qwcfp_180x180.png" />
+		<link rel="icon" type="image/png" sizes="192x192"  href="resources/images/icon_qwcfp_192_192.png" />
+		<link rel="shortcut icon" type="image/png" href="resources/images/icon_qwcfp.png"/>
+	    
+		<h:outputStylesheet library="css" name="jquery-mobile.css"/>
+		<h:outputScript library="script" name="locale-primefaces.js"/>
+		<h:outputScript library="script" name="perfect-scrollbar.js"/>
+		<h:outputScript library="script" name="ajax.js"/>		
+	</h:head>
+
+	<style>
+		.ui-widget-header{
+			border: none;
+		}
+		
+		.notif{
+			right:2px;	
+			top:25px ;
+			background: #85b2cb -moz-linear-gradient(center top , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)) repeat scroll 0 0;
+			background: #85b2cb -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), to(rgba(255,255,255,0.4)));		
+			font-size:10px;
+			border-radius: 5px;
+			border: 1px solid #7096ab;
+			position:absolute;
+	    	color: #1c4257;
+	    	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+	    	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);    
+	    	padding: 1px 2px;	
+	    	width: 10px;	    		    	   	
+		}
+
+	</style>
+
+<h:body>
+	<h:form id="formDIV" enctype="multipart/form-data">
+	<p:poll interval="100" listener="#{notiBean.getQtdNotifies()}" update=":formDIV:txt_countMB" />
+		<p:layout fullPage="true">
+			<p:layoutUnit position="center" style="background-color: #EFF3F6; border: none" >			
+				<p:overlayPanel for="btn-basic"  widgetVar="pnl-basic" at="left" showEffect="overlay" >		
+					<p:commandButton value="LogOut" type="button" onclick="sair()" icon="ui-icon-power" />			
+									
+				</p:overlayPanel>
+			
+				<div class="topSistMobile" align="right" >				
+				    <p:commandLink  onclick="linkVoltarMobile()" id="home">
+			    		<h:graphicImage library="images" name="home.png"/>
+			    	</p:commandLink>
+			    	
+				    <p:spacer width="10px"/>
+				    
+					<p:commandLink  id="btn-basic"  type="button" >
+			    		<h:graphicImage library="images" name="menu.png"/>
+			    	</p:commandLink>
+			    	
+			    	 <p:spacer width="10px"/>   	
+			    	 
+			    	<p:commandLink  onclick="notificarmob()" id="notify">
+			    		<h:graphicImage library="images" name="notify.png"/>
+			    	</p:commandLink>
+			
+			    	
+			    		<p:outputLabel id="txt_countMB" value="#{notiBean.qtdNotifies}" style="font-size:10px;" styleClass="notif" /> 
+				</div>	
+				<div  class="nameSistem">
+			    	<p:graphicImage library="images" name="nameSistem.png" />
+				</div>
+					
+				<div  class="confIdentif" align="right">
+					<h:panelGrid columns="2" >	
+						<p:graphicImage library="images" name="icon_user.png"/>			
+						<h:outputText value="#{loginBean.member.memberName}" styleClass="logoBlueText" />
+					</h:panelGrid>		
+				</div>	    	
+				
+		
+				<div class="ContentSideSections Implementation" id="conteudo"  name="conteudo">
+					<ui:insert name="conteudo" id="conteudo" >Página Principal</ui:insert>
+				</div>
+
+		
+			</p:layoutUnit>			
+		</p:layout>
+		
+	</h:form>
+</h:body>
+</html>

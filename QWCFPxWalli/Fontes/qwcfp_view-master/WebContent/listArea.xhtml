@@ -1,0 +1,206 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	<style>
+		#filtro{
+			margin-bottom: 10px;
+		}
+		.dialogoWidth {
+			width: 20% !important;
+		}
+	</style>
+	
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		
+	<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+				<h1>Listar área - QWCFP</h1>
+	
+					<p:columnToggler datasource="editArea" trigger="toggler" />			
+					<div id="filtro" align="right">
+						<p:commandButton id="toggler" type="button" value="Colunas" icon="fa fa-fw fa-columns" styleClass="direitaAlinhar" />
+					
+						<p:menuButton id="opcoes" disabled="#{areasBean.disable}" value="Opções" styleClass="direitaAlinhar">
+							<p:menuitem value="Editar Área" update=":formDIV:carDialog" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit" title="Editar Área #{areasBean.area.nome}"
+							rendered="#{loginBean.isGi()}"  process="@this editArea"  >
+							</p:menuitem>
+							<p:menuitem value="Solicitar Privilégio"
+							action="#{areasBean.setarId(areasBean.area)}" update=":formDIV:carDialog"
+							disabled="#{areasBean.area.statusId == areasBean.areaInativa}"
+							oncomplete="PF('solicPriv').show()" icon="fa fa-fw fa-plus-square-o"
+							title="Solicitar Privilégio" process="@this editArea">
+							</p:menuitem>
+							<p:menuitem action="#{areasBean.verMembros(areasBean.area)}"
+							icon="fa fa-fw fa-users" title="Ver Membros" value="Ver Membros"
+							process="@this" />
+							<p:menuitem action="#{areasBean.ativarArea(areasBean.area)}" id="ativaArea"
+							update=":formDIV:editArea, :formDIV:msgs,  :formDIV:inativaArea"
+							rendered="#{(areasBean.area.statusId == areasBean.areaInativa) and loginBean.isGi()}"
+							icon="fa fa-fw fa-check" title="Ativar Área" value="Ativar Área"
+							process="@this editArea" />
+							<p:menuitem action="#{areasBean.inativarArea(areasBean.area)}"
+							update=":formDIV:editArea, :formDIV:msgs, :formDIV:ativaArea" id="inativaArea"
+							rendered="#{areasBean.area.statusId == areasBean.areaAtiva and loginBean.isGi()}"
+							icon="fa fa-fw fa-remove" title="Inativar Área"
+							value="Inativar Área" process="@this editArea" />
+						</p:menuButton>
+					</div>
+
+
+		<p:dataTable resizableColumns="true" id="editArea" border="1"
+			cellspacing="0" cellpadding="2" var="car" value="#{areasBean.areas}"
+			rows="10" rowsPerPageTemplate="10,15,20,25,50,100"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Áreas)"
+			paginatorPosition="bottom" paginator="true"
+			rendered="#{!loginBean.isInvited()}" rowIndexVar="rowId"
+			widgetVar="datatable" selection="#{areasBean.area}"
+			rowKey="#{car.areaId}" selectionMode="single" styleClass="borderless"
+			emptyMessage="Não há áreas cadastradas">
+
+			<p:ajax event="rowSelect"
+				oncomplete="#{areasBean.setDisable('false')}"
+				update=":formDIV:opcoes" />
+
+			<p:ajax event="contextMenu" update=":formDIV:ctxMenuListAreaId"
+				oncomplete="PF('ctxMenuListArea').show(currentEvent);"></p:ajax>
+ 
+			<p:column headerText="Nome da Área" filterBy="#{car.nome}" style="font-weight: bold">
+				<h:outputText value="#{car.nome}" style="font-weight: normal" />
+			</p:column>
+
+			<p:column headerText="Sigla" style="font-weight: bold">
+				<h:outputText value="#{car.apelido}" style="font-weight: normal" />
+			</p:column>
+
+			<p:column headerText="Gerente da Área" style="font-weight: bold">
+				<h:outputText value="#{car.managerName}" style="font-weight: normal" />
+			</p:column>
+
+			<p:column headerText="Status" style="font-weight: bold">
+				<h:outputText value="#{car.statusId}" converter="#{converterDomain}"
+					style="font-weight: normal" />
+			</p:column>
+
+		</p:dataTable>
+		
+		
+		<p:contextMenu for="editArea" id="ctxMenuListAreaId"
+			widgetVar="ctxMenuListArea">
+			<p:menuitem value="Editar Área" update=":formDIV:carDialog"
+				oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit"
+				title="Editar Área #{areasBean.area.nome}"
+				rendered="#{loginBean.isGi()}"  process="@this editArea"  >
+			</p:menuitem>
+			<p:menuitem value="Solicitar Privilégio"
+				action="#{areasBean.setarId(areasBean.area)}" update=":formDIV:carDialog"
+				disabled="#{areasBean.area.statusId == areasBean.areaInativa}"
+				oncomplete="PF('solicPriv').show()" icon="fa fa-fw fa-plus-square-o"
+				title="Solicitar Privilégio" process="@this editArea">
+			</p:menuitem>
+			<p:menuitem action="#{areasBean.verMembros(areasBean.area)}"
+				icon="fa fa-fw fa-users" title="Ver Membros" value="Ver Membros"
+				process="@this" />
+			<p:menuitem action="#{areasBean.ativarArea(areasBean.area)}"
+				update=":formDIV:editArea, :formDIV:msgs"
+				rendered="#{(areasBean.area.statusId == areasBean.areaInativa) and loginBean.isGi()}"
+				icon="fa fa-fw fa-check" title="Ativar Área" value="Ativar Área"
+				process="@this editArea" />
+			<p:menuitem action="#{areasBean.inativarArea(areasBean.area)}"
+				update=":formDIV:editArea, :formDIV:msgs"
+				rendered="#{areasBean.area.statusId == areasBean.areaAtiva and loginBean.isGi()}"
+				icon="fa fa-fw fa-remove" title="Inativar Área"
+				value="Inativar Área" process="@this editArea" />
+		</p:contextMenu>
+		
+	</p:panel>
+		
+		<p:dialog header="Editar Área - QWCFP" styleClass="dialogoWidth"  id="carDialog" widgetVar="carDialog" resizable="false" draggable="false" responsive="true"  >
+			<h:inputHidden value="#{areasBean.area.areaId}" style="font-weight: normal;" />
+			<h:inputHidden value="#{areasBean.area.areaId}" style="font-weight: normal;" />
+			<h:inputHidden value="#{areasBean.area.statusId}" style="font-weight: normal;" />
+			<h:inputHidden value="#{areasBean.area.statusId}" style="font-weight: normal;" />
+		
+			<div class="ui-g form-group" >
+				<div class="ui-g-12">
+					<p:selectOneMenu id="AREA_SUBORDINATED" value="#{areasBean.area.subordinatedAreaId}" required="false" style="width:100%" effect="fade">
+						<f:selectItem itemLabel="Área Subordinada" />
+						<f:selectItems value="#{areasBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+					</p:selectOneMenu>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{areasBean.area.nome}" size="30" maxlength="50" required="true" requiredMessage="O nome da Área é obrigatório"/>
+						<label>Nome da área</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{areasBean.area.apelido}" size="30" required="true" maxlength="20" requiredMessage="A sigla da área é obrigatória" />
+						<label>Sigla</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText value="#{areasBean.area.managerName}" required="true"  maxlength="100" requiredMessage="O nome do gestor é obrigatório." size="30" />
+						<label>Nome do Gestor:</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+					 	<p:inputText  converter="converterFone"   value="#{areasBean.area.phoneManager}" size="30" maxlength="13" validatorMessage="O telefone informado é inválido." validator="validatePhone" /> 
+						<label>Telefone do gestor</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="AREA_EMAIL_MANAGER_EDIT" size="30" maxlength="128" validatorMessage="O e-mail informado é inválido." value="#{areasBean.area.emailManager}">
+							<f:validator validatorId="validateEmail" for="AREA_EMAIL_MANAGER_EDIT" />
+							<p:ajax event="change" update="AREA_EMAIL_MANAGER_EDIT,:formDIV:msgs" />
+						</p:inputText>
+						<label>E-mail do gestor</label>
+					</h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					<p:inputTextarea value="#{areasBean.area.description}" cols="32" placeholder="Descrição" maxlength="2000"/>
+				</div>
+			</div>
+
+			<f:facet name="footer">
+				<p:commandButton value="salvar" icon="fa fa-fw fa-save" action="#{areasBean.editar()}" process="carDialog" update=":formDIV:editArea, :formDIV:msgs, :formDIV:carDialog"
+				oncomplete="if (args &amp;&amp; !args.validationFailed) PF('carDialog').hide()" />
+			</f:facet>
+		</p:dialog>
+
+
+		
+		<p:dialog header="Solicitar Privilégios #{areasBean.area.nome} " widgetVar="solicPriv" resizable="false" draggable="false" responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<p:outputLabel for="privilegios" value="Escolha os privilégios: " />
+					<br/>
+					<p:selectManyCheckbox id="privilegios" value="#{notiBean.privSelectSol}"  layout="responsive" columns="2" styleClass="form-group" required="true" requiredMessage="Escolha pelo menos um privilégio"   >
+						<f:selectItems value="#{notiBean.domainPrivSolArea}" var="dom"	itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+					</p:selectManyCheckbox>
+				</div>
+				<div class="ui-g-12">
+					<p:inputTextarea id="justificativaPriv" style="width:100%"  placeholder="Justificativa" value="#{notiBean.justificativa}"  required="true" requiredMessage="A justificativa é um campo obrigatório" />
+				</div>
+			</div>
+
+			<f:facet name="footer">
+				<p:commandButton value="Solicitar" type="submit" style="width:auto"  icon="fa fa-fw fa-bullhorn" actionListener="#{notiBean.solicitarPrivilegioArea()}" update=":formDIV:msgs"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('solicPriv').hide()" />
+			</f:facet>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

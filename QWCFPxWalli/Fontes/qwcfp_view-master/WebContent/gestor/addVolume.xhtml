@@ -1,0 +1,59 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<style>
+			.ui-widget-content{
+		 		border: none !important;
+			}
+		</style>
+		
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+			<h1>Cadastrar Novo Volume</h1>
+			
+			<p:panelGrid columns="1" layout="grid" >
+				<p:selectOneMenu id="STATUS_VOLUME_ADD" value="#{volumeBean.volume.status}" required="true" requiredMessage="O status do volume é obrigatório"   effect="fade">
+					<f:selectItem itemLabel="Indicador da situação do volume" />
+					<f:selectItems value="#{volumeBean.statusList}" var="status" itemValue="#{status.id}" itemLabel="#{status.description}" />
+				</p:selectOneMenu>
+				
+				<div style="height: 10px !important;"></div>
+				
+						<h:panelGrid columns="2" >
+							<h:panelGroup styleClass="md-inputfield">
+								<p:spinner max="999999" id="VOLUME_SIZE_IN_BYTES"  min="0"  
+									value="#{volumeBean.volume.sizeInBytes}" required="true"  requiredMessage="O tamanho do volume é obrigatório"
+									  style="width:100%" />
+								<label>Tamanho do volume</label>
+							</h:panelGroup>
+
+							<p:selectOneMenu id="ADD_VOLUME_SIZE_EXP" style="margin-top: 2px;"
+								value="#{volumeBean.sizeVol}">
+								<f:selectItem itemLabel="KB" itemValue="1024" />
+								<f:selectItem itemLabel="MB" itemValue="1048576" />
+								<f:selectItem itemLabel="GB" itemValue="1073741824" />
+								<f:selectItem itemLabel="TB" itemValue="1099511627776" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						
+						<div style="height: 10px !important;"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="VOLUME_ROOT_FULL_PATH_VOL" 
+							value="#{volumeBean.volume.rootFullPathVol}" required="true" maxlength="1024" requiredMessage="O caminho do volume é obrigatório"
+							  />
+						<label>Caminho absoluto da raiz do volume</label>
+					</h:panelGroup>
+				<p:commandButton value="Salvar" action="#{volumeBean.salvar}" update="msgs" icon="fa fa-fw fa-save" style="display:block; margin:5px 0px" />
+			</p:panelGrid>		
+			
+		</p:panel>	
+		<div class="EmptyBox30"></div>
+        * Campo de preenchimento obrigatório
+    </ui:define>
+</ui:composition>
+</html>

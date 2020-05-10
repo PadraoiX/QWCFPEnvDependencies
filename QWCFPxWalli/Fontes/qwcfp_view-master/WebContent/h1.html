@@ -1,0 +1,47 @@
+<html>
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#button1").click(function(){
+		if($("#button2").is(":visible")){
+			// Pesquisa em arquivos
+			$("#button2").fadeOut();
+				/* $("#barra-grupos").fadeOut(); */
+		}else{
+			$("#button2").fadeIn();
+			if(!$("#barra-grupos").is(":visible")){
+				$("#barra-grupos").css({display: 'block'});
+			}
+			
+		}
+	});
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("#bt01").click(function(){
+        /* $("p").css({"background-color": "yellow", "font-size": "200%"}); */
+    	$("p").css({"display":"none"}); 
+        
+    });
+});
+
+$(document).ready(function(){
+    $("#bt02").click(function(){
+        $("p").css({"display":""});
+    });
+});
+</script>
+
+</head>
+<body>
+<p style="background-color:#ff0000">This is a paragraph.</p>
+
+<button id="bt01">agora vai</button>
+<button id="bt02">agora nao vai</button>
+
+<input id="barra-grupos" />
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrupoGraficoTam" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac748f29-1ca4-486b-afaa-d53a773f67e4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="group" class="java.lang.String">
+		<fieldDescription><![CDATA[group]]></fieldDescription>
+	</field>
+	<field name="sizeInKb" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[sizeInKb]]></fieldDescription>
+	</field>
+	<field name="codigo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[codigo]]></fieldDescription>
+	</field>
+	<background>
+		<band height="550">
+			<pie3DChart>
+				<chart evaluationTime="Page" renderType="draw" theme="default">
+					<reportElement x="0" y="70" width="752" height="480" uuid="6bec3251-f594-49dc-aad2-b209db04e825"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{codigo}]]></keyExpression>
+					<valueExpression><![CDATA[$F{sizeInKb}]]></valueExpression>
+					<labelExpression><![CDATA[$F{group}]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot backgroundAlpha="0.5" foregroundAlpha="0.8">
+						<seriesColor seriesOrder="0" color="#00FFFF"/>
+						<seriesColor seriesOrder="1" color="#00CCFF"/>
+						<seriesColor seriesOrder="2" color="#0099FF"/>
+						<seriesColor seriesOrder="3" color="#0066FF"/>
+						<seriesColor seriesOrder="4" color="#0033FF"/>
+						<seriesColor seriesOrder="5" color="#3300FF"/>
+						<seriesColor seriesOrder="6" color="#9900FF"/>
+					</plot>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</background>
+	<title>
+		<band height="98">
+			<frame>
+				<reportElement mode="Opaque" x="224" y="0" width="528" height="65" forecolor="#006699" backcolor="#006699" uuid="9053dbda-476d-46e3-99b9-69a460d57aee"/>
+			</frame>
+			<staticText>
+				<reportElement x="224" y="0" width="528" height="65" forecolor="#FFFFFF" uuid="312d10a5-bed1-4fa1-8dd5-30d2a37d80e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="26" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Relatório - Tamanho do Espaço por Grupo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="50">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="34" width="752" height="16" forecolor="#D0B48E" backcolor="#006699" uuid="652b8f2b-38ff-4b86-b97d-85ace8ff3407"/>
+				<textField evaluationTime="Report">
+					<reportElement x="710" y="0" width="40" height="16" forecolor="#FFFFFF" uuid="48a538db-2c51-46b5-ab7e-3e67ca674b17"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="622" y="0" width="80" height="16" forecolor="#FFFFFF" uuid="3a79a84b-2a42-4194-815d-ddd6d1ba79c6"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="2" y="0" width="197" height="16" forecolor="#FFFFFF" uuid="5e9f012a-841f-4aaa-83c4-f6d82536e405"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

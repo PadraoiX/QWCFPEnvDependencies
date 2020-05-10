@@ -1,0 +1,197 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template3.xhtml">
+	<ui:define name="conteudo">
+		<p:growl id="messages" life="#{loginBean.messageTime}" showDetail="true" />	
+		
+		<p:toolbar styleClass="menuPainel" >
+					    <f:facet name="left">
+					        <p:commandButton 
+								type="submit" 
+								onclick="PF('uploadFile').show();" 
+								icon="ui-icon-arrow-u" 
+								value="Upload"
+								action="#{groupBean.setarId(car, true)}">
+								<f:setPropertyActionListener value="#{car}" target="#{groupBean.myGroup}" />
+							</p:commandButton>						
+					        
+					    </f:facet>					 
+					    <f:facet name="right">
+					    	<p:commandButton type="button"  onclick="PF('configGrupo').show();"  icon="ui-icon-gear" value="Settings" styleClass="direitaAlinhar" >
+								<f:setPropertyActionListener target="#{groupBean.myGroup}" value="#{car}"/>
+							</p:commandButton>						
+					    </f:facet>
+					</p:toolbar>
+
+		<h3>Arquivos do grupo - QWCFP</h3>
+
+
+		<p:dataTable id="downloadFile" var="car" value="#{fileBean.fileList}"
+			selection="#{fileDownload.selectedFileList}" rowKey="#{car.fileid}"
+			selectionMode="multiple" resizableColumns="true" paginator="true"
+			paginatorPosition="bottom" rowsPerPageTemplate="5,10,15" rows="10"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} arquivos)"
+			emptyMessage="Não há arquivos neste grupo!">
+
+			<p:column headerText="Nome do Arquivo" style="font-weight: bold">
+				<h:outputText value="#{fileBean.nome(car.fileName.toUpperCase())}"
+					style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Tamanho" style="font-weight: bold;  width:70px">
+				<h:outputText value="#{fileBean.sizeInByte(car.fileid)}"
+					style="font-weight: normal;" />
+			</p:column>
+
+			<p:column style=" width:25px">
+				<p:commandButton ajax="false" icon="ui-icon-arrow-d">
+					<p:fileDownload value="#{fileDownload.getInputStream(car)}" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+
+		<p:dialog header="Remover Arquivo" widgetVar="remover" modal="false"
+			showEffect="fade" hideEffect="fade" resizable="true" width="400"
+			height="100" closeOnEscape="true">
+			<p:outputPanel id="remover" style="text-align:center;">
+				<ui:repeat value="#{groupBean.myGroup}" var="car">
+					<h:outputText value="#{car.groupId} - #{car.nome}"
+						style="display:block" />
+				</ui:repeat>
+				<h2>Confirma a exclusão do arquivos?</h2>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar" oncomplete="PF('remover').hide()"
+					icon="ui-icon-cancel" />
+				<p:spacer width="10" />
+				<p:commandButton value="Excluir" oncomplete="PF('remover').hide()"
+					icon="ui-icon-closethick" update="messages" />
+			</div>
+		</p:dialog>
+
+		<p:dialog header="Gerenciar Versões" widgetVar="gversoes"
+			modal="false" showEffect="fade" hideEffect="fade" resizable="false"
+			width="400" height="100" closeOnEscape="true">
+			<p:outputPanel id="gversoes" style="text-align:center;">
+				<ui:repeat value="#{groupBean.myGroup}" var="car">
+					<h:outputText value="#{car.groupId} - #{car.nome}"
+						style="display:block" />
+				</ui:repeat>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar" oncomplete="PF('gversoes').hide()"
+					icon="ui-icon-cancel" update="messages" />
+			</div>
+		</p:dialog>
+
+		<p:dialog header="Mover Arquivo" widgetVar="moveFile" modal="false"
+			showEffect="fade" hideEffect="fade" resizable="true" width="400"
+			height="300" closeOnEscape="true">
+			<p:outputPanel id="sharedFile" style="text-align:center;">
+				<h:panelGrid columns="2" cellpadding="4" columnClasses="label,value">
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Nome do arquivo:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Tamanho:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Versão:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Status:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Usuário criador:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Informação adicional:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Grupo de destino:" />
+					<p:inputTextarea value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Condição:" />
+					<p:selectOneRadio>
+						<f:selectItem itemLabel="Versionaro" itemValue="1" />
+						<f:selectItem itemLabel="Atualizar" itemValue="2" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar" oncomplete="PF('moveFile').hide()"
+					icon="ui-icon-cancel" update="messages" />
+				<p:spacer width="10" />
+				<p:commandButton value="Mover" oncomplete="PF('moveFile').hide()"
+					icon="ui-icon-arrowthickstop-1-e" update="messages" />
+			</div>
+		</p:dialog>
+
+		<p:dialog header="Compartilhar Arquivo" widgetVar="sharedFile"
+			modal="false" showEffect="fade" hideEffect="fade" resizable="true"
+			width="400" height="250" closeOnEscape="true">
+			<p:outputPanel id="moveFile" style="text-align:center;">
+				<h:panelGrid columns="2" cellpadding="4" columnClasses="label,value">
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Nome do arquivo:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Tamanho:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Versão:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Status:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Usuário criador:" />
+					<p:outputLabel value="teste teste" styleClass="esquerdaAlinhar" />
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Membro de destino:" />
+					<p:selectOneMenu id="membro" value="#{memberBean.member.bossIdFk}"
+						panelStyle="width:180px" styleClass="esquerdaAlinhar"
+						requiredMessage="Selecione um usuário!.">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{memberBean.members}" var="member"
+							itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel style="font-weight: bold;"
+						styleClass="esquerdaAlinhar" value="Quantidade de dias:" />
+					<p:inputText styleClass="esquerdaAlinhar" />
+
+				</h:panelGrid>
+			</p:outputPanel>
+			<div style="position: absolute; bottom: 10px; width: 95%;">
+				<p:commandButton value="Cancelar"
+					oncomplete="PF('sharedFile').hide()" icon="ui-icon-cancel"
+					update="messages" />
+				<p:spacer width="10" />
+				<p:commandButton value="Compartilhar"
+					oncomplete="PF('sharedFile').hide()"
+					icon="ui-icon-transferthick-e-w" update="messages" />
+			</div>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</HTML>

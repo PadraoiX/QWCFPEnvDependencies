@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QW2SG_SERVCES_CATALOG>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 0</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 0, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 1</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 1, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 2</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 2, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 3</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 3, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 4</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 4, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 5</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 5, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 6</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 6, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 7</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 7, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 8</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 8, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 9</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 9, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 10</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 10, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 11</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 11, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 12</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 12, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 13</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 13, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 14</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 14, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 15</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 15, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 16</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 16, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 17</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 17, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 18</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 18, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+   <WService>
+      <idService>3973e022e93220f9212c18d0d0c543ae7c309e46640da93a4a0314de999f5112</idService>
+      <name>CAIXAWS - FISES Nó 19</name>
+      <UserPrivs class="java.util.ArrayList"/>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nó 19, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <Version>1.1</Version>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WService>
+</QW2SG_SERVCES_CATALOG>

@@ -1,0 +1,123 @@
+.ui-layout-pane {
+	padding: 0;
+	overflow: hidden
+}
+
+.ui-layout-north, .ui-layout-south, .ui-layout-west, .ui-layout-east,
+	.ui-layout-center {
+	display: none
+}
+
+.ui-layout-resizer-west-dragging, .ui-layout-resizer-west-open-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-w.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-y center
+}
+
+.ui-layout-resizer-west-closed-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-e.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-y center
+}
+
+.ui-layout-toggler-west-open {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-lt.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll left center transparent
+}
+
+.ui-layout-toggler-west-closed {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-rt.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll right center transparent
+}
+
+.ui-layout-resizer-east-dragging, .ui-layout-resizer-east-open-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-e.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-y center
+}
+
+.ui-layout-resizer-east-closed-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-w.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-y center
+}
+
+.ui-layout-toggler-east-open {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-rt.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll right center transparent
+}
+
+.ui-layout-toggler-east-closed {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-lt.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll left center transparent
+}
+
+.ui-layout-resizer-north-dragging, .ui-layout-resizer-north-open-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-n.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-x center
+}
+
+.ui-layout-resizer-north-closed-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-s.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-x center
+}
+
+.ui-layout-toggler-north-open {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-up.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll top center transparent
+}
+
+.ui-layout-toggler-north-closed {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-dn.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll bottom center transparent
+}
+
+.ui-layout-resizer-south-dragging, .ui-layout-resizer-south-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-s.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-x center
+}
+
+.ui-layout-resizer-south-closed-hover {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/resizable-n.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		repeat-x center
+}
+
+.ui-layout-toggler-south-open {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-dn.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll bottom center transparent
+}
+
+.ui-layout-toggler-south-closed {
+	background:
+		url("/showcase-ext/javax.faces.resource/layout/toggle-up.gif.jsf?ln=primefaces-extensions&v=3.0.0")
+		no-repeat scroll top center transparent
+}
+
+.ui-layout-resizer-dragging-limit {
+	border: 1px solid #e27d7d
+}
+
+.pe-layout-pane-withsubpanes {
+	border: 0
+}
+
+.pe-layout-pane-header {
+	padding: 4px 1em;
+	border-width: 0 0 1px
+}
+
+.pe-layout-pane-content {
+	padding: 6px;
+	overflow: auto
+}

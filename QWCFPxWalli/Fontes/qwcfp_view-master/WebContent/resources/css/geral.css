@@ -1,0 +1,138 @@
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	font-family: "lucida sans", verdana, arial, helvetica, sans-serif;
+	font-size: 75%;
+}
+
+h1 {
+	font-size: 1.0em;
+	padding: 10px 10px 0;
+}
+
+p {
+	padding: 0 10px 1em;
+}
+
+.ui-widget-conten {
+	background-color: #EFF3F6
+}
+
+* html #conteudo {
+	height: 100%;
+}
+
+#Documentacao {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	height: 5px;
+	left: 20px;
+	margin-left: auto;
+	margin-right: 5px;
+	margin-top: 20px;
+	position: absolute;
+	right: 5px;
+	width: 200px;
+	z-index: 9999;
+}
+
+#DivCad {
+	position: relative;
+	margin-left:
+}
+
+#DivCentro {
+	text-align: center;
+}
+
+.ui-panelgrid {
+	border: none!importa
+}
+
+#copyright{
+	text-align: center;
+	font-size: 0.9em;
+    color: #363636;
+    line-height: 1.3em;
+    padding-top: 5px;
+    clear: both;
+}
+/** Responsive **/
+/* MEDIA QUERIES *****************************************************************************************************************/
+@media screen and (min-width:320px) and (max-width: 700px) {
+	#conteudo {
+		background: url("../resources/images/nameSistem.png") no-repeat scroll right
+			bottom;
+		min-height: 98%;
+		width: 100%;
+		margin: 0 auto;
+		position: fixed;
+	}
+	.MarAuto {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.BordRad10 {
+		border-radius: 10px;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+	}
+	#dialog {
+		width: 300px !important;
+	}
+	#dialogSenha {
+		width: 300px !important;
+	}
+	.Apelido{
+		display: none;
+	}
+}
+
+/** Responsive **/
+/* MEDIA QUERIES *****************************************************************************************************************/
+@media screen and (min-width:701px) and (max-width: 2500px) {
+	#conteudo {
+		background: url("../resources/images/globo_datasus.png") no-repeat scroll right
+			bottom;
+		min-height: 98%;
+		width: 100%;
+		margin: 0 auto;
+	}
+	
+	.BordRad10 {
+		border-radius: 10px;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+	}
+	#dialog {
+		width: 350px !important;
+	}
+	#dialog {
+		font-size: 14px;
+	}
+	#dialog input[type="user"], 
+	#dialoginput[type="pass"] {
+		border: solid 1px #C0C5C7 !important;
+		padding: 10px !important;
+		box-shadow: none;
+		color: #00AEEF !important;
+		text-align: center;
+	}
+	#dialog {
+		margin-bottom: 20px;
+		overflow: hidden;
+		border: solid 1px #C0C5C7;
+	}
+	#dialogSenha {
+		width: 350px !important;
+	}
+	/* #dialogCad {
+		width: 550px !important;
+	} */
+}

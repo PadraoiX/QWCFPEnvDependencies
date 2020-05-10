@@ -1,0 +1,875 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+
+		<style>
+.iconarea {
+	background-image: url("/resources/images/iconAreaOn.png");
+}
+
+.ui-datatable tbody td.wrap {
+    white-space: normal;
+}
+#filtro{
+			margin-bottom: 10px;
+		}
+#filtros{
+	margin-bottom: 10px;
+}
+@media screen and (min-width:320px) and (max-width:700px){
+	.tabsMob{
+		width: 100% !important ;	
+	}
+}
+</style>
+	<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+
+		<h1>Notificações - QWCFP</h1>
+		<p:tabView id="tabViewdesk" dynamic="true" cache="false">
+		<p:ajax event="tabChange" listener="#{qtdeNotify.getQtdNotifies()}" update=":formDIV:tabViewdesk" />
+		
+		<p:tab title="Notificações Pessoais  (#{qtdeNotify.qtdNotifiesPessoais})" titleStyleClass="tabsMob">
+			<p:growl id="messages6" life="#{loginBean.messageTime}" showDetail="true" />
+				
+			<div id="filtro" align="right">
+			<h:panelGrid columns="2">
+				<p:commandButton icon="fa fa-trash-o fa-lg" id="removeBttn"   style="display: none" update=":formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:messages6" ajax="true" title="Apagar mensagens Selecionadas" oncomplete="updateNotiSuggestAreas() renderRemove()"  actionListener="#{listNotifyMemberBean.inativeNotify}" />
+				<p:commandButton icon="fa fa-trash-o fa-lg"     update=":formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:messages6" ajax="true"	title="Excluir Todas as Mensagens" value="Apagar Todas"  oncomplete="updateNoti()"  actionListener="#{listNotifyMemberBean.inativeAll()}" >
+					<p:confirm header="Confirmação" message="Tem certeza que deseja excluir todas as notificações?" icon="ui-icon-alert" />
+				</p:commandButton>
+			</h:panelGrid>
+			</div>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Sim" type="button"	styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"	styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+				<p:remoteCommand   id="updateNoti" name="updateNoti" actionListener="#{qtdeNotify.getQtdNotifies()}" process="@this" update=":formDIV:tabViewdesk, :formTopBar:qtdNotifiesGlobal"  />
+				<p:dataTable resizableColumns="true" id="listNP" border="1"
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{listNotifyMemberBean.notificationsLazy}"
+					rowsPerPageTemplate="10,50,100,500, 1000, 10000" 
+					emptyMessage="Não há nenhuma notificação"
+					selection="#{listNotifyMemberBean.selectedNotificacoes}"
+					rowKey="#{car.id}" lazy="true"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+					
+					 <p:ajax event="rowSelectCheckbox" update="formDIV:tabViewdesk:removeBttn" oncomplete="renderRemove(true)" process="formDIV:tabViewdesk:removeBttn"/>
+				 	 <p:ajax event="rowUnselectCheckbox" update="formDIV:tabViewdesk:removeBttn" oncomplete="renderRemove()"   process="formDIV:tabViewdesk:removeBttn" />
+				 	 <p:ajax event="rowSelect" update="formDIV:tabViewdesk:removeBttn" oncomplete="renderRemove(true)" process="formDIV:tabViewdesk:removeBttn" />
+				 	 <p:ajax event="rowUnselect" update="formDIV:tabViewdesk:removeBttn" oncomplete="renderRemove()"  process="formDIV:tabViewdesk:removeBttn" />
+					 <p:ajax event="toggleSelect" update="formDIV:tabViewdesk:removeBttn" oncomplete="renderRemoveToggle()" process="formDIV:tabViewdesk:removeBttn" /> 
+					
+					<p:column selectionMode="multiple" resizable="false" style="width:16px;text-align:center"/>
+
+					<p:column headerText="Data de Criação" style="width:150px" sortBy="#{car.creationDate}">
+						<h:outputText value="#{car.creationDate}" style="font-weight: normal" converter="converteDataHist" />
+					</p:column>
+					
+					<p:column headerText="Usuário" style="width:150px">
+						<h:outputText value="#{car.creatorMemberId}" converter="#{memberConverter}" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}" style="font-weight: normal" />
+					</p:column>
+					
+				</p:dataTable>
+					
+		</p:tab>
+
+		<p:tab title="Grupos Pendentes (#{qtdeNotify.qtdNotifiesGruposPendentes})" rendered="#{loginBean.isGi()}" titleStyleClass="tabsMob" id="tabGruposPendentes">
+				<p:growl id="messages" life="#{loginBean.messageTime}" showDetail="true" />
+				
+				
+				<p:contextMenu for="listGP" id="contextlistGPMenu" style="border: none;">
+					<p:menuitem oncomplete="PF('carDialog1').show()"  icon="fa fa-fw fa-edit" title="Ativar grupo"  value="Ativar Grupo" />
+					<p:menuitem oncomplete="PF('recusarGrupo').show()"  icon="fa fa-fw fa-remove" title="Recusar"  value="Recusar"/>
+				</p:contextMenu>
+						
+				<div id="filtro" align="right">
+					
+					<p:menuButton id="opcoes" value="Opções" styleClass="direitaAlinhar"  >
+						<p:menuitem oncomplete="PF('carDialog1').show()"  icon="fa fa-fw fa-edit" title="Ativar grupo"  value="Ativar Grupo" rendered="#{groupPendente.selectedGroups ne null}" />
+						<p:menuitem oncomplete="PF('recusarGrupo').show()"  icon="fa fa-fw fa-remove" title="Recusar"  value="Recusar"  rendered="#{groupPendente.selectedGroups ne null}"/>
+						<p:menuitem value="Selecione uma ou mais notificações na tabela" rendered="#{groupPendente.selectedGroups eq null}" />
+					</p:menuButton>
+				</div>		
+				
+				<label style="text-align: left"></label>
+				<p:dataTable id="listGP" var="car" reflow="true"
+					value="#{groupPendente.gruposPendentes}" rows="10" paginator="true"
+					selection="#{groupPendente.selectedGroups}"
+					rowKey="#{car.groupId}"
+					selectionMode="multiple"
+					emptyMessage="Não há Grupos Pendentes!"
+					rowsPerPageTemplate="10,15,20,25,50,100" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages})"
+					paginatorPosition="bottom">
+					
+					<p:ajax event="rowSelect" update="formDIV:tabViewdesk:opcoes" />
+					<p:ajax event="contextMenu" update="formDIV:tabViewdesk:opcoes" />
+					
+					<p:ajax event="rowSelectCheckbox" update="formDIV:tabViewdesk:opcoes" />
+					<p:ajax event="rowUnselectCheckbox" update="formDIV:tabViewdesk:opcoes" />
+					<p:ajax event="rowUnselect" update="formDIV:tabViewdesk:opcoes" />
+					<p:ajax event="toggleSelect" update="formDIV:tabViewdesk:opcoes" />
+
+					<p:column style="font-weight: bold" filterBy="#{car.nome}">
+						<h:outputText value="#{car.nome}" style="font-weight: normal" />
+					</p:column>
+					
+					<p:column style="font-weight: bold"  headerText="Dono">
+						<h:outputText value="#{car.managerGroup}" converter="#{memberConverter}" style="font-weight: normal" />
+					</p:column>
+					
+					<p:column headerText="Apelido" style="font-weight: bold;width:150px;">
+						<h:outputText value="#{car.apelido}" style="font-weight: normal" />
+					</p:column>
+
+					<p:column headerText="Descrição" style="font-weight: bold">
+						<h:outputText value="#{car.description}" style="font-weight: normal" />
+					</p:column>
+
+					<p:column headerText="Tamanho"  style="font-weight: bold;width:100px;">
+						<h:outputText id="tamanho" value="#{groupBean.convertByte(car.sizeInBytes)}"  style="font-weight: normal" />
+					</p:column>
+
+					<p:column headerText="Status" style="font-weight: bold;width:100px;">
+						<h:outputText value="#{groupBean.getStatus(car.status)}" style="font-weight: normal" />
+					</p:column>
+				</p:dataTable>
+				<pe:tooltip for="listGP"  value="Dica: Pressione (Shift ou Ctrl) + Click para selecionar várias notificações"  
+            mouseTracking="true" myPosition="top left" adjustX="10" adjustY="10" />  
+				
+				<p:dialog header="Recusar Grupo"
+					widgetVar="recusarGrupo" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="recusarGrupo">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para recusar o grupo" style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{groupPendente.justificativa}"  id="justificativa" counter="displayRecGR"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayRecGR" />
+						<br/>
+					</p:outputPanel>
+					<div class="altura20"></div>
+						<p:commandButton value="Recusar" icon="fa fa-fw fa-check-square-o"
+							type="submit" action="#{groupPendente.recursarGrupo()}" process="@this :formDIV:tabViewdesk:justificativa"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages,
+												:formDIV:tabViewdesk:justificativa"
+							oncomplete=" PF('recusarGrupo').hide(), updateNoti()" />
+							<p:spacer width="20"/>
+			  				<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('recusarGrupo').hide()"  />
+							<div class="altura20"></div>
+				</p:dialog>
+
+
+				<p:dialog header="Ativar grupo "
+					widgetVar="carDialog1" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="carDialog1">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para ativar o grupo"	style="font-weight: bold;" />
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{groupPendente.justificativa}" counter="display"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis."  style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="display" />
+						<br/>
+					</p:outputPanel>
+						<div class="altura20"></div>
+						<p:commandButton value="Ativar" icon="fa fa-fw fa-check-square-o"
+							type="submit" action="#{groupPendente.ativarGrupo()}" process="@this :formDIV:tabViewdesk:justificativa"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages,
+												:formDIV:tabViewdesk:justificativa"
+							oncomplete="PF('carDialog1').hide(),  updateNoti()"  />
+							<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('carDialog1').hide()"  />
+			  	<div class="altura20"></div>
+				</p:dialog>
+
+			</p:tab>
+
+		<p:tab title="Membros Pendentes (#{qtdeNotify.qtdNotifiesMembers})" id="tabMembrosPendentes" rendered="#{loginBean.isGi()}" titleStyleClass="tabsMob">
+					<p:growl id="messages1" life="#{loginBean.messageTime}" showDetail="true" />
+				<p:dataTable id="listUP" var="car"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Usuários)"
+					value="#{listMemberPendBean.memberPendente}"
+					paginatorPosition="bottom" rowsPerPageTemplate="10,15,20,25,50,100"  rows="10"
+					emptyMessage="Não há Membros Pendentes!"
+					paginator="true">
+
+					<p:column style="font-weight: bold;" filterBy="#{car.memberName}">
+						<h:outputText value="#{car.memberName}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Email" style="font-weight: bold" sortBy="">
+						<h:outputText value="#{car.memberEmail}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Justificativa" style="font-weight: bold">
+						<h:outputText value="#{car.justificativa}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Telefone"
+						style="font-weight: bold; width:150px">
+						<h:outputText value="#{car.numberPhone1}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Status"
+						style="font-weight: bold; width:100px">
+						<h:outputText value="#{car.statusMemberDomFk}"
+							converter="#{converterDomain}" style="font-weight: normal;" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center"	rendered="#{loginBean.isGi()}">
+						<!-- <p:commandButton icon="fa fa-fw fa-check-square-o"
+							action="#{listMemberPendBean.altStatus(true,car)}" title="Aceitar"
+							update=":formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:messages1" oncomplete="updateNoti()"/> -->
+						<p:commandButton oncomplete="PF('acceptMember').show()"  icon="fa fa-fw fa-check-square-o" title="Aceitar">
+							<f:setPropertyActionListener value="#{car}"	target="#{listMemberPendBean.member}" />
+						</p:commandButton>
+						<p:commandButton oncomplete="PF('recusarMember').show()"  icon="fa fa-fw fa-remove" title="Recusar">
+							<f:setPropertyActionListener value="#{car}"	target="#{listMemberPendBean.member}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				
+				<p:dialog header="Aceitar Membro"
+					widgetVar="acceptMember" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="acceptMember">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para aceitar o membro"	style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{listMemberPendBean.justificativa}"   counter="displayAceMem"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayAceMem" />
+						<br/>
+					</p:outputPanel>
+						<p:commandButton value="Aceitar" icon="fa fa-fw fa-check-square-o"  actionListener="#{listMemberPendBean.altStatus(true,listMemberPendBean.member)}"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages1"
+							onclick="PF('acceptMember').hide()"
+							oncomplete="updateNoti()"
+								 />
+					<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('acceptMember').hide()"  />
+				</p:dialog>	
+			
+				<p:dialog header="Recusar Membro"
+					widgetVar="recusarMember" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="recusarMember">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para recusar o membro"	style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{listMemberPendBean.justificativa}"   counter="displayRecMem"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayRecMem" />
+						<br/>
+					</p:outputPanel>
+						<p:commandButton value="Recusar" icon="fa fa-fw fa-check-square-o"
+							type="submit" action="#{listMemberPendBean.recusarMembro(listMemberPendBean.member)}"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages"
+							onclick="PF('recusarMember').hide()"
+							oncomplete="updateNoti()"
+								 />
+					<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('recusarMember').hide()"  />
+				</p:dialog>				
+			</p:tab>
+
+		<p:tab title="Arquivos" id="tabArquivos" rendered="#{loginBean.isGi()}" titleStyleClass="tabsMob">
+				<p:growl id="messages2" life="#{loginBean.messageTime}" showDetail="true" />
+				
+				<h3>Arquivos para Expurgo - QWCFP</h3>
+				
+				<h:panelGrid columns="1" cellpadding="2" width="100%">
+
+					<p:row>
+						<p:selectOneMenu id="filtro2" value="#{fileBean.operation}"	panelStyle="width:180px" effect="fade">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{fileBean.listFiltro}" var="fil"	itemLabel="#{fil}" itemValue="#{fil}" />
+							<p:ajax
+								update=":formDIV:tabViewdesk:listFile,:formDIV:tabViewdesk:messages2"
+								event="change" listener="#{fileBean.updateFilesPurgue()}"
+								process="@this" />
+						</p:selectOneMenu>
+						<p:spacer width="20" />
+						<h:panelGroup>
+							<p:outputLabel for="qtdeDias" value="Quantidade de dias: "  style="font-weight: bold" />
+							<p:spacer width="15" />
+							<h:inputText id="qtdeDias" value="#{fileBean.qtdeDias}" /><p:spacer width="15" />
+							<p:commandButton icon="fa fa-fw fa-chevron-right"	id="commandButtonAdiar"
+							action="#{fileBean.adiarDataValidadeGI( true )}"
+							update=":formDIV:tabViewdesk:listFile,:formDIV:tabViewdesk:messages2"
+							ajax="true" title="Adiar Data de Validade" />
+						</h:panelGroup>
+					</p:row>
+				</h:panelGrid>
+					
+					<div id="filtro" align="right">
+						<p:commandButton icon="fa fa-fw fa-check-square-o" rendered="#{(fileBean.operation) != 'Expurgados Autorizado'}"
+							id="commandButtonAutrorizo"
+							action="#{fileBean.autorizarExpurgo( true )}"
+							update="			:formDIV:tabViewdesk:listGP,
+										:formDIV:tabViewdesk:listUP,
+										:formDIV:tabViewdesk:listSA,  
+										:formDIV:tabViewdesk:listSG,
+										:formDIV:tabViewdesk:listSMG,
+										:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+										:formDIV:tabViewdesk:messages2,
+										:formDIV:tabViewdesk:listFile"
+							ajax="true" value="Autorizar Expurgo" />
+				</div>
+
+
+				<p:dataTable  id="listFile" var="car" value="#{fileBean.fileListLazy}" 
+				scrollRows="100" rows="100" liveScroll="true" 
+				scrollHeight="500" lazy="true" scrollable="true"  
+				selection="#{fileBean.selectedFiles}" rowKey="#{car.fileid}"
+				emptyMessage="Não há arquivos neste grupo!" >
+				
+					<p:column selectionMode="multiple" style="width:16px;text-align:center"  rendered="#{(fileBean.operation) != 'Expurgados Autorizado'}" />
+
+					<p:column headerText="Nome" style="font-weight: bold">
+						<h:outputText value="#{car.fileName.toUpperCase()}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Proprietário"
+						style="font-weight: bold;  width:150px">
+						<h:outputText value="#{car.ownerMemberName.toUpperCase()}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Data de Criação"
+						style="font-weight: bold;  width:120px">
+						<h:outputText value="#{car.creationDate}" converter="converteData"
+							style="font-weight: normal;" />
+					</p:column>
+
+				</p:dataTable>
+			</p:tab>
+
+
+			<p:tab title="Solicitações Áreas (#{qtdeNotify.qtdNotifiesAreas})" id="SolAreasTab" rendered="#{loginBean.isGi()}" titleStyleClass="tabsMob">
+			
+				<p:growl id="messages3" life="#{loginBean.messageTime}" showDetail="true" />
+				<p:dataTable resizableColumns="true" id="listSA" border="1"
+					emptyMessage="Não há solicitações pendentes."
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{notiAreaGIBean.notifiesArea}" rowsPerPageTemplate="10,15,20,25,50,100" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+
+					<p:column headerText="Data de Criação" style="width:150px">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteData" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:tabViewdesk:carDetail, :formDIV:tabViewdesk:messages3" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit" title="Escolher privilégios para atribuir">
+							<f:setPropertyActionListener value="#{car}" target="#{notiAreaGIBean.notification}" />
+						</p:commandButton>
+						<p:commandButton update=":formDIV:tabViewdesk:listSA, :formDIV:tabViewdesk:messages3" icon="fa fa-fw fa-remove"  oncomplete="PF('recusarArea').show()" title="Recusar" process="@this :formDIV:tabViewdesk:SolAreasTab">
+							<f:setPropertyActionListener value="#{car}" target="#{notiAreaGIBean.notification}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+
+				<p:dialog header="Autorizar privilégio - QWCFP"
+					widgetVar="carDialog" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+
+					<p:outputPanel id="carDetail" >
+						<h:panelGrid style="text-align: left;" columns="2" cellpadding="2"
+							rendered="#{not empty notiAreaGIBean.notification}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+							</f:facet>
+
+							<h:inputHidden value="#{notiAreaGIBean.notification.creatorMemberId}"	style="font-weight: normal;" />
+							<h:inputHidden value="#{notiAreaGIBean.notification.areaScopeId}"	style="font-weight: normal;" />
+
+							<p:outputLabel for="privilegios" value="Privilégios: " />
+							<p:selectManyCheckbox id="privilegios"	value="#{notiAreaGIBean.privSelect}" layout="grid" columns="1">
+								<f:selectItems value="#{notiAreaGIBean.domainPriv}" var="dom"	itemLabel="#{dom.description}" itemValue="#{dom.id}" />
+							</p:selectManyCheckbox>
+
+							<h:outputLabel for="QtdDias" value="Quantidade de dias: " />
+							<p:spinner id="QtdDias" value="#{notiAreaGIBean.notification.qtdDias}"
+								min="0" max="5000" />
+
+						</h:panelGrid>
+					</p:outputPanel>
+					<div class="altura20"></div>
+					<p:commandButton value="Conceder Privilégios"
+							icon="fa fa-fw fa-save" action="#{notiAreaGIBean.concederPriv()}"
+							update=":formDIV:tabViewdesk:listSA,  
+									:formDIV:tabViewdesk:messages3"
+							oncomplete="PF('carDialog').hide(), updateNoti()" />
+							<p:spacer width="20"/>
+			  		<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('carDialog').hide()"  />
+					<div class="altura20"></div>
+				</p:dialog>
+				
+				<p:dialog header="Recusar Solicitação"
+					widgetVar="recusarArea" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="recusarAreaPanel">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para recusar a solicitação na área." style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{notiAreaGIBean.justificativa}"  id="justificativaRecArea" counter="displayRecArea"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayRecArea" />
+						<br/>
+					</p:outputPanel>
+					<div class="altura20"></div>
+						<p:commandButton value="Recusar" icon="fa fa-fw fa-check-square-o" actionListener="#{notiAreaGIBean.refuseAreaNotify(notiAreaGIBean.notification.id)}"  process="@this :formDIV:tabViewdesk:justificativaRecArea"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages3,
+												:formDIV:tabViewdesk:justificativa"
+							oncomplete=" PF('recusarArea').hide(), updateNoti()" />
+							<p:spacer width="20"/>
+			  				<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('recusarArea').hide()"  />
+							<div class="altura20"></div>
+				</p:dialog>
+
+
+			</p:tab>
+			
+			<p:tab title="Solicitações Minhas Áreas (#{qtdeNotify.qtdNotifiesAllMyAreas})" id="SolMyAreasTab" rendered="#{loginBean.ga}" titleStyleClass="tabsMob">
+			
+				<p:growl id="messages8" life="#{loginBean.messageTime}" showDetail="true" />
+				<p:dataTable resizableColumns="true" id="listSMA" border="1"
+					emptyMessage="Não há solicitações pendentes."
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{notiAllMyAreaBean.notifiesArea}" rowsPerPageTemplate="10,15,20,25,50,100" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+
+					<p:column headerText="Data de Criação" style="width:150px">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteData" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:tabViewdesk:myAreaDetail, :formDIV:tabViewdesk:messages8" oncomplete="PF('myAreaDialog').show()" icon="fa fa-fw fa-edit" title="Escolher privilégios para atribuir">
+							<f:setPropertyActionListener value="#{car}" target="#{notiAllMyAreaBean.notification}" />
+						</p:commandButton>
+						<p:commandButton update=":formDIV:tabViewdesk:recusarMyAreaPanel, :formDIV:tabViewdesk:messages8" icon="fa fa-fw fa-remove"  oncomplete="PF('recusarMyArea').show()" title="Recusar" process="@this :formDIV:tabViewdesk:SolMyAreasTab">
+							<f:setPropertyActionListener value="#{car}" target="#{notiAllMyAreaBean.notification}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+
+				<p:dialog header="Autorizar privilégio - QWCFP"
+					widgetVar="myAreaDialog" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+
+					<p:outputPanel id="myAreaDetail" >
+						<h:panelGrid style="text-align: left;" columns="2" cellpadding="2"
+							rendered="#{not empty notiAllMyAreaBean.notification}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+							</f:facet>
+
+							<h:inputHidden value="#{notiAllMyAreaBean.notification.creatorMemberId}"	style="font-weight: normal;" />
+							<h:inputHidden value="#{notiAllMyAreaBean.notification.areaScopeId}"	style="font-weight: normal;" />
+
+							<p:outputLabel for="privilegios" value="Privilégios: " />
+							<p:selectManyCheckbox id="privilegiosMyArea"	value="#{notiAllMyAreaBean.privSelect}" layout="grid" columns="1">
+								<f:selectItems value="#{notiAllMyAreaBean.domainPriv}" var="dom"	itemLabel="#{dom.description}" itemValue="#{dom.id}" />
+							</p:selectManyCheckbox>
+
+							<h:outputLabel for="QtdDiasMyAreas" value="Quantidade de dias: " />
+							<p:spinner id="QtdDiasMyAreas" value="#{notiAllMyAreaBean.notification.qtdDias}"
+								min="0" max="5000" />
+
+						</h:panelGrid>
+					</p:outputPanel>
+					<div class="altura20"></div>
+					<p:commandButton value="Conceder Privilégios"
+							icon="fa fa-fw fa-save" action="#{notiAllMyAreaBean.concederPriv()}"
+							update=":formDIV:tabViewdesk:listSMA,
+									:formDIV:tabViewdesk:listSA,    
+									:formDIV:tabViewdesk:messages8"
+							oncomplete="PF('myAreaDialog').hide(), updateNoti()" />
+							<p:spacer width="20"/>
+			  		<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('myAreaDialog').hide()"  />
+					<div class="altura20"></div>
+				</p:dialog>
+				
+				<p:dialog header="Recusar Solicitação"
+					widgetVar="recusarMyArea" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="recusarMyAreaPanel">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para recusar a solicitação na área." style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{notiAllMyAreaBean.justificativa}"  id="justificativaRecMyArea" counter="displayRecMyArea"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayRecMyArea" />
+						<br/>
+					</p:outputPanel>
+					<div class="altura20"></div>
+						<p:commandButton value="Recusar" icon="fa fa-fw fa-check-square-o" actionListener="#{notiAllMyAreaBean.refuseAreaNotify(notiAllMyAreaBean.notification.id)}"  process="@this :formDIV:tabViewdesk:justificativaRecArea"
+							update=":formDIV:tabViewdesk:listGP,
+												:formDIV:tabViewdesk:listUP,
+												:formDIV:tabViewdesk:listSMA,  
+												:formDIV:tabViewdesk:listSA,  
+												:formDIV:tabViewdesk:listSG,
+												:formDIV:tabViewdesk:listSMG,
+												:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+												:formDIV:tabViewdesk:messages8,
+												:formDIV:tabViewdesk:justificativaRecMyArea"
+							oncomplete=" PF('recusarMyArea').hide(), updateNoti()" />
+							<p:spacer width="20"/>
+			  				<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('recusarMyArea').hide()"  />
+							<div class="altura20"></div>
+				</p:dialog>
+
+
+			</p:tab>
+
+			<p:tab title="Solicitações Grupos (#{qtdeNotify.qtdNotifiesGroup})" rendered="#{loginBean.isGi()}" titleStyleClass="tabsMob">
+				<p:growl id="messages4" life="#{loginBean.messageTime}" showDetail="true" />
+				<p:dataTable resizableColumns="true" id="listSG" border="1"
+					emptyMessage="Não há solicitações pendentes."
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{notiGroupGIBean.notifiesInfraGrupos}"
+					rowsPerPageTemplate="10,15,20,25,50,100" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+
+					<p:column headerText="Data de Criação" style="width:150px">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteData" />
+					</p:column>
+					
+					<p:column headerText="Destinatário" style="width:150px">
+						<h:outputText value="#{car.memberScopeId}" 
+							style="font-weight: normal" converter="#{memberConverter}" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+					
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:tabViewdesk:soliDetail1, :formDIV:tabViewdesk:messages4"	oncomplete="PF('soliDetail1').show()" icon="fa fa-fw fa-edit"	title="Escolher privilégios para atribuir">
+							<f:setPropertyActionListener value="#{car}"	target="#{notiGroupGIBean.notification}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+
+				<p:dialog header="Autorizar privilégio - QWCFP"
+					widgetVar="soliDetail1" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+
+					<p:outputPanel id="soliDetail1" style="text-align:center;">
+						<h:panelGrid style="text-align: left;" columns="2" cellpadding="2"
+							rendered="#{not empty notiGroupGIBean.notification}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+							</f:facet>
+
+							<h:inputHidden value="#{notiGroupGIBean.notification.creatorMemberId}"
+								style="font-weight: normal;" />
+							<h:inputHidden value="#{notiGroupGIBean.notification.areaScopeId}"
+								style="font-weight: normal;" />
+
+							<p:outputLabel for="privilegios1" value="Privilégios: " />
+							<p:selectManyCheckbox id="privilegios1"
+								value="#{notiGroupGIBean.privSelect}" layout="grid" columns="1">
+								<f:selectItems value="#{notiBean.domainPriv}" var="dom"
+									itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+							</p:selectManyCheckbox>
+
+							<h:outputLabel for="QtdDias1" value="Quantidade de dias: " />
+							<p:spinner id="QtdDias1" value="#{notiGroupGIBean.notification.qtdDias}" 
+								min="0" max="5000" />
+
+						</h:panelGrid>
+					</p:outputPanel>
+					<div class="altura20"></div>
+						<p:commandButton value="Conceder Privilégios"
+							icon="fa fa-fw fa-save" action="#{notiGroupGIBean.concederPrivGrp()}"
+							update=" 		:formDIV:tabViewdesk:listSG
+											:formDIV:tabViewdesk:messages4"
+							oncomplete="PF('soliDetail1').hide(), updateNoti()" />
+									<p:spacer width="20"/>
+			  		<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('soliDetail1').hide()"  />
+					<div class="altura20"></div>
+				</p:dialog>
+			</p:tab>
+
+			<p:tab title="Solicitações Meus Grupos (#{qtdeNotify.qtdNotifiesAllMyGroup})" titleStyleClass="tabsMob">
+			<p:growl id="messages5" life="#{loginBean.messageTime}" showDetail="true" />
+				<p:dataTable resizableColumns="true" id="listSMG" border="1"
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{notiAllMyGroupBean.notifiesAllMyGroup}"
+					rowsPerPageTemplate="10,15,20,25,50,100" 
+					emptyMessage="Não há nenhuma solicitação para seus grupos"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+
+					<p:column headerText="Data de Criação" style="width:150px">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteData" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:tabViewdesk:soliMDetail, :formDIV:tabViewdesk:messages5"
+							oncomplete="PF('soliMDetail').show()" icon="fa fa-fw fa-edit"
+							title="Escolher privilégios para atribuir">
+							<f:setPropertyActionListener value="#{car}"
+								target="#{notiAllMyGroupBean.notification}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+
+				<p:dialog header="Autorizar privilégio - QWCFP"
+					widgetVar="soliMDetail" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+
+					<p:outputPanel id="soliMDetail" style="text-align:center;">
+						<h:panelGrid style="text-align: left;" columns="2" cellpadding="2"
+							rendered="#{not empty notiAllMyGroupBean.notification}"
+							columnClasses="label,value">
+
+							<f:facet name="header">
+							</f:facet>
+
+							<h:inputHidden value="#{notiAllMyGroupBean.notification.creatorMemberId}"
+								style="font-weight: normal;" />
+							<h:inputHidden value="#{notiAllMyGroupBean.notification.groupScopeId}"
+								style="font-weight: normal;" />
+
+							<p:outputLabel for="privilegios2" value="Privilégios: " />
+							<p:selectManyCheckbox id="privilegios2"
+								value="#{notiAllMyGroupBean.privSelect}" layout="grid" columns="1">
+								<f:selectItems value="#{notiBean.domainPriv}" var="dom"
+									itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+							</p:selectManyCheckbox>
+
+							<h:outputLabel for="QtdDias2" value="Quantidade de dias: " />
+							<p:spinner id="QtdDias2" value="#{notiAllMyGroupBean.notification.qtdDias}"
+								min="0" max="5000" />
+								
+							<p:outputLabel for="group_scoupe_pl" value="Grupos:" />
+							<p:pickList id="group_scoupe_pl" value="#{notiAllMyGroupBean.groupToGrantList}"
+								var="group" effect="bounce" itemLabel="#{group.nome}"
+								itemValue="#{group}" showSourceControls="false"
+								showTargetControls="false" responsive="true" showSourceFilter="true"
+								showTargetFilter="true" filterMatchMode="contains"
+								showCheckbox="true" converter="converterMGroupsPickList" style="width:600px;">
+			
+								<f:facet name="sourceCaption">Grupos gerenciados</f:facet>
+								<f:facet name="targetCaption">Grupos escolhidos.</f:facet>
+							</p:pickList>
+
+						</h:panelGrid>
+					</p:outputPanel>
+					<div class="altura20"></div>
+						<p:commandButton value="Conceder Privilégios"
+							icon="fa fa-fw fa-save" action="#{notiAllMyGroupBean.concederPrivGrp()}"
+							update=":formDIV:tabViewdesk:listGP,
+									:formDIV:tabViewdesk:listUP,
+									:formDIV:tabViewdesk:listSA,  
+									:formDIV:tabViewdesk:listSG,
+									:formDIV:tabViewdesk:listSMG, 
+									:formDIV:tabViewdesk:listNP,:formDIV:tabViewdesk:listSUA, 
+									:formDIV:tabViewdesk:messages5"
+							oncomplete="PF('soliMDetail').hide(), updateNoti()" process="@this formDIV:tabViewdesk:soliMDetail"/>
+							<p:spacer width="20"/>
+			  		<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('soliMDetail').hide()"  />
+					<div class="altura20"></div>
+				</p:dialog>
+			</p:tab>
+			
+			<p:tab title="Sugestões de Criação de Áreas (#{qtdeNotify.qtdNotifiesSuggestAreas})" titleStyleClass="tabsMob">
+			<p:growl id="messages7" life="#{loginBean.messageTime}" showDetail="true" />
+					<div id="filtros" align="right">
+						<h:panelGrid columns="2">
+							<p:commandButton icon="fa fa-trash-o fa-lg"  update=":formDIV:tabViewdesk:listSUA, :formDIV:tabViewdesk:messages7" ajax="true" title="Apagar mensagens Selecionadas" oncomplete="updateNoti() renderRemove()"  actionListener="#{listNotifySuggestedAreasBean.inativeNotify}" />
+						</h:panelGrid>
+					</div>
+					
+				<p:remoteCommand   id="updateNotiSuggestAreas" name="updateNotiSuggestAreas" actionListener="#{qtdeNotify.getQtdNotifiesSuggestAreas()}" process="@this" update=":formDIV:tabViewdesk, :formTopBar:qtdNotifiesGlobal"  />
+				<p:dataTable resizableColumns="true" id="listSUA" border="1"
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{listNotifySuggestedAreasBean.suggestedArea}"
+					rowsPerPageTemplate="10,50,100,500, 1000, 10000" 
+					emptyMessage="Não há nenhuma notificação"
+					selection="#{listNotifySuggestedAreasBean.selectedNotificacoes}"
+					rowKey="#{car.id}" lazy="true"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true">
+
+					<p:column selectionMode="multiple" resizable="false" style="width:16px;text-align:center"/>
+
+					<p:column headerText="Data de Criação" style="width:150px" sortBy="#{car.creationDate}">
+						<h:outputText value="#{car.creationDate}" style="font-weight: normal" converter="converteDataHist" />
+					</p:column>
+					
+					<p:column headerText="Usuário" style="width:150px">
+						<h:outputText value="#{car.creatorMemberId}" converter="#{memberConverter}" />
+					</p:column>
+
+					<p:column headerText="Mensagem" styleClass="wrap">
+						<h:outputText value="#{car.messageText}" style="font-weight: normal" />
+					</p:column>
+					
+				</p:dataTable>
+					
+			
+			</p:tab>
+
+		</p:tabView>
+	</p:panel>	
+
+		<script type="text/javascript">
+
+		function isOdd(num) {
+			 return num % 2;
+		 }
+			    function handleDialogSubmit(args, dialogName) {
+			        if (!args.validationFailed) {
+			            PF(dialogName).hide();
+			        }
+			    }
+			   
+				function renderRemoveToggle( ){
+					if(document.getElementById('formDIV:tabViewdesk:removeBttn').style.display == 'none'){
+						document.getElementById('formDIV:tabViewdesk:removeBttn').style.display = 'block';
+					}else{
+						document.getElementById('formDIV:tabViewdesk:removeBttn').style.display = 'none';
+					}
+
+				}
+				
+			    function renderRemove(render){
+				    	if(render)
+							document.getElementById('formDIV:tabViewdesk:removeBttn').style.display = 'block';
+				    	else
+				    		document.getElementById('formDIV:tabViewdesk:removeBttn').style.display = 'none';			
+				}
+		</script>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

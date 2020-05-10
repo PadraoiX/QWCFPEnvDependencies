@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QW2SG_SERVCES_CATALOG>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 0</name>
+      <alias>URLnomeAmigavel_0</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 0, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 1</name>
+      <alias>URLnomeAmigavel_1</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 1, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 2</name>
+      <alias>URLnomeAmigavel_2</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 2, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 3</name>
+      <alias>URLnomeAmigavel_3</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 3, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 4</name>
+      <alias>URLnomeAmigavel_4</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 4, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 5</name>
+      <alias>URLnomeAmigavel_5</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 5, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 6</name>
+      <alias>URLnomeAmigavel_6</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 6, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 7</name>
+      <alias>URLnomeAmigavel_7</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 7, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 8</name>
+      <alias>URLnomeAmigavel_8</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 8, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 9</name>
+      <alias>URLnomeAmigavel_9</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 9, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 10</name>
+      <alias>URLnomeAmigavel_10</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 10, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 11</name>
+      <alias>URLnomeAmigavel_11</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 11, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 12</name>
+      <alias>URLnomeAmigavel_12</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 12, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 13</name>
+      <alias>URLnomeAmigavel_13</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 13, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 14</name>
+      <alias>URLnomeAmigavel_14</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 14, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 15</name>
+      <alias>URLnomeAmigavel_15</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 15, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 16</name>
+      <alias>URLnomeAmigavel_16</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 16, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 17</name>
+      <alias>URLnomeAmigavel_17</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 17, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 18</name>
+      <alias>URLnomeAmigavel_18</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 18, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+   <WSDLDoc>
+      <pkName>a9eaf270c9b6b27aa9ab0c962d478e1c2fd6475496f461d0ac8f617d92098417</pkName>
+      <name>CAIXAWS - FISES Nº: 19</name>
+      <alias>URLnomeAmigavel_19</alias>
+      <Parametros class="java.util.ArrayList">
+         <Parametro>
+            <key>PARM01</key>
+            <value>Nome</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM02</key>
+            <value>Senha</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM03</key>
+            <value>Site</value>
+         </Parametro>
+         <Parametro>
+            <key>PARM04</key>
+            <value>URI</value>
+         </Parametro>
+      </Parametros>
+      <UserPrivs class="java.util.ArrayList">
+         <userPriv>1|98765432100|infra@pix.com.br</userPriv>
+         <userPriv>573|39904121168|anderson@pix.com.br</userPriv>
+         <userPriv>17|98765432100|ivan@pix.com.br</userPriv>
+      </UserPrivs>
+      <WSDLUrl>https://sigscext.caixa.gov.br/arsys/WSDL/public/arsapp-int.caixa/GSC_RF010_FornecedorExterno_V401_WS?wsdl</WSDLUrl>
+      <description>Descrição do chamado Nº: 19, WSDL que descre o serviço da CAIXA para listar, alterar, excluir chamdos FISE.</description>
+      <nameSpace>{urn:GSC_RF010_FornecedorExterno_V401_WS}PortSoapBinding</nameSpace>
+      <bindingName>PortSoapBinding</bindingName>
+      <SAOPVersion>1.1</SAOPVersion>
+      <docStyle>Document</docStyle>
+      <wsdlDocument>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM1VSMsvyk0syVdwj/AM0HdyDHY1M9ED
+AE3MBhUuAAAA
+</wsdlDocument>
+      <wsdlDocWithReplaces>H4sIAAAAAAAAAPPLV0grLSktylfIVwhxjQjxV4jw9dFRSM7PVUgsVihLLMo8vLAss1ghJVWhuDSp
+uCSzpDTz8PLDi/Pz4fzDa1OASlNzFdLyi3ITS/IV3CM8A/SdHINdzUz0AJsu/5NgAAAA
+</wsdlDocWithReplaces>
+   </WSDLDoc>
+</QW2SG_SERVCES_CATALOG>

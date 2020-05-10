@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">	 
+  
+     <h:head title="QWCFP">
+        <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta http-equiv="pragma" content="no-cache"/>
+            <meta http-equiv="cache-control" content="no-cache"/>
+            <meta http-equiv="expires" content="0"/>        
+		    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />  	
+        </f:facet>
+			
+			<link href="icons/icon_qwcfp_96x96.png" rel="icon"/>
+			<link rel="apple-touch-icon" sizes="72x72" href="resources/images/icon_qwcfp_72x72.png" />
+			<link rel="apple-touch-icon" sizes="144x144" href="resources/images/icon_qwcfp_144x144.png" />			
+			<link rel="icon" type="image/png" sizes="192x192"  href="resources/images/icon_qwcfp_192_192.png" />
+			<link rel="icon" type="image/png" sizes="96x96" href="resources/images/icon_qwcfp_96x96.png" />			
+		    <link rel="shortcut icon" type="image/png" href="resources/images/icon_qwcfp.png"/>	
+				<title >QWCFP - Padrão iX  </title>
+			<h:outputStylesheet library="css" name="showcase.css"/>		
+			<h:outputScript library="script" name="showcase.js"/>
+			<h:outputScript library="script" name="locale-primefaces.js"/>
+			<h:outputScript library="script" name="perfect-scrollbar.js"/>
+			<h:outputScript library="script" name="ajax.js"/>
+			
+			<style>
+				.ui-layout-unit{		
+					padding: 0.4em;
+				}
+				#layoutMenu{
+					visibility: hidden;
+				}
+			
+				.ui-widget-header {
+					border: none;
+					font-weight: normal;				
+				}
+				.ui-overlaypanel-content{
+					padding: 0.1em;
+				}
+
+			</style>
+	
+    </h:head>  
+      
+    <h:body> 
+    	<p:layout fullPage="true">
+    		<p:layoutUnit position="north" styleClass="northUnit" id="lauoutTop">
+	    		<p:overlayPanel for="btn-basic"  widgetVar="pnl-basic" at="left" showEffect="overlay">
+	    			<p:commandLink  onclick="linkVoltar()" id="home">
+				    	<h:graphicImage library="images" name="home.png"/>
+				    </p:commandLink>
+				    <p:commandLink onclick="shared()" id="shared">
+				    	<h:graphicImage library="images" name="iconShared.png"/>
+				    </p:commandLink>
+				    <p:commandLink  onclick="notificar()" id="notify">
+				    	<h:graphicImage library="images" name="notify.png"/>
+				    	<p:outputLabel id="txt_count" value="#{notiBean.qtdNotifies}" styleClass="notif" />
+				    </p:commandLink>
+	    			<p:commandLink actionListener="#{loginBean.logout}" id="sair">
+				    	<h:graphicImage library="images" name="sair.png"/>
+				    </p:commandLink> 				
+				</p:overlayPanel>
+    			
+    			<div class="BlueLogo" onclick="linkVoltar()" >
+    			</div> 
+    			
+    			<div id="layoutMenuTop" class="topSist posicao " >
+		    		<h:form id="formFX">
+		    			<p:poll interval="100" listener="#{notiBean.getQtdNotifies()}" update=":formFX:txt_count" />	    		 
+				    	<p:commandLink  onclick="linkVoltar()" id="home">
+				    		<h:graphicImage library="images" name="home.png"/>
+				    	</p:commandLink>
+				    	<p:tooltip id="toolTiphome" for="home" value="Página Principal" trackMouse="true" />	
+				    	<p:spacer width="3"/>
+				    		
+				    	<p:commandLink onclick="shared()" id="shared">
+				    		<h:graphicImage library="images" name="iconShared.png"/>
+				    	</p:commandLink>
+				    	<p:tooltip id="toolTioshared" for="shared" value="Arquivos Compartilhados" trackMouse="true" />	
+				    	<p:spacer width="3"/>	
+				    		    		    	
+				    	<p:commandLink  onclick="notificar()" id="notify">
+				    		<h:graphicImage library="images" name="notify.png"/>
+				    		<p:outputLabel id="txt_count" value="#{notiBean.qtdNotifies}" styleClass="notif" />
+				    	</p:commandLink>
+				    	<p:tooltip id="toolTipnotify" for="notify" value="Notificações" trackMouse="true" />	
+				    	<p:spacer width="3"/>
+				    			    	  
+				    	<p:commandLink actionListener="#{loginBean.logout}" id="sair">
+				    		<h:graphicImage library="images" name="sair.png"/>
+				    	</p:commandLink> 		    	
+				    	<p:tooltip id="toolTipperfil" for="sair" value="LogOut" trackMouse="true" />
+				    	
+		    		</h:form>
+	    		</div>
+	    		<div id="layoutMenuTop2" class="topSist posicao " >		    			
+				    	<p:commandLink  id="btn-basic"  type="button" >
+			    		<h:graphicImage library="images" name="menu.png"/>
+			    		</p:commandLink>		    			
+	    		</div>	    		
+    			<div  class="identificar" style="height:30px; border-bottom:none;">
+					<h:panelGrid columns="3" >	
+						<p:graphicImage library="images" name="icon_user.png"/>	
+						<h:outputLabel  value="#{loginBean.member.memberName}" styleClass="dispBlock logoBlueText fontSize30 mediumFont" />
+					</h:panelGrid>		
+				</div>    			   	
+    		</p:layoutUnit>
+    		
+    		<p:layoutUnit position="west" styleClass="westUnit" id="layoutMenu" style="background-color: #313b3f; border: 1px solid #313b3f;">
+    			           <ui:include src="../menu.xhtml"/>    			 
+    		</p:layoutUnit>
+    		
+    		<p:layoutUnit position="center" id="principal" styleClass="principal">
+    			<h:form id="formDIV">
+					<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  />       	
+					
+					<p:dialog widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false" styleClass="ajax-status">
+						<p:graphicImage library="images" name="loaderA32.gif" />
+					</p:dialog>
+		       		
+		       		<div class="ContentSideSections Implementation" id="conteudo"  name="conteudo" >
+						<ui:insert name="conteudo" id="conteudo" >Página Principal</ui:insert>
+					</div>
+				</h:form>
+    			<!-- <f:facet name="footer" style="border: 0px; background: none;">
+					<div class="ContentSideSections">
+						<span class="floatLeft fontSize14 gray">
+						<a href="http://www.pix.com.br">Padrão iX Sistemas Abertos S/A</a>
+						, Copyright © 2015
+						<br/>
+						All rights reserved.
+						</span>
+						<span class="floatRight fontSize14 gray">QWCFP 2.0</span>
+						<div style="clear:both"></div>
+					</div>
+				</f:facet>			 -->
+    		</p:layoutUnit>    		
+    	</p:layout>          
+    </h:body>  
+</html> 

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">	
+	<h:head>	
+	
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+			
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		
+		<link href="icons/icon_qwcfp_96x96.png" rel="icon"/>
+		<link rel="apple-touch-icon" sizes="72x72" href="resources/images/icon_qwcfp_72x72.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="resources/images/icon_qwcfp_144x144.png" />
+		
+		<link rel="icon" type="image/png" sizes="192x192"  href="resources/images/icon_qwcfp_192_192.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="resources/images/icon_qwcfp_96x96.png" />
+		
+	    <link rel="shortcut icon" type="image/png" href="resources/images/icon_qwcfp.png"/>
+		<title >QWCFP - Padrão iX  </title>
+
+		<h:outputStylesheet library="css" name="showcase.css"/>		
+		<h:outputStylesheet library="primefaces-barcelona" name="theme.css"/>
+		
+		<h:outputScript library="script" name="showcase.js"/>
+		<h:outputScript library="script" name="locale-primefaces.js"/>
+		<h:outputScript library="script" name="perfect-scrollbar.js"/>
+		<h:outputScript library="script" name="ajax.js"/>
+		<h:outputScript library="script" name="fileUpload4.js"/>
+		<h:outputScript library="script" name="downloadFile3.js"/>		
+		
+        <h:outputScript name="js/nanoscroller.js" library="barcelona-layout" />
+        <h:outputScript name="js/layout.js" library="barcelona-layout" />
+        <h:outputScript name="js/ripple.js" library="barcelona-layout" />
+		
+		<!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" /> -->
+		<link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="resources/css/jquery.fileupload.css"/>  	
+		
+	</h:head>
+
+	<style>
+body {
+	background: #f7f5f3;
+}
+
+.ui-widget-header {
+	border: none;
+}
+
+topSist {
+	width: 100%;
+	height: 75px;
+	text-align: right;
+	margin: 0px;
+	margin-top: -70px;
+}
+
+.progress {
+	position: relative;
+	width: 330px;
+	border: 1px solid #ddd;
+	padding: 1px;
+	border-radius: 3px;
+	height: 25px;
+}
+
+.bar {
+	background-color: #85b2cb;
+	width: 0%;
+	height: 25px;
+	border-radius: 3px;
+}
+
+.percent {
+	position: absolute;
+	display: inline-block;
+	top: 5px;
+	left: 48%;
+}
+
+#filedrag {
+	display: none;
+	/* font-weight: bold;
+	text-align: center;
+	padding: 1em 0;
+	margin: 1em 0;
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 7px;
+	cursor: default; */
+}
+
+#filedrag.hover {
+	/* color: #f00;
+	border-color: #f00;
+	border-style: solid; */
+	box-shadow: inset 0 3px 4px #888;
+	font-weight: bold;
+	background: rgba(220, 214, 214, 0.3);
+	/* text-align: center; */
+	/* padding: 2em 0;
+	margin: 2em 0; */
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 7px;
+	cursor: default;
+}
+
+.ui-grid-row {
+	border: none !important;
+}
+
+.notif {
+	margin-left: -10px;
+	background: #85b2cb
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0.4)) repeat scroll 0 0;
+	background: #85b2cb
+		-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+		0)), to(rgba(255, 255, 255, 0.4)));
+	font-size: 10px;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 1px solid #7096ab;
+	color: #1c4257;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+	padding: 1px 3px;
+	text-align: center;
+}
+
+.posicao {
+	float: right;
+	margin-top: -60px;
+	margin-right: 15px;
+}
+
+#conteudo {
+	background: #f7f5f3;
+}
+
+#menucfpB {
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+	background-color: #f7f5f3;
+}
+
+div#load_screen {
+	background: #f7f5f3;
+	opacity: 1;
+	position: fixed;
+	z-index: 10;
+	top: 0px;
+	width: 100%;
+	height: 1600px;
+}
+
+div#load_screen>div#loading {
+	color: #FFF;
+	width: 120px;
+	height: 24px;
+	margin: 300px auto;
+}
+
+
+#reaload{
+	background: transparent none repeat scroll 0% 0% !important;
+	border: none !important;
+	box-shadow: none !important;
+	
+
+}
+
+
+</style>
+
+<script>
+window.addEventListener("load", function(){
+	var load_screen = document.getElementById("load_screen");
+	document.body.removeChild(load_screen);
+});
+
+
+var currentEvent;
+
+$(document).ready(function() {
+   PrimeFaces.widget.ContextMenu.prototype.show = function(e) {
+      //hide other contextmenus if any
+      $(document.body).children('.ui-contextmenu:visible').hide();
+      currentEvent = null;
+
+      if(e) {
+         currentEvent = e;
+      }
+
+      var win = $(window),
+      left = e.pageX,
+      top = e.pageY,
+      width = this.jq.outerWidth(),
+      height = this.jq.outerHeight();
+
+      //collision detection for window boundaries
+      if((left + width) > (win.width())+ win.scrollLeft()) {
+         left = left - width;
+      }
+      if((top + height ) > (win.height() + win.scrollTop())) {
+         top = top - height;
+      }
+      
+      if(this.cfg.beforeShow) {
+         this.cfg.beforeShow.call(this);
+      }
+
+      this.jq.css({
+         'left': left,
+         'top': top,
+         'z-index': ++PrimeFaces.zindex
+      }).show();
+      e.preventDefault();
+   };
+});
+</script>
+
+<h:body>
+
+	<div id="load_screen">
+		<div id="loading">
+			<img src="../resources/images/loading_gif.gif" alt=" " />
+			<div id="loading">
+				<img src="resources/images/loading_gif.gif" alt=" " />
+				<h:graphicImage name="loading_gif.gif" library="images" />
+			</div>
+		</div>
+	</div>
+
+<p:layout fullPage="true">
+ 	<p:layoutUnit position="west" size="306" resizable="true" closable="false" collapsible="true" style="background-color: #313b3f;; border: 1px solid #313b3f;" id="menucfpB"   >
+          <h:form>
+          <ui:include src="../menu.xhtml"/>
+          </h:form>
+    </p:layoutUnit> 
+ 
+    <p:layoutUnit position="center" style="background: #f7f5f3; border: none" id="principalcfp" >   	
+    	<!-- INICIO DO CABECALHO -->
+    	<f:facet name="header" style="border: 0px; ">
+    		<div id="menumobile">
+    			<p:commandButton id="dynaButton"  type="button" icon="fa fa-fw fa-reorder" />
+    		</div> 
+	    		<p:slideMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:180px">
+	    			<p:submenu label="Áreas">
+	    				<p:menuitem value="Criar área" outcome="/gestor/addArea.faces" rendered="#{loginBean.isGi()}" />
+	    				<p:menuitem value="Listar área" outcome="/listArea.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Usuários">
+	    				<p:menuitem value="Criar Usuário" outcome="/gestor/addUsuario.faces" rendered="#{loginBean.isGi()}" />
+	    				<p:menuitem value="Listar Usuários" outcome="/listUser.faces"/>
+	    				<p:menuitem value="Editar meu perfil" outcome="/alterarUser.faces"/>
+	    				<p:menuitem value="Meus Privilégios" outcome="/privilegios.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Grupos">
+	    				<p:menuitem value="Criar Grupo" outcome="/addGrupo.faces" />
+	    				<p:menuitem value="Listar Grupos" outcome="/listGrupos.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Nós" rendered="#{loginBean.isGi()}">
+	    				<p:menuitem value="Criar Nó" outcome="/gestor/addNode.faces" />
+	    				<p:menuitem value="Listar Nós" outcome="/gestor/listNode.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Volumes" rendered="#{loginBean.isGi()}">
+	    				<p:menuitem value="Criar Volume" outcome="/gestor/addVolume.faces" />
+	    				<p:menuitem value="Listar Volumes" outcome="/gestor/listVolume.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Configurações" rendered="#{loginBean.isGi()}">
+	    				<p:menuitem value="Criar Regra" outcome="/gestor/addRegra.faces" />
+	    				<p:menuitem value="Listar Regras" outcome="/gestor/listRegras.faces"/>
+	    				<p:menuitem value="Configurar Sistema" outcome="/gestor/configSistema.faces"/>
+	    			</p:submenu>
+	    			<p:submenu label="Histórico" rendered="#{loginBean.isGi()}">
+	    				<p:menuitem value="Pesquisar Histórico" outcome="/gestor/historico.faces" rendered="#{loginBean.isGi()}" />	    				
+	    			</p:submenu>
+	    			<p:submenu label="Relatórios" rendered="#{loginBean.isGi()}">
+	    				<p:menuitem value="Gerar Relatórios" outcome="/gestor/listRelatorios.faces" rendered="#{loginBean.isGi()}" />
+	    			</p:submenu>
+	    		</p:slideMenu>
+    		   		
+    		<div  class="ContentSideSections" style="height:30px; border-bottom:none;">
+				<h:panelGrid columns="3" >	
+					<h:outputLabel value="Usuário:" styleClass="dispBlock logoDarkText fontSize30"/>
+					<h:outputLabel  value="#{loginBean.member.memberName}" styleClass="dispBlock logoBlueText fontSize30 mediumFont" />
+				</h:panelGrid>	
+			</div>
+			
+	    	<div class="topSist posicao" >
+	    		<h:form id="formFX">
+	    			<p:poll interval="100" listener="#{qtdeNotify.getQtdNotifies()}" update=":formFX:txt_count"  />	    		 
+			    	<p:commandLink  onclick="linkVoltar()" id="home">
+			    		<h:graphicImage library="images" name="home.png"/>
+			    	</p:commandLink>
+			    	<p:tooltip id="toolTiphome" for="home" value="Página Principal" trackMouse="true" />	
+			    	<p:spacer width="10"/>
+			    		
+			    	<p:commandLink onclick="shared()" id="shared">
+			    		<h:graphicImage library="images" name="iconShared.png"/>
+			    	</p:commandLink>
+			    	<p:tooltip id="toolTioshared" for="shared" value="Arquivos Compartilhados" trackMouse="true" />	
+			    	<p:spacer width="10"/>	
+			    		    		    	
+			    	<p:commandLink  onclick="notificar()" id="notify">
+			    		<h:graphicImage library="images" name="notify.png"/>
+			    		<p:outputLabel id="txt_count" value="#{qtdeNotify.qtdNotifies}" styleClass="notif" />
+			    	</p:commandLink>
+			    	<p:tooltip id="toolTipnotify" for="notify" value="Notificações" trackMouse="true" />	
+			    	<p:spacer width="10"/>
+			    			    	  
+			    	<p:commandLink actionListener="#{loginBean.logout}" id="sair">
+			    		<h:graphicImage library="images" name="sair.png"/>
+			    	</p:commandLink> 		    	
+			    	<p:tooltip id="toolTipperfil" for="sair" value="LogOut" trackMouse="true" />		    	
+	    		</h:form>
+	    		</div>	    
+    	</f:facet>
+		
+		<div style="height:3px;">
+			
+		</div>
+<!-- 			FIM DO CABECALHO -->
+       	<h:form id="formDIV">
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  />       	
+			<p:dialog id="reaload"  widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false" styleClass="ajax-status">
+				<p:graphicImage library="images" name="5.gif" />
+			</p:dialog>
+       		
+       		<div class="ContentSideSections Implementation" id="conteudo"  name="conteudo" >
+				<ui:insert name="conteudo" id="conteudo" >Página Principal</ui:insert>
+			</div>
+		</h:form>
+		
+		<f:facet  name="footer" id="footer"  style="border: 0px; background: none; height: 75px; " >			
+			<span class="floatLeft fontSize14 gray">
+				<a href="http://www.pix.com.br">Padrão iX Sistemas Abertos S/A</a>
+				,Copyright © 2015
+				<br/>
+				All rights reserved.
+			</span>
+			<span class="floatRight fontSize14 gray">QWCFP 2.0</span>
+			<div style="clear:both"></div>			
+		</f:facet>		
+    </p:layoutUnit>   
+    
+</p:layout>
+<h:outputStylesheet name="css/nanoscroller.css" library="barcelona-layout" />
+        <h:outputStylesheet name="css/animate.css" library="barcelona-layout" />
+        <h:outputStylesheet name="css/ripple.css" library="barcelona-layout" />
+        <h:outputStylesheet name="css/layout-blue.css" library="barcelona-layout" />
+</h:body>
+</html>

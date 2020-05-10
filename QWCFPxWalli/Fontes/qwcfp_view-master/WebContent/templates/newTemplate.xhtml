@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<h:outputStylesheet name="theme.css" library="css" />
+	<h:outputStylesheet name="font-awesome.css" library="css" />
+	<h:outputStylesheet name="primefaces.css" library="css" />
+	<h:outputScript library="script" name="jquery.js" />
+	<h:outputScript library="script" name="jquery-plugins.js" />
+	<h:outputScript library="script" name="primefaces.js" />
+	<h:outputStylesheet name="charts.css" library="css" />
+	<script type="text/javascript"
+		src="/sentinel/javax.faces.resource/charts/charts.js.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l?ln=primefaces&amp;v=5.2"></script>
+
+	<h:outputStylesheet name="font-icon-layout.css" library="css" />
+	<h:outputStylesheet name="sentinel-layout.css" library="css" />
+	<h:outputStylesheet name="core-layout.css" library="css" />
+	<script type="text/javascript">if(window.PrimeFaces){}</script>
+
+	<link href="icons/icon_qwcfp_96x96.png" rel="icon" />
+	<link rel="apple-touch-icon" sizes="72x72"
+		href="resources/images/icon_qwcfp_72x72.png" />
+	<link rel="apple-touch-icon" sizes="144x144"
+		href="resources/images/icon_qwcfp_144x144.png" />
+
+	<link rel="icon" type="image/png" sizes="192x192"
+		href="resources/images/icon_qwcfp_192_192.png" />
+	<link rel="icon" type="image/png" sizes="96x96"
+		href="resources/images/icon_qwcfp_96x96.png" />
+
+	<link rel="shortcut icon" type="image/png"
+		href="resources/images/icon_qwcfp.png" />
+	<title>QWCFP - Padrão iX</title>
+
+	<h:outputScript library="script" name="layout.js" />
+	<script type="text/javascript">
+		function skinChart() {
+			this.cfg.shadow = false;
+			this.cfg.seriesColors = [ '#dae8ef', '#27aae1' ];
+			this.cfg.grid = {
+				background : '#f3f5f7',
+				borderColor : '#e5ebf0',
+				gridLineColor : '#e5ebf0',
+				shadow : false
+			};
+			this.cfg.axesDefaults = {
+				rendererOptions : {
+					textColor : '#9fadb5'
+				}
+			};
+			this.cfg.seriesDefaults = {
+				shadow : false,
+				markerOptions : {
+					shadow : false
+				}
+			}
+		}
+
+		function skinPie() {
+			this.cfg.seriesColors = [ '#dae8ef', '#27aae1', '#33ccff',
+					'#9fadb5' ];
+			this.cfg.grid = {
+				background : '#ffffff',
+				borderColor : '#eaeaea',
+				gridLineColor : '#e5ebf0',
+				shadow : false,
+				borderWidth : 0
+			};
+			this.cfg.seriesDefaults.shadow = false;
+		}
+	</script>
+	<style type="text/css">
+.jqplot-target, .jqplot-axis {
+	color: #9fadb5;
+}
+</style>
+</h:head>
+<h:body>
+	<div id="layout-header" class="Unselectable fontRegular">
+		<a href="main.faces"><p:graphicImage library="images" name="mini_logocfp.png" /></a>
+		<ul id="sm-topmenu" class="layout-header-widgets white Fs14">
+			<li class="Fleft BordRadHalf TexAlCenter"><i> <h:graphicImage library="images" name="home2.png" />
+			</i>
+				<ul
+					class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+					<li class="Animated05"><a class="white Unselectable"><i
+							class="icon-user-male Fs26 OvHidden"></i><span class="Fs18">Walter
+								White<br />
+							<span class="Fs10">Last Login - 18.08.2014</span>
+						</span></a></li>
+					<li class="Animated05"><a href="#" class="white Unselectable"><i
+							class="icon-stopwatch-1"></i>User Tasks</a></li>
+					<li class="Animated05"><a href="#" class="white Unselectable"><i
+							class="icon-users-2"></i>Create New User</a></li>
+					<li class="Animated05"><a href="#" class="white Unselectable"><i
+							class="icon-sliders"></i>User Preferences</a></li>
+				</ul></li>
+			<li class="Fleft BordRadHalf TexAlCenter"><i> <h:graphicImage
+						library="images" name="shared2.png" />
+			</i> <span class="alertBubble BordRad10 Fs9">166</span>
+				<ul
+					class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-chat-empty yellow"></i>Gustavo Fring<br />
+						<span class="Fs10">What does a man do Walter?</span></a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-chat-empty"></i>Skyler White<br />
+						<span class="Fs10">Where are you?.</span></a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-chat-empty red"></i>Hank Schrader<br />
+						<span class="Fs10">Barbecue photos from last weekend.</span></a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-chat-empty red"></i>Jesse Pinkman<br />
+						<span class="Fs10">Mr. White.</span></a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-chat-empty"></i>Heisenberg<br />
+						<span class="Fs10">I am the one who knocks.</span></a></li>
+				</ul></li>
+			<li class="Fleft BordRadHalf TexAlCenter"><i><h:graphicImage
+						library="images" name="notify2.png" /></i><span
+				class="alertBubble BordRad10 Fs9">24</span>
+				<ul
+					class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i class="icon-flag red"></i>New
+							Products</a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i
+							class="icon-flag yellow"></i>Today Sales Reports</a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i class="icon-flag red"></i>Visit
+							Reports</a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i class="icon-flag red"></i>Sales
+							Reports</a></li>
+					<li class="Animated05"><a href="#"
+						class="white Unselectable TexAlRight"><i class="icon-flag"></i>Task
+							Alerts</a></li>
+				</ul></li>
+
+			<li class="Fleft BordRadHalf TexAlCenter"><i><h:graphicImage
+						library="images" name="sair2.png" /></i>
+				<ul
+					class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+					<li class="Animated05"><a href="login.xhtml"
+						class="white Unselectable"><i class="icon-ccw-1"></i>Restart</a></li>
+					<li class="Animated05"><a href="#" class="white Unselectable"><i
+							class="icon-logout"></i>Log Out</a></li>
+				</ul>
+			</li>
+		</ul>
+		<!-- NEVER REMOVE FOLLOWING 'UL' TAG ! BECAUSE THIS CONTAINS RESPONSIVE MODE HEADER MENU OPEN-CLOSE BUTTON -->
+		<ul id="sm-mobiletopmenu" class="layout-header-widgets white Fs14">
+			<li class="Fleft BordRadHalf TexAlCenter Animated05 DisplayOnResponsive">
+				<i ><p:graphicImage library="images" name="menu_top2.png" /></i></li>
+		</ul>
+		<!-- ****** -->
+	</div>
+
+	<div id="layout-menubar" class="Unselectable fontRegular">
+		<div class="layout-menubarinner-box" id="buttonArea">
+			<a href="#" id="layout-menubar-resize"  class="BordRad3" title="Menu Resize"><h:graphicImage library="images" name="menu2.png" /></a> 
+			<a href="#" id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><h:graphicImage library="images"	name="menu2.png" /></a>
+		</div>
+
+		<div class="layout-menubarinner-box" id="searchArea">
+			<i class="fa fa-fw fa-search gray"></i> 
+			<input type="text" class="layout-menubar-search floatLeft Animated05"
+				placeholder="Search Here" />
+		</div>
+		
+		<ul id="sm_leftmenu" class="layout-menubar-container">
+			<li id="sm_dashboard" role="menuitem" class="layout-menubar-active">
+				<a
+				href="main.faces"
+				onclick="Sentinel.toggleSubMenu(this)"> <i
+					class="fa fa-fw fa-home  yellow i"></i> Home
+				</a>
+			</li>
+			<li id="sm_sentineltheme" role="menuitem"><a href="#"
+				onclick="Sentinel.toggleSubMenu(this);return false;"><i
+					class="fa fa-fw fa-cubes  yellow i"></i> Meus Grupos<i
+					class="fa fa-fw fa-angle-down Fright"></i></a>
+			<ul class="layout-menubar-submenu-container" role="menu">
+					<li id="sm_forms" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/forms.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-doc-text-1 yellow i"></i> Forms</a></li>
+					<li id="sm_datacomponents" role="menuitem"><a
+						class="marginLevel-1"
+						href="/sentinel/data.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-th yellow i"></i> Data Components</a></li>
+					<li id="sm_datatable" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/datatable.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-table yellow i"></i> DataTable</a></li>
+					<li id="sm_panels" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/panel.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-magic yellow i"></i> Panels</a></li>
+					<li id="sm_overlays" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/overlay.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-newspaper yellow i"></i> Overlays</a></li>
+					<li id="sm_menus" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/menu.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-menu yellow i"></i> Menus</a></li>
+					<li id="sm_messages" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/messages.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-bell yellow i"></i> Messages</a></li>
+					<li id="sm_fu" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/file.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-docs yellow i"></i> FileUpload</a></li>
+					<li id="sm_misc" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/misc.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-beaker yellow i"></i> Misc</a></li>
+				</ul></li>
+			<li id="sm_dp" role="menuitem"><a href="#"
+				onclick="Sentinel.toggleSubMenu(this);return false;"><i
+					class="fa fa-fw fa-user yellow i"></i> Gerenciar Usuários<i
+					class="fa fa-fw fa-angle-down Fright"></i></a>
+			<ul class="layout-menubar-submenu-container" role="menu">
+					<li id="sm_empty" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-plus-squared-alt yellow i"></i> Empty Page</a></li>
+					<li id="sm_login" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/login.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-login yellow i"></i> Login Page</a></li>
+					<li id="sm_error" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/error.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-warning-empty yellow i"></i> Error Page</a></li>
+					<li id="sm_404" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/404.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-warning-empty yellow i"></i> 404 Page</a></li>
+					<li id="sm_access" role="menuitem"><a class="marginLevel-1"
+						href="/sentinel/access-denied.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+							class="icon-warning-empty yellow i"></i> Access Denied Page</a></li>
+				</ul></li>
+			<li id="sm_menu" role="menuitem"><a href="#"
+				onclick="Sentinel.toggleSubMenu(this);return false;"><i
+					class="fa fa-fw fa-group yellow i"></i> Gerenciar Grupos<i
+					class="fa fa-fw fa-angle-down Fright"></i></a>
+			<ul class="layout-menubar-submenu-container" role="menu">
+					<li id="sm_sub1" role="menuitem"><a href="#"
+						onclick="Sentinel.toggleSubMenu(this);return false;"
+						class="marginLevel-1"><i class="icon-folder-empty yellow i"></i>Submenu
+							1<i class="icon-angle-down Fright"></i></a>
+					<ul class="layout-menubar-submenu-container" role="menu">
+							<li id="sm_sub1_1" role="menuitem"><a href="#"
+								onclick="Sentinel.toggleSubMenu(this);return false;"
+								class="marginLevel-2"><i class="icon-folder-empty yellow i"></i>Submenu
+									1.1<i class="icon-angle-down Fright"></i></a>
+							<ul class="layout-menubar-submenu-container" role="menu">
+									<li id="sm_sub1_1_1" role="menuitem"><a href="#"
+										onclick="Sentinel.toggleSubMenu(this);return false;"
+										class="marginLevel-3"><i
+											class="icon-folder-empty yellow i"></i>Submenu 1.1.1<i
+											class="icon-angle-down Fright"></i></a>
+									<ul class="layout-menubar-submenu-container" role="menu">
+											<li id="sm_lnk1" role="menuitem"><a
+												class="marginLevel-4"
+												href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+													class="icon-link yellow i"></i> Link 1</a></li>
+											<li id="sm_lnk2" role="menuitem"><a
+												class="marginLevel-4"
+												href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+													class="icon-link yellow i"></i> Link 2</a></li>
+											<li id="sm_lnk3" role="menuitem"><a
+												class="marginLevel-4"
+												href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"><i
+													class="icon-link yellow i"></i> Link 3</a></li>
+										</ul></li>
+								</ul></li>
+						</ul></li>
+				</ul></li>
+			<li id="sm_fonts" role="menuitem"><a
+				href="/sentinel/font-icons.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-sitemap yellow i"></i> Gerenciar Nós<i
+					class="fa fa-fw fa-angle-down Fright"></i></a></li>
+			<li id="sm_user" role="menuitem"><a
+				href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-database yellow i"></i> Gerenciar Volumes</a></li>
+			<li id="sm_tasks" role="menuitem"><a
+				href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-gears yellow i"></i> Configurações</a></li>
+			<li id="sm_contact" role="menuitem"><a
+				href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-gears yellow i"></i> Notificações</a></li>
+			<li id="sm_doc" role="menuitem"><a
+				href="/sentinel/documentation.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-history yellow i"></i> Histórico</a></li>
+			<li id="sm_contact" role="menuitem"><a
+				href="/sentinel/empty-page.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l"
+				onclick="Sentinel.toggleSubMenu(this)"><i
+					class="fa fa-fw fa-newspaper-o yellow i"></i> Relatórios</a></li>
+		</ul>
+		<script type="text/javascript">Sentinel.restoreMenuState();</script>
+
+	</div>
+
+	<div id="layout-portlets-cover" class="fontRegular">
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<div class="EmptyBox20"></div>
+					
+				<div class="Container25 Responsive">
+					<div class="ContainerIndent">
+					0	
+					</div>
+				</div>
+
+					
+					
+					
+					
+				
+					
+			
+				<div class="Container25 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt23"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							style="min-height: 300px;" data-widget="widget_j_idt23">
+							<div id="j_idt23_content"
+								class="ui-panel-content ui-widget-content">2</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container25 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt30"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							style="min-height: 300px;" data-widget="widget_j_idt30">
+							<div id="j_idt30_content"
+								class="ui-panel-content ui-widget-content">3</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container25 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt37"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							style="min-height: 300px" data-widget="widget_j_idt37">
+							<div id="j_idt37_content"
+								class="ui-panel-content ui-widget-content">4</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="EmptyBox10"></div>
+			</div>
+		</div>
+
+		<div class="Container100 BorBotLeaden">
+			<div class="ContainerIndent">
+				<div class="EmptyBox10"></div>
+
+				<div class="Container50 Responsive50">
+					<div class="ContainerIndent">
+						<div id="j_idt41"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							style="min-height: 400px;" data-widget="widget_j_idt41">
+							<div id="j_idt41_content" class="ui-panel-content ui-widget-content">
+								5
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container50 Responsive50">
+					<div class="ContainerIndent">
+						<div id="j_idt46"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							style="min-height: 400px;" data-widget="widget_j_idt46">
+							<div id="j_idt46_content" class="ui-panel-content ui-widget-content">
+							6
+							
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="EmptyBox20"></div>
+			</div>
+		</div>
+
+		<div class="Container100 leaden-back BorBotLeaden">
+			<div class="ContainerIndent">
+				<div class="EmptyBox10"></div>
+
+				<div class="Container20 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt70"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							data-widget="widget_j_idt70">
+							<div id="j_idt70_content"
+								class="ui-panel-content ui-widget-content">7</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container20 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt75"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							data-widget="widget_j_idt75">
+							<div id="j_idt75_content"
+								class="ui-panel-content ui-widget-content">8</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container20 Responsive">
+					<div class="ContainerIndent">
+						<div id="j_idt80"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							data-widget="widget_j_idt80">
+							<div id="j_idt80_content"
+								class="ui-panel-content ui-widget-content">9</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="Container40 Responsive100">
+					<div class="ContainerIndent">
+						<div id="j_idt85"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all"
+							data-widget="widget_j_idt85">
+							<div id="j_idt85_content"
+								class="ui-panel-content ui-widget-content">10</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="EmptyBox10"></div>
+			</div>
+		</div>
+	</div>
+	<div id="j_idt111"
+		style="width: 32px; height: 32px; position: fixed; right: 12px; bottom: 10px">
+		<div id="j_idt111_start" style="display: none">
+			<img id="j_idt112"
+				src="/sentinel/javax.faces.resource/images/preloader.gif.xhtml;jsessionid=6g5tu6kku3pt1xp1fz9is5z6l?ln=sentinel-layout"
+				alt="" />
+		</div>
+		<div id="j_idt111_complete" style="display: none"></div>
+	</div>
+</h:body>
+
+</html>

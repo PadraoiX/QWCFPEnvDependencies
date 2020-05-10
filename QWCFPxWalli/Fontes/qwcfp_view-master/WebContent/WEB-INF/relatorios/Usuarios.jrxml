@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Usuarios" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a3d14e3-afec-4c3c-b1d6-c77c3da07488">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="areas" class="java.lang.String">
+		<fieldDescription><![CDATA[areas]]></fieldDescription>
+	</field>
+	<field name="usuarios" class="java.lang.String">
+		<fieldDescription><![CDATA[usuarios]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="ab14eebb-521c-4081-ba24-54ea79515b82"/>
+				<staticText>
+					<reportElement x="20" y="20" width="357" height="43" forecolor="#FFFFFF" uuid="e356660b-bd9a-4bc0-9e0b-2764d1896fa0"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Usuários do Sistema]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="23" y="63" width="180" height="20" forecolor="#FFFFFF" uuid="5c2e4c61-10e9-4b44-85bb-d83c379339c9"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Qware Cluster Super Server]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement mode="Opaque" x="-20" y="0" width="203" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="47481fd4-fb99-436a-ae7b-6b1f48b0aff2"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[       Áreas]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="0ddec9a7-4172-4376-8e13-275e03b21162"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="182" y="0" width="393" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="47481fd4-fb99-436a-ae7b-6b1f48b0aff2"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuários]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="183" height="20" uuid="8ceab9cd-4a0d-4829-a85e-fa055266192b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{areas}==null)? "SEM AREA":$F{areas}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f53394a8-5d08-4d70-bf72-800febb00fd5"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="183" y="0" width="370" height="20" uuid="8ceab9cd-4a0d-4829-a85e-fa055266192b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="0e485cf2-20dd-483c-8686-12f030df18f5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="d18fd0ff-8157-458f-91b8-88be3badc1e9"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="0640b2ae-5473-4d03-a1a1-f138f3f3065e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

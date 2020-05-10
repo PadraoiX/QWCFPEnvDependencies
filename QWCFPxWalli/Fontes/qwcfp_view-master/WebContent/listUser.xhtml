@@ -1,0 +1,272 @@
+<HTML 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<ui:composition template="/templates/template-barcelona.xhtml">
+
+<script>
+
+
+</script>
+
+
+	<ui:define name="conteudo">
+	 <style>
+		.ui-widget-content{
+	 		border: none;
+		}
+		#filtro{
+			margin-bottom: 10px;
+		}
+	 </style>
+    <p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />    
+      
+		
+		<p:panel id="panelTable" styleClass="card card-w-title sombraPanel" >
+			<h1>Listar Usuários  - QWCFP </h1>
+       		<p:columnToggler id="columnTogller" datasource="editUsuario" trigger="toggler" />
+       		
+			<div id="filtro" align="right">
+       			<p:commandButton id="toggler" type="button" value="Colunas" styleClass="direitaAlinhar" icon="fa fa-fw fa-columns" />
+       			<p:menuButton id="opcoes" value="Opções">
+					
+					<p:menuitem update=":formDIV:privDialogId" value="Atribuir privilégios" actionListener="#{notiBean.clear}" rendered="#{not empty listMyManagedGroups.myManagedGroups and listMemberBean.member ne null}" oncomplete="PF('privDialogMtLk').show()" icon="fa fa-fw fa-plus-square-o" title="Atribuir privilégios"  process="@this editUsuario" />
+			    	<p:menuitem update=":formDIV:mailUserId" value="Enviar E-mail" rendered="#{listMemberBean.member ne null}" oncomplete="PF('mailDialog').show()" icon="fa fa-fw fa-envelope" title="Enviar E-mail" process="@this editUsuario"  />
+			    	
+			    	<p:menuitem value="Editar Usuário" oncomplete="PF('editUserDialog').show()" update=":formDIV:carDialog" icon="fa fa-fw fa-edit" title="Editar Usuário" process="@this editUsuario" rendered="#{loginBean.isGi() and listMemberBean.member ne null}" />
+					<p:menuitem id="miActiveMemberB"  value="Ativar"  icon="fa fa-fw fa-check-square-o" action="#{listMemberBean.altStatus(true)}" rendered="#{listMemberBean.renderAtiva}"   update=":formDIV:editUsuario,:formDIV:msgs, :formDIV:opcoes" title="Ativar" process="@this editUsuario" />
+					<p:menuitem id="miInactiveMemberB" value="Desativar" icon="fa fa-fw fa-ban"  action="#{listMemberBean.altStatus(false)}" rendered="#{listMemberBean.renderDesativa}" update=":formDIV:editUsuario,:formDIV:msgs, :formDIV:opcoes"  title="Desativar" process="@this editUsuario"/>
+					<p:menuitem id="selectMem" process="@this editUsuario" value="Selecione um membro" rendered="#{listMemberBean.member eq null}"/>
+				</p:menuButton>
+      		</div>
+    		<p:dataTable 
+	    	id="editUsuario" 
+	    	var="car"	    	
+	    	value="#{listMemberBean.members}"      	
+			widgetVar="wdEditUsuario"
+			selection="#{listMemberBean.member}"   	
+			rowKey="#{car.memberId}"
+			selectionMode="single"
+	    	paginatorPosition="bottom"
+	    	resizableColumns="true"	    	  
+	    	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	    	
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Usuários)"  
+	    	rowsPerPageTemplate="10,15,20,25,50,100" 
+	    	rows="10" 
+	    	paginator="true" >
+	    	
+	    	<p:ajax event="rowSelect" listener="#{listMemberBean.render()}" update=":formDIV:opcoes, :formDIV:miActiveMemberB ,:formDIV:miInactiveMemberB" />
+	    	<p:ajax event="contextMenu" update=":formDIV:carDialog, :formDIV:cmEditMembers, :formDIV:opcoes" oncomplete="PF('ctxMenuMembers').show(currentEvent);"  ></p:ajax>
+	    	
+	        <p:column style="font-weight: bold;" filterBy="#{car.memberName}" >
+				<h:outputText value="#{car.memberName}" style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Email" style="font-weight: bold">
+				<h:outputText value="#{car.memberEmail}"
+					style="font-weight: normal;" />
+			</p:column>
+			
+			<p:column headerText="CPF" style="font-weight: bold" rendered="#{loginBean.isGi()}">
+				<h:outputText value="#{car.loginCpfId}" style="font-weight: normal;"
+					converter="converterCpf" />
+			</p:column>
+
+			<p:column headerText="Telefone" 
+				style="font-weight: bold; ">
+				<h:outputText value="#{car.numberPhone1}" style="font-weight: normal;"  converter="converterFone" />
+			</p:column>
+
+			<p:column headerText="Status" sortBy="#{car.statusMemberDomFk}" style="font-weight: bold;">
+				<h:outputText
+					value="#{car.statusMemberDomFk}" converter="#{converterDomain}"	style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Gestor Infra" style="font-weight: bold;">
+				<h:outputText value="#{memberBean.isMemberGi(car.memberEmail)}" style="font-weight: normal;" />
+			</p:column>
+    	</p:dataTable> 
+    	
+    		<p:contextMenu id="cmEditMembers" for="editUsuario" widgetVar="ctxMenuMembers">
+      		<p:menuitem update=":formDIV:privDialogId" value="Atribuir privilégios" actionListener="#{notiBean.clear}" rendered="#{not empty listMyManagedGroups.myManagedGroups}" oncomplete="PF('privDialogMtLk').show()" icon="fa fa-fw fa-plus-square-o" title="Atribuir privilégios"  process="@this editUsuario">
+            </p:menuitem>   
+            <p:menuitem update=":formDIV:mailUserId" value="Enviar E-mail"  oncomplete="PF('mailDialog').show()" icon="fa fa-fw fa-envelope" title="Enviar E-mail" process="@this editUsuario"  >
+			</p:menuitem>   
+    	
+    		<p:menuitem value="Editar Usuário" oncomplete="PF('editUserDialog').show()" update=":formDIV:carDialog" icon="fa fa-fw fa-edit" title="Editar Usuário" process="@this editUsuario" rendered="#{loginBean.isGi()}" />
+			<p:menuitem id="miActiveMember"  value="Ativar"  icon="fa fa-fw fa-check-square-o" action="#{listMemberBean.altStatus(true)}" rendered="#{!listMemberBean.altStatusVis('1')  and loginBean.isGi()}"  update=":formDIV:editUsuario,:formDIV:msgs, :formDIV:opcoes" title="Ativar" process="@this editUsuario" />
+			<p:menuitem id="miInactiveMember" value="Desativar" icon="fa fa-fw fa-ban"  action="#{listMemberBean.altStatus(false)}" rendered="#{!listMemberBean.altStatusVis(0) and loginBean.isGi()}" update=":formDIV:editUsuario,:formDIV:msgs, :formDIV:opcoes" title="Desativar" process="@this editUsuario"/>
+		</p:contextMenu>
+    	
+    	</p:panel>
+    	
+    	<p:dialog id="mailUserId" header="Enviar Menssagem" widgetVar="mailDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="true" width="350" height="300" closeOnEscape="true">
+    	
+				<h:inputHidden value="#{listMemberBean.member.memberEmail}" />
+
+				<div class="ui-g form-group" style="margin-bottom: 16px;">
+    	
+					<div class="ui-g-12">					
+						<h:panelGroup styleClass="md-inputfield">					
+							<p:inputText  value="#{listMemberBean.member.memberEmail}" disabled="true" />
+							<label>Para</label>
+						</h:panelGroup>
+					</div>
+					
+					<div class="ui-g-12">
+						<h:panelGroup styleClass="md-inputfield">
+							<p:inputText id="mail_subject" value="#{memberBean.mailSubject}" required="true" requiredMessage="O assunto é um campo obrigatório"  />
+							<label>Assunto</label>
+						</h:panelGroup>
+					</div>
+					
+					<div class="ui-g-12">
+						<p:inputTextarea  rows="6" cols="32" value="#{memberBean.mailTxt}" placeholder="Corpo" required="true" requiredMessage="O corpo é um campo obrigatório" />
+					</div>
+					
+				</div>
+					
+				
+				<f:facet name="footer">
+					<p:commandButton value="Enviar" action="#{memberBean.sendMail( listMemberBean.member.memberEmail )}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('mailDialog').hide()" icon="fa fa-fw fa-send" update=":formDIV:msgs,:formDIV:editUsuario" process="@this mailUserId"/>
+				</f:facet>
+				
+			
+		</p:dialog>
+		
+			<p:dialog id="privDialogId" header="Atribuir privilégio para #{listMemberBean.member.memberName}" widgetVar="privDialogMtLk" width="600"
+				modal="false" showEffect="fade" hideEffect="fade" resizable="false"
+				closeOnEscape="true" fitViewport="true" closable="true" responsive="true">
+				
+				<h:inputHidden id="grupoId" value="#{notiBean.groupToGrant}" style="font-weight: normal;" />
+				
+				<div class="ui-g form-group" style="margin-bottom: 16px;">
+					<div class="ui-g-12">
+						<p:outputLabel for="privilegios" value="Escolha os privilégios: " />
+						<br/>
+						<p:selectManyCheckbox id="privilegios" columns="2" styleClass="form-group" required="true" requiredMessage="Escolha pelo menos um privilégio"  value="#{notiBean.privSelect}" layout="responsive" >
+							<f:selectItems value="#{notiBean.domainPriv}" var="dom" itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+						</p:selectManyCheckbox>
+					</div>
+					<div class="ui-g-12">
+							<h:outputLabel for="QtdDias" value=" Quantidade de dias: " />
+							<br/>
+							<p:spinner id="QtdDias" value="#{notiBean.qtdDias}" min="0" max="5000" required="true" requiredMessage="A quantidade de dias deve ser maior que 0"/>
+					</div>
+					<div class="ui-g-14">
+						<p:pickList id="group_scoupe_pl" value="#{notiBean.groupToGrantList}"
+								var="group" effect="bounce" itemLabel="#{group.nome}"
+								itemValue="#{group}" showSourceControls="false"
+								showTargetControls="false" responsive="true" showSourceFilter="true"
+								showTargetFilter="true" filterMatchMode="contains"
+								showCheckbox="true" converter="converterMGroupsPickList">
+			
+								<f:facet name="sourceCaption">Grupos gerenciados</f:facet>
+								<f:facet name="targetCaption">Grupos escolhidos.</f:facet>
+							</p:pickList>
+					</div>
+				</div>
+				
+				<f:facet name="footer">
+					<p:commandButton value="Conceder Privilégios" icon="fa fa-fw fa-save"
+								action="#{notiBean.concederPrivGrp( listMemberBean.member )}"  
+								update=":formDIV:msgs, :formDIV:editUsuario"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('privDialogMtLk').hide()" process="privDialogId editUsuario privilegios"/>
+								<p:spacer width="20"/>
+				</f:facet>
+				
+			</p:dialog>
+    	
+    	
+    	
+	 <p:dialog id="carDialog" header="Editar Usuário - QWCFP" widgetVar="editUserDialog" styleClass="sembordas" modal="false"  closeOnEscape="true" width="500"  >		
+				<h:panelGrid  columns="1" cellpadding='4' id="carDetail"   layout="grid" styleClass="ui-panelgrid-blank form-group tamanhoCamanho"
+					rendered="#{not empty listMemberBean.member}">
+					<h:inputHidden value="#{listMemberBean.member.memberId}"
+						style="font-weight: normal;" />
+					 <h:inputHidden value="#{listMemberBean.member.loginCpfId}"
+						style="font-weight: normal;" />
+						
+					<h:inputHidden value="#{listMemberBean.member.areaCodePhone1}"
+						style="font-weight: normal;" /> 
+					<h:inputHidden value="#{listMemberBean.member.areaCodePhone1}"
+						style="font-weight: normal;" />
+
+					<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_USER" value="#{listMemberBean.member.memberName}" size="30" required="true" maxlength="100" requiredMessage="Nome do usuário é obrigatório."/>
+					<label>Nome do Usuário</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+					<p:inputMask id="MEMBER_CPF" value="#{listMemberBean.member.loginCpfId}" mask="999.999.999-99" maxlength="11" required="#{loginBean.cpfRequired}" converter="converterCpf"/>
+					<label>CPF</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_MAIL" value="#{listMemberBean.member.memberEmail}" required="true" maxlength="128" styleClass="tamanhoCamanho" requiredMessage="O e-mail é obrigatório." validatorMessage="E-mail informado é inválido.">
+						<f:validator validatorId="validateEmail" for="MEMBER_MAIL"/>
+						<p:ajax event="change" update="MEMBER_MAIL,:formDIV:msgs" />	
+					</p:inputText>
+					<label>E-Mail</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_PERSONAL_MAIL" value="#{listMemberBean.member.memberEmailPersonal}" maxlength="128" styleClass="tamanhoCamanho" />
+					<label>E-Mail Pessoal</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+			
+					<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="telefone" value="#{listMemberBean.member.numberPhone1}" converter="converterFone"  required="true" styleClass="tamanhoCamanho" maxlength="16" requiredMessage="O telefone é obrigatório."/>
+					<label>Telefone</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>					
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="MEMBER_ADDRESS" value="#{listMemberBean.member.phisicalAddress}" styleClass="tamanhoCamanho" maxlength="100" required="true" requiredMessage="O endereço é obrigatório."/>
+						<label>Endereço</label>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+
+					<p:outputLabel for="MEMBER_CEP" value="CEP:" />
+						<h:panelGroup styleClass="md-inputfield">
+						<p:inputMask id="MEMBER_CEP" value="#{listMemberBean.member.zipCode}" mask="99.999-999" maxlength="10" styleClass="tamanhoCamanho" required="true" requiredMessage="O CEP é obrigatório" validatorMessage="O CEP é inválido."/>
+					</h:panelGroup>
+					<div class="EmptyBox5"></div>
+					
+					<p:selectOneMenu  id="MEMBER_BOSS" value="#{listMemberBean.member.bossIdFk}" style="width:100%" effect="fade">
+						<f:selectItem itemLabel="Chefe da Área" />
+						<f:selectItems value="#{listMemberBean.members}"  var="mem"	itemValue="#{mem.memberId}" itemLabel="#{mem.memberName}" />
+					</p:selectOneMenu>
+					<div class="EmptyBox5"></div>
+
+					<p:selectOneMenu id="MEMBER_AREA" required="true"	style="width:100%" value="#{listMemberBean.member.areaIdFk}" filter="true" effect="fade" requiredMessage="A área de trabalho é obrigatória.">
+						<f:selectItem itemLabel="Área de Trabalho" />
+						<f:selectItems value="#{areasBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+					</p:selectOneMenu>
+					<div class="EmptyBox5"></div>
+					
+					<h:panelGroup id="userIdLdap" style="#{loginBean.authenticationLdap  and loginBean.isGi() ? '' : 'display: none'}" styleClass="md-inputfield" >
+						<p:inputText id="MEMBER_LDAP"  value="#{listMemberBean.member.ldapKeyForCorpAuth}"  style="width:100%" size="30" />
+						<label>User Id Ldap</label>
+					</h:panelGroup>
+					
+				</h:panelGrid>
+
+			<f:facet name="footer">		
+				<p:commandButton value="Alterar"  icon="fa fa-fw fa-save" process="@this carDialog"
+						action="#{listMemberBean.editar(loginBean.isGi())}"
+						update=":formDIV:editUsuario, :formDIV:msgs"
+						oncomplete="if (args &amp;&amp; !args.validationFailed) PF('editUserDialog').hide()"   />
+			</f:facet>
+		</p:dialog>
+    	
+   		
+	</ui:define>
+</ui:composition>
+</HTML>

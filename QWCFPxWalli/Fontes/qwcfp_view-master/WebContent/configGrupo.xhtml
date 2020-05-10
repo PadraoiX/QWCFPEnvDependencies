@@ -1,0 +1,889 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	<style type="text/css">
+	
+			.logoBlueLink:hover {
+				background: #C4C4C4 -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
+				color: #25aae1;
+				
+			}
+			.td1Style{
+				width: 20% !important;
+    			padding: 8px !important;
+    			font-weight: bold;
+    			color: #6a6a7d;
+			}
+			
+			.rowColor{
+				background: #f4f4f4;
+			}
+			
+			table{
+				width: 100%;
+			}
+			
+			.ui-panelgrid .ui-panelgrid-cell {
+			    border-width: 1px;
+			    border-style: none;
+			    border-color: navy;
+			    padding: 4px 10px;
+			}
+			
+			.altura20{
+				height: 20px;
+			}
+	.largura10{
+		width: 10px;
+	}
+			
+	.borda{
+			border: solid 1px #d8d8d8 !important;
+			}
+	
+		</style>
+		<p:growl id="growl" life="#{loginBean.messageTime}" showDetail="true" sticky="false" />
+		<!-- <h1>
+			Configuração do Grupo -
+			<p:commandLink type="submit" action="#{groupBean.setarId(groupBean.myGroupDeta, false)}" disabled="#{groupBean.myWrappedGroupDeta.blindPrivileges or groupBean.myWrappedGroupDeta.myGroupsEx.groupStatus != 'ATIVO'}" >
+				<h:outputText id="configTitleConfig2" value="#{groupBean.myGroupDeta.nome.toUpperCase()}" style="color:#25aae1" styleClass="logoBlueLink"/>
+			</p:commandLink>
+		</h1> -->
+		
+		<p:panel  >
+			<f:facet name="header">Configuração do Grupo -
+			<p:commandLink id="clconfigTitleConfig" process="@this" action="#{groupBean.setarId(groupBean.myGroupDeta, false)}" disabled="#{groupBean.myWrappedGroupDeta.blindPrivileges or groupBean.myWrappedGroupDeta.myGroupsEx.groupStatus != 'ATIVO'}" >
+				<h:outputText id="configTitleConfig" value="#{groupBean.myGroupDeta.nome.toUpperCase()}" style="color: #ffc107;font-weight: bold;" styleClass="logoBlueLink"/>
+			</p:commandLink></f:facet>
+		<p:tabView id="configTabView" dynamic="true" cache="true" style="border: none" >
+			<p:tab title="Detalhes do Grupo">
+				<p:panelGrid id="groupDetailTab"  styleClass="nba-grid"  cellpadding="2"  >
+					
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Nome do Grupo:</p:column>
+                    	<p:column style="font-weight: ; ">#{groupBean.myGroupDeta.nome}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Descrição:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">#{groupBean.myGroupDeta.description}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Dono do Grupo:</p:column>
+                    	<p:column style="font-weight: ; ">#{groupBean.myGroupDeta.ownerCreator}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Data Criação:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor"><h:outputText value="#{groupBean.myGroupDeta.creationDate}" converter="converteData" size="10" locale="pt" /></p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Data limite de envio:</p:column>
+                    	<p:column style="font-weight: ; "><h:outputText value="#{groupBean.myGroupDeta.inputDateLimit}" converter="converteData" size="10" locale="pt" /></p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Data limite de download:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor"><h:outputText value="#{groupBean.myGroupDeta.outputDateLimit}" converter="converteData" size="10" locale="pt" /></p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Dias Limite Acesso:</p:column>
+                    	<p:column style="font-weight: ; ">#{groupBean.myGroupDeta.daysLimitDiscart}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Gerente do Grupo:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">#{memberBean.managerGroup(groupBean.myGroupDeta.managerGroup)}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Área Organizacional:</p:column>
+                    	<p:column style="font-weight: ; ">#{areasBean.areaManaged(groupBean.myGroupDeta.areaId)}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Grupo de Subordinação:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">#{groupBean.subordinado(groupBean.myGroupDeta.subordinateGroup)}</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Permite Versionamento: </p:column>
+                    	<p:column style="font-weight: ; ">
+                    		<h:outputText rendered="#{groupBean.myGroupDeta.aceptVersion == 'S'}" value="SIM" />
+							<h:outputText rendered="#{groupBean.myGroupDeta.aceptVersion == 'N'}" value="NÃO" />
+                    	</p:column>                    	
+                    </p:row>
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Limite de Versões:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">
+                    		<h:outputText value="#{groupBean.myGroupDeta.versionLimit}" rendered="#{groupBean.myGroupDeta.aceptVersion == 'S'}" />
+                    		<h:outputText value="#{groupBean.myGroupDeta.versionLimit}" rendered="#{groupBean.myGroupDeta.aceptVersion == 'N'}" />
+                    	</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Apelido do Grupo:</p:column>
+                    	<p:column style="font-weight: ; ">#{groupBean.myGroupDeta.apelido}</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Espaço Compartilhado:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">
+                    		<h:outputLabel value="#{groupBean.convertByte(groupBean.myWrappedGroupDeta.myGroupsEx.groupChildreanSpace)} / #{groupBean.convertByte(groupBean.myWrappedGroupDeta.myGroupsEx.groupTotalSpace)}" rendered="#{not empty groupBean.myWrappedGroupDeta.myGroupsEx.groupSpaceLimit}" />
+                    	</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Espaço limite do grupo:</p:column>
+                    	<p:column style="font-weight: ; ">
+                    		<h:outputLabel value="#{groupBean.convertByte(groupBean.getOcupiedSpace(groupBean.myWrappedGroupDeta.myGroupsEx))} / #{groupBean.convertByte(groupBean.myWrappedGroupDeta.myGroupsEx.groupOriginalSpaceLimit)}" rendered="#{not empty groupBean.myWrappedGroupDeta.myGroupsEx.groupSpaceLimit}"/>
+                    	</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Espaço Proposto:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">
+                    		<h:outputLabel	value="#{groupBean.convertByte(groupBean.myGroupDeta.sizeInBytes)}" rendered="#{empty groupBean.myWrappedGroupDeta.myGroupsEx.groupSpaceLimit}"/>
+                    	</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Tipo de armazenamento:</p:column>
+                    	<p:column style="font-weight: ; ">#{groupBean.returnDomain(groupBean.myGroupDeta.fileSystemStorageDomain)}</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%" styleClass="rowColor">Tipo de notificação:</p:column>
+                    	<p:column style="font-weight: ; " styleClass="rowColor">#{groupBean.returnDomain(groupBean.myGroupDeta.notificationTypeDomain)}</p:column>                    	
+                    </p:row>
+       
+					<h:outputText value="" styleClass="td1Style"  rendered="#{groupBean.myGroupDeta.aceptVersion == 'S'}" />
+					
+				</p:panelGrid>
+				
+					<div>
+					<div class="altura20" style="margin-top:10px;"></div>
+						 <p:commandButton oncomplete="PF('carDialog2').show(); disableTxt();" icon="fa fa-fw fa-edit" title="Editar Grupo" rendered="#{groupBean.isGg()}" process="@this" >
+							<p:resetInput target="formDIV:carDialog2" />
+						</p:commandButton> 
+				
+						<p:commandButton   style="margin-left:20px;" rendered="#{groupBean.myGroupDeta.groupId != 0}" onclick="PF('solicitarPermissao').show()" icon="fa fa-fw fa-plus-square-o" title="Solicitar Permissão"    >
+							<p:resetInput target="formDIV:solicitarPermissao" />
+						</p:commandButton>
+					</div>
+			</p:tab>
+			 <p:tab title="Membros do Grupo">
+			 	<p:remoteCommand id="updateTableMembers" name="updateTableMembers" process="@this" update="editUsuario" />
+				<p:dataTable
+					id="editUsuario"
+					var="car"
+					value="#{listMemberOfGroupBean.memberMyGroup}"
+					rows="10"
+					rowKey="#{car.myGroupsEx}"
+			    	rowsPerPageTemplate="10,15,20,25,50,100" 
+			    	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Membros)" 
+			    	paginatorPosition="bottom"
+			    	paginator="true" >
+
+					<p:column style="font-weight: bold;" headerText="Nome"> <!-- TODO readicionar filtro por nome que foi removido por perder informações após a filtragem. -->
+						<h:outputText value="#{car.myGroupsEx.memberName}" style="font-weight: normal;" />
+					</p:column>
+
+					
+					<p:column id="gestorColumn" headerText="Gestor" style="font-weight: bold; width:100px" rendered="#{groupBean.isGg()}">
+						<p:panelGrid style="border: none; text-align: center;" rendered="#{car.manager}" >
+							<i class="fa fa-fw fa-check"></i>
+						</p:panelGrid>
+						<p:panelGrid style="border: none; text-align: center;" rendered="#{!car.manager}" >
+							<i class="fa fa-fw fa-close"></i>
+						</p:panelGrid>
+					</p:column>
+					
+					<p:column headerText="Ações"  style="width:120px;text-align: center"  rendered="#{groupBean.isGg()}" >
+						<p:commandButton update=":formDIV:privDialogo, :formDIV:configTabView:editUsuario" oncomplete="PF('privDialogo').show()" action="#{notiBean.fillPrivs()}" icon="fa fa-fw fa-edit" title="Privilégios" process="@this editUsuario">
+							<f:setPropertyActionListener value="#{car.myGroupsEx}"	target="#{notiBean.wrappedMember}" />
+						</p:commandButton>
+						<p:commandButton update=":formDIV:privDetail"   oncomplete="PF('privDialog').show()" icon="fa fa-fw fa-plus-square-o"  action="#{listMemberOfGroupBean.setMemberId(car.myGroupsEx.memberId)}" title="Atribuir privilégios" process="@this editUsuario">
+							<f:setPropertyActionListener value="#{car.myGroupsEx}"	target="#{notiBean.wrappedMember}" />
+						</p:commandButton>
+						<p:commandButton update=":formDIV:configTabView:editUsuario, :formDIV:configTabView, :formDIV:growl"  action="#{listMemberOfGroupBean.removerMembro(car.myGroupsEx.memberId)}" icon="fa fa-fw fa-remove" title="Remover Usuário do Grupo" process="@this editUsuario" >
+						<p:confirm header="Confirmação" message="Tem certeza?"	icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:tab>
+			
+			<p:tab title="Validação" rendered="#{groupBean.isGg()}">
+				<p:growl id="messagesLayout" life="#{loginBean.messageTime}" showDetail="true" />
+			
+				<div class="ui-g">
+					<div class="ui-g-6 ui-lg-12">
+					<p:selectOneMenu id="listLayouts" filter="true"
+							filterMatchMode="startsWith" value="#{groupBean.myGroupDeta.layoutIdFk}"
+							required="true" style="margin-right: 10px;"
+							styleClass="direitaAlinhar" effect="fade"
+							requiredMessage="Selecione um layout!">
+							<p:ajax listener="#{layoutBean.onLayoutChange(groupBean.myGroupDeta.layoutIdFk)}" update="fieldsetLayout, tabelita" />
+							<f:selectItem itemLabel="Escolha um layout" />
+							<f:selectItems value="#{layoutBean.listLayouts}" var="layout" itemValue="#{layout.id.intValue()}" itemLabel="#{layout.name}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-g-6 ui-lg-12">
+							<p:commandButton process="@this listLayouts" value="Associar Layout" styleClass="direitaAlinhar"
+							icon="fa fa-fw fa-check-square-o" action="#{groupBean.editar}"
+							update="listLayouts,:formDIV:configTabView:messagesLayout"
+							 />
+					</div>
+				</div>
+				
+				
+				
+			<p:fieldset id="fieldsetLayout" legend="#{layoutBean.header}" style="margin-bottom:20px">
+	
+				<h:dataTable var="record" value="#{layoutBean.layout.records}" id="tabelita" reflow="true" >
+					<p:column headerText="#{record.name}">
+						<h1 style="text-transform: capitalize;">#{record.name}</h1>
+						
+						<p:dataTable var="fields" value="#{record.listFields}" reflow="true">
+						
+							<p:column headerText="Nome">
+						        <h:outputText value="#{fields.name}" />
+						    </p:column>
+						    
+						    <p:column headerText="Tamanho">
+						        <h:outputText value="#{fields.length}" />
+						    </p:column>
+						    
+						    <p:column headerText="Obrigatório"  rendered="#{fields.required != null}">
+						        <h:outputText value="#{fields.required}" />
+						    </p:column>
+						    
+						    <p:column headerText="Obrigatório" rendered="#{fields.required == null}">
+						        <h:outputText value="❌" />
+						    </p:column>
+						    
+						    <p:column headerText="Tipo" >
+						        <h:outputText value="#{fields.especialType}" />
+						    </p:column>
+						    
+						    <p:column headerText="Formato" >
+						        <h:outputText value="#{fields.format}" />
+						    </p:column>
+						    
+						    <p:column headerText="Validação" >
+						        <h:outputText value="#{fields.validate}" />
+						    </p:column>
+						    
+						     <p:column headerText="Identificador" >
+						        <h:outputText value="#{fields.literal}" />
+						    </p:column>
+						 
+						</p:dataTable>
+	 
+					</p:column>
+				</h:dataTable>
+	
+			</p:fieldset>
+				  	
+			</p:tab>
+			
+			
+		
+
+			<p:tab title="Expurgados" rendered="#{groupBean.isGg()}">
+				<p:growl id="messages" life="#{loginBean.messageTime}" showDetail="true" />
+
+				<h1>Arquivos para Expurgo - QWCFP</h1>
+
+				<p:panelGrid cellpadding="2" styleClass="filtrotable semBorda">				
+					<p:row>
+						<p:column>
+							<p:selectOneMenu id="filtro2" value="#{fileBean.operation}"
+								panelStyle="width:180px" effect="fade">
+								<f:selectItem itemLabel="Selecione..." />
+								<f:selectItems value="#{fileBean.listFiltro}" var="fil"
+									itemLabel="#{fil}" itemValue="#{fil}" />
+								<p:ajax
+									update=":formDIV:configTabView:listFile,:formDIV:configTabView:messages"
+									event="change" listener="#{fileBean.updateFilesPurgueGrupo()}"
+									process="@this" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<div>
+								<h:panelGroup>
+									<p:outputLabel for="qtdeDias" value="Quantidade de dias: " />
+									<p:spacer width="15" />
+									<h:inputText id="qtdeDias" value="#{fileBean.qtdeDias}" />
+									<p:spacer width="15" />
+									<p:commandButton icon="fa fa-fw fa-check"
+										title="Adiar data de Validade" process="@this qtdeDias :formDIV:configTabView:listFile"
+										actionListener="#{fileBean.adiarDataValidadeGI(false)}"
+										update=":formDIV:configTabView:listFile,:formDIV:configTabView:messages"
+										ajax="true" />
+								</h:panelGroup>
+							</div>
+						</p:column>
+						<p:column style="text-align: right;">
+							<p:commandButton process="@this listFile" value="Autorizar Expurgo"
+								icon="fa fa-fw fa-check-square-o"
+								actionListener="#{fileBean.autorizarExpurgo( false )}"
+								update=":formDIV:configTabView:listFile,:formDIV:configTabView:messages"
+								 />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:dataTable id="listFile" var="car"
+					value="#{fileBean.fileListLazy}" scrollRows="100" rows="100"
+					liveScroll="true" scrollHeight="500" lazy="true" scrollable="true"
+					selection="#{fileBean.selectedFiles}" rowKey="#{car.fileid}"
+					emptyMessage="Não há arquivos a serem expurgados!">
+
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center"
+						rendered="#{(fileBean.operation) != 'Expurgados Autorizado'}" />
+
+					<p:column headerText="Nome" style="font-weight: bold">
+						<h:outputText value="#{car.fileName.toUpperCase()}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Proprietário"
+						style="font-weight: bold;  width:150px">
+						<h:outputText value="#{car.ownerMemberName.toUpperCase()}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Status"
+						style="font-weight: bold;  width:150px">
+						<h:outputText value="#{fileBean.status(car.fileid)}"
+							style="font-weight: normal;" />
+					</p:column>
+
+					<p:column headerText="Data de Criação"
+						style="font-weight: bold;  width:120px">
+						<h:outputText value="#{car.creationDate}" converter="converteData"
+							style="font-weight: normal;" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:tab>
+
+			<p:tab title="Associar Regras" rendered="#{groupBean.isGg()}">
+				<p:growl id="msg" showDetail="true" life="#{loginBean.messageTime}" escape="false" />
+		<h:panelGrid columns="1" >
+				<p:pickList id="pickList" value="#{assignedBean.listModelRules}"
+					var="rule" effect="bounce" itemLabel="#{rule.name}"
+					itemValue="#{rule}" showSourceControls="false"
+					showTargetControls="true" responsive="true" showSourceFilter="true"
+					showTargetFilter="true" filterMatchMode="contains"
+					showCheckbox="true" converter="converterRulesPickList">
+
+					<f:facet name="sourceCaption">Regras Não associadas</f:facet>
+					<f:facet name="targetCaption">Regra Associadas</f:facet>
+
+					<p:ajax event="transfer" listener="#{assignedBean.onTransfer}"
+						update="msg,pickList" />
+					<p:ajax event="select" listener="#{assignedBean.onSelect}"
+						update="msg, ruleDetail" />
+					<p:ajax event="unselect" listener="#{assignedBean.onUnselect}"
+						update="msg" />
+					<p:ajax event="reorder" listener="#{assignedBean.onReorder}"
+						update="msg" />
+				</p:pickList>
+				
+				<p:separator></p:separator>
+				
+				<p:panelGrid id="ruleDetail"  cellpadding="10" columnClasses="label,value">
+					<f:facet name="header">
+						<p:row>
+							<p:column>Propriedades</p:column>
+							<p:column>Valor</p:column>
+						</p:row>
+					</f:facet>
+					
+					<p:row>
+						<p:column style="font-weight: bold;">Nome</p:column>
+						<p:column>#{assignedBean.ruleSelected.name}</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="font-weight: bold;">Descrição</p:column>
+						<p:column >#{assignedBean.ruleSelected.description}</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="font-weight: bold;">Status</p:column>
+						<p:column  ><h:outputLabel   value="#{assignedBean.ruleSelected.status}"  converter="#{converterDomain}" /></p:column>
+					</p:row>
+					<p:row>
+						<p:column style="font-weight: bold;">Código da regra</p:column>
+						<p:column  >#{assignedBean.ruleSelected.sourceRuleJexl}</p:column>
+					</p:row>	
+					<p:row>
+						<p:column style="font-weight: bold;">Parâmetros</p:column>
+						<p:column  >#{assignedBean.ruleSelected.jsonStringParm}</p:column>
+					</p:row>		
+					
+				</p:panelGrid>
+		</h:panelGrid>
+		</p:tab>
+			<p:tab title="Histórico" id="tabHist"  rendered="#{groupBean.isGg()}" >
+				<p:dataTable id="tableHist" var="car"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Elementos)"
+					rowsPerPageTemplate="10,15,20,25,50,100,500,1000"
+					value="#{listNotifyBean.listNotifyLazy}" paginatorPosition="bottom" emptyMessage="Sem histórico" 
+					 rows="10" paginator="true"
+					lazy="true">
+
+					<p:column headerText="Data de Criação" style="width:150px" sortBy="#{car.creationDate}">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteDataHist" />
+					</p:column>
+
+					<p:column headerText="Mensagem">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+
+					<p:column headerText="Usuário" style="width:150px">
+						<h:outputText value="#{car.creatorMemberId}"
+							converter="#{memberConverter}" style="font-weight: normal" />
+					</p:column>
+
+
+				</p:dataTable>
+			</p:tab>
+
+			<p:tab title="Solicitações" id="tabSoli"  rendered="#{groupBean.isGg()}">
+				<p:dataTable resizableColumns="true" id="listGG" border="1"
+					cellspacing="0" cellpadding="2" var="car"
+					value="#{notiGroupBean.notifyMyGroup}"
+					rowsPerPageTemplate="5,10,15"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Notificações)"
+					rows="10" paginatorPosition="bottom" paginator="true" emptyMessage="O grupo não novas solicitações">
+
+					<p:column headerText="Data de Criação" style="width:150px">
+						<h:outputText value="#{car.creationDate}"
+							style="font-weight: normal" converter="converteData" />
+					</p:column>
+
+					<p:column headerText="Mensagem">
+						<h:outputText value="#{car.messageText}"
+							style="font-weight: normal" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:carDetail, :formDIV:configTabView:editUsuario" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit" title="Escolher privilégios para atribuir" process="@this">
+							<f:setPropertyActionListener value="#{car}" 	target="#{notiGroupBean.notification}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:tab>
+	
+			
+			<p:tab title="Convites" id="tabInvite"  rendered="#{groupBean.isGg()}">
+				<p:remoteCommand id="updateTabInvite" name="updateTabInvite" process="@this"
+				update="inviteTable" actionListener="#{listInvitedBean.updateList()}" />
+				<p:growl id="growlConv" showDetail="true" life="#{loginBean.messageTime}" sticky="false" />
+				<h3>Convide usuários pelo email</h3>
+				<h:panelGrid columns="1"   >
+
+					<p:inputTextarea id="emailsInputArea" styleClass="borda" rows="3" cols="100" value="#{memberInvitedBean.emails}" autoResize="false" />
+					<p:commandButton value="Enviar"
+						action="#{memberInvitedBean.send}" type="submit" process="@this emailsInputArea"
+						icon="fa fa-fw fa-send-o"  update="growlConv" oncomplete="updateTabInvite()" />
+				</h:panelGrid>
+			
+				<p:dataTable id="inviteTable" var="car"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Usuários)"
+					value="#{listInvitedBean.invitedList}"
+					paginatorPosition="bottom" rowsPerPageTemplate="10,15,20,25,50,100"  rows="10"
+					emptyMessage="Não há Membros Pendentes!"
+					paginator="true">
+
+					<p:column style="font-weight: bold;" filterBy="#{car.email}">
+						<h:outputText value="#{car.email}"
+							style="font-weight: normal;" />
+					</p:column>
+
+
+					<!-- <p:column headerText="CPF" style="font-weight: bold">
+						<h:outputText value="#{car.loginCpfId}"
+							style="font-weight: normal;" converter="converterCpf" />
+					</p:column> -->
+
+					<p:column headerText="Status"
+						style="font-weight: bold; width:100px">
+						<h:outputText value="#{car.status}" style="font-weight: normal;" />
+					</p:column>
+
+					<p:column style="width:80px;text-align: center">
+						<p:commandButton update=":formDIV:acceptMembDlgId, :formDIV:configTabView:inviteTable" oncomplete="PF('acceptMembDlgWid').show()" icon="fa fa-fw fa-edit" title="Aceitar" process="@this" >
+							<f:setPropertyActionListener value="#{car}" target="#{listInvitedBean.invitation}"  />
+						</p:commandButton>
+						<p:commandButton oncomplete="PF('recusarMember').show()"  icon="fa fa-fw fa-remove" title="Recusar" process="@this">
+							<f:setPropertyActionListener value="#{car}"	target="#{listInvitedBean.invitation}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:tab>
+
+		</p:tabView>
+		</p:panel>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	    <p:dialog header="Recusar Membro"
+					widgetVar="recusarMember" modal="false" showEffect="fade"
+					hideEffect="fade" resizable="false" closeOnEscape="true">
+					<p:outputPanel id="recusarMember">
+						<h:panelGrid columns="1" cellpadding="2"
+							columnClasses="label,value">
+							
+							<h:outputText value="Justificativa para recusar o membro"	style="font-weight: bold;"/>
+
+							<p:inputTextarea rows="5" cols="30"
+								value="#{listInvitedBean.justificativa}"   counter="displayRecMem"
+								maxlength="1000" counterTemplate="{0} caracácteres disponíveis." 
+								style="width: 400px;"
+								autoResize="false" />
+						</h:panelGrid>
+						<h:outputText id="displayRecMem" />
+						<br/>
+					</p:outputPanel>
+						<p:commandButton value="Recusar" icon="fa fa-fw fa-check-square-o"
+							type="submit" action="#{listInvitedBean.refusedInvitedMember()}" process="@this recusarMember"
+							update="growl, :formDIV:configTabView:inviteTable"	oncomplete="PF('recusarMember').hide(),  updateTabInvite()" />
+					<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('recusarMember').hide()"  />
+				</p:dialog>
+	    
+	    <p:dialog id="acceptMembDlgId" header="Seleção de privilégios" widgetVar="acceptMembDlgWid" width="450"
+				modal="false" showEffect="fade" hideEffect="fade" resizable="false"
+				closeOnEscape="true" fitViewport="true" closable="true" responsive="true">
+				
+					<p:outputPanel id="privDetailPan" >
+						<h:panelGrid  columns="2" cellpadding="2" columnClasses="label,value" border="0">
+
+							<f:facet name="header">
+							</f:facet>
+							
+							<!-- <h:outputText id="nomeMember_3" value="#{listInvitedBean.member.memberName}" />
+							<h:inputHidden id="nomeMemberpt_3" value="#{listInvitedBean.member}"	style="font-weight: normal;" /> -->
+
+							<p:outputLabel for="privilegios_3" value="Privilégios: " />
+							<h:column>
+								<p:selectManyCheckbox id="privilegios_3"
+									value="#{listInvitedBean.privSelect}" layout="grid" columns="1">
+									<f:selectItems value="#{notiBean.domainPriv}" var="dom"
+										itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+								</p:selectManyCheckbox>
+							</h:column>
+							
+							<h:outputLabel for="QtdDias_3" value=" Quantidade de dias: " />
+							<p:spinner id="QtdDias_3" value="#{listInvitedBean.qtdDays}" min="0" max="5000"/>
+							
+						</h:panelGrid>
+					</p:outputPanel>
+							         	<div class="altura20"></div>   
+							<p:commandButton value="Conceder Privilégios" icon="fa fa-fw fa-save"
+								action="#{listInvitedBean.activate('true')}"  
+								update="growl, :formDIV:configTabView:inviteTable"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('acceptMembDlgWid').hide(), updateTabInvite()" process="@this privDetailPan :formDIV:configTabView:inviteTable"/>
+								<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('acceptMembDlgWid').hide()"  />
+			  	<div class="altura20"></div>
+			</p:dialog>
+		
+		<p:dialog id="dialogGrantSolicit"
+			header="Autorizar privilégio - #{groupBean.myGroupDeta.nome}" widgetVar="carDialog"
+			modal="false" showEffect="fade" hideEffect="fade" resizable="false"
+			closeOnEscape="true">
+
+			<p:outputPanel id="carDetail">
+				<h:panelGrid columns="2" cellpadding="2" rendered="#{not empty notiGroupBean.notification}" columnClasses="label,value">
+
+					<f:facet name="header">
+					</f:facet>
+
+					<h:outputText id="nomeMember" value="#{notiGroupBean.notification.creatorMemberId}" converter="#{memberConverter}" />
+					<h:inputHidden id="grupoId"
+						value="#{notiGroupBean.notification.groupScopeId}"
+						style="font-weight: normal;" />
+
+					<p:outputLabel for="privilegios_2" value="Privilégios: " />
+					<p:selectManyCheckbox id="privilegios_2"
+						value="#{notiGroupBean.privSelect}" layout="grid" columns="1">
+						<f:selectItems value="#{notiBean.domainPriv}" var="dom"
+							itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+					</p:selectManyCheckbox>
+
+					<h:outputLabel for="QtdDias" value="Quantidade de dias: " />
+					<p:spinner id="QtdDias"
+						value="#{notiGroupBean.notification.qtdDias}" min="1" max="5000" />
+
+				</h:panelGrid>
+
+			</p:outputPanel>
+			<div class="altura20"></div>
+				<p:commandButton value="Conceder Privilégios"
+					icon="fa fa-fw fa-save" action="#{notiGroupBean.concederPrivGrp()}"
+					update=":formDIV:configTabView:listGG, growl"  process="@this carDetail :formDIV:configTabView:listGG"
+					oncomplete="handleDialogSubmit(args, 'carDialog')" />
+						<p:spacer width="20"/>
+			  	<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('carDialog').hide()"  />
+			  	<div class="altura20"></div>
+		</p:dialog>
+
+		<p:dialog header="Editar Grupo -  #{groupBean.myGroupDeta.nome}" id="carDialog2" widgetVar="carDialog2" width="400" height="600"
+			modal="false" showEffect="fade" hideEffect="fade" resizable="false" fitViewport="true"
+			closeOnEscape="true">
+
+				<h:panelGrid id="editarGrupoPanel" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" style="width: 100%; border: none;">
+					<f:facet name="header">
+					</f:facet>
+
+					<h:inputHidden value="#{groupBean.myGroupDeta.groupId}" style="font-weight: normal;" />
+					<h:inputHidden value="#{groupBean.myGroupDeta.groupId}" style="font-weight: normal;" />
+
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="grupo_Name" value="#{groupBean.myGroupDeta.nome}" required="true" requiredMessage="O nome do grupo é obrigatório." maxlength="100" style="width:100%;"/>
+						<label>Nome</label>
+					</h:panelGroup>
+
+					<p:outputLabel for="grupo_ShortDescription" value="Descrição:" />
+					<p:inputTextarea id="grupo_ShortDescription" value="#{groupBean.myGroupDeta.description}" cols="32" maxlength="2000" requiredMessage="A descrição é obrigatória." required="true"/>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="grupo_OwnerCreator" size="30" value="#{groupBean.myGroupDeta.ownerCreator}" maxlength="100" requiredMessage="O campo dono do grupo é obrigatório." required="true"/>
+						<label>Dono do Grupo</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="grupo_Acronym" value="#{groupBean.myGroupDeta.apelido}" size="30" maxlength="20" requiredMessage="O apelido do grupo é obrigatório" validator="validateGroupAlias" required="true"/>
+						<label>Apelido do grupo</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="grupo_DaysLimitDiscard" value="#{groupBean.myGroupDeta.daysLimitDiscart}" size="6" requiredMessage="É obrigatório informar os dias limites de arquivo." required="true" maxlength="6"/>
+						<label>Dias Limite de arquivo</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:calendar id="grupo_InputDateLimiteX" pattern="dd/MM/yyyy" value="#{groupBean.myGroupDeta.inputDateLimit}" size="10" locale="pt" converter="converteData" requiredMessage="A data limite de envio é obrigatória." required="true"/>
+						<label>Data Limite Envio</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:calendar id="grupo_OutputDateLimiteX" pattern="dd/MM/yyyy" value="#{groupBean.myGroupDeta.outputDateLimit}" size="10"   locale="pt" requiredMessage="A data limite de download é obrigatória."  converter="converteData" required="true"/>
+						<label>Data Limite Download</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+					
+					<p:outputPanel>
+						<h:panelGrid columns="3" cellpadding="2" id="spaceGrid">
+							<p:selectOneMenu value="#{groupBean.spaceOperation}">
+								<f:selectItem itemLabel="+" itemValue="add" />
+								<f:selectItem itemLabel="-" itemValue="sub" />
+							</p:selectOneMenu>
+
+							<p:inputText id="grupo_SpaceLimit_edit"
+								value="#{groupBean.alteredSpace}" />
+
+							<p:selectOneMenu value="#{groupBean.spaceUnitSymbol}">
+								<f:selectItem itemLabel="MB" itemValue="MB" />
+								<f:selectItem itemLabel="GB" itemValue="GB" />
+								<f:selectItem itemLabel="TB" itemValue="TB" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+					</p:outputPanel>
+					<div class="altura20"></div>
+
+					<p:outputLabel for="grupo_AceptVersioning" value="Permite Versionamento:" />
+					<p:selectOneRadio id="grupo_AceptVersioning" value="#{groupBean.myGroupDeta.aceptVersion}" style="width:100%">
+						<f:selectItem itemLabel="Sim" itemValue="S" />
+						<f:selectItem itemLabel="Não" itemValue="N" selected="true" />
+						<p:ajax event="change" update="grupo_FileLimtVersions"  oncomplete="disableTxt();"  process="@this" />
+					</p:selectOneRadio>
+					<div class="altura20"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputMask id="grupo_FileLimtVersions" required="#{groupBean.myGroupDeta.aceptVersion eq 'S'}" style="width:100%" value="#{groupBean.myGroupDeta.versionLimit}" validator="validateVLimit" />
+						<label>Limite de Versões</label>
+					</h:panelGroup>
+					<div class="altura20"></div>
+
+					<p:selectOneMenu id="grupo_GroupManagerx" value="#{groupBean.myGroupDeta.managerGroup}" filter="true" filterMatchMode="startsWith" style="width:100%" effect="fade" required="true" requiredMessage="Selecione o usuário dono do grupo!">
+						<f:selectItem itemLabel="Selecione Gerente do Grupo" />
+						<f:selectItems value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+					</p:selectOneMenu>
+					<div class="altura20"></div>
+
+					<p:outputLabel for="grupo_SupportPerson1" value="Suporte 1:" />
+					<p:selectOneMenu id="grupo_SupportPerson1" value="#{groupBean.myGroupDeta.suporte1}" style="width:100%" effect="fade" required="true" requiredMessage="Selecione o primeiro usuário de suporte!.">
+						<f:selectItem itemLabel="Selecione Suporte 1" />
+						<f:selectItems value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+					</p:selectOneMenu>
+					<div class="altura20"></div>
+
+					<p:selectOneMenu id="grupo_SupportPerson2" value="#{groupBean.myGroupDeta.suporte2}" style="width:100%" effect="fade" required="true" requiredMessage="Selecione o segundo usuário de suporte!">
+						<f:selectItem itemLabel="Selecione Suporte 2" />
+						<f:selectItems value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+					</p:selectOneMenu>
+					<div class="altura20"></div>
+					
+					<p:selectOneMenu id="MEMBER_AREA" value="#{groupBean.myGroupDeta.areaId}" style="width:100%" required="true" effect="fade">
+						<f:selectItem itemLabel="Selecione Área de Trabalho" />
+						<f:selectItems value="#{areasBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+					</p:selectOneMenu>
+					<div class="altura20"></div>
+					<p:selectOneMenu id="grupo_Storage" value="#{groupBean.myGroupDeta.fileSystemStorageDomain}" required="true" style="width:100%" effect="fade" requiredMessage="Selecione o tipo de armazenamento.">
+						<f:selectItem itemLabel="Selecione o tipo de armazenamento" />
+						<f:selectItems  value="#{groupBean.storageType}" var="type" itemValue="#{type.id}"  itemLabel="#{type.description}"/>
+					</p:selectOneMenu>       
+				</h:panelGrid>
+
+			
+				
+			<f:facet name="footer">
+	        		<p:commandButton value="Salvar" icon="fa fa-fw fa-save" action="#{groupBean.editar}" process="@this editarGrupoPanel spaceGrid" update="growl,:formDIV:configTabView:groupDetailTab, :formDIV:configTitleConfig, :formDIV:editarGrupoPanel" oncomplete="handleDialogSubmit(args, 'carDialog2')">
+	        			<p:resetInput target="formDIV:spaceGrid"></p:resetInput>
+	        		</p:commandButton>
+			</f:facet>
+				
+		</p:dialog>
+
+		<p:dialog  id="solPrivDialog" 
+			widgetVar="solicitarPermissao" header="Solicitar Privilégio -  #{groupBean.myGroupDeta.nome}" modal="false"  resizable="false"
+			draggable="false" responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<p:outputLabel for="privilegios" value="Escolha os privilégios: " />
+					<br/>
+					<p:selectManyCheckbox id="privilegios" value="#{notiBean.privSelectSol}"  layout="responsive" columns="2" styleClass="form-group" required="true" requiredMessage="Escolha pelo menos um privilégio"   >
+						<f:selectItems value="#{notiBean.domainPrivSol}" var="dom" itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+					</p:selectManyCheckbox>
+				</div>
+				<div class="ui-g-12">
+					<p:inputTextarea id="justificativaPriv" style="width:100%"  placeholder="Justificativa" value="#{notiBean.justificativa}"  required="true" requiredMessage="A justificativa é um campo obrigatório" />
+				</div>
+			</div>
+
+			<f:facet name="footer">
+				<p:commandButton value="Solicitar" icon="fa fa-fw fa-save"
+				actionListener="#{notiBean.solicitarPrivilegio()}" update="growl,solPrivDialog"
+				oncomplete="handleDialogSubmit(args, 'solicitarPermissao')" process="@this solPrivDialog" />
+			</f:facet>
+		</p:dialog>
+		
+			<p:dialog 
+					header="Gerênciar Privilégio do Usuário no Grupo - QWCFP"
+					widgetVar="privDialogo"
+					width="700px" dynamic="true" >
+				<p:outputPanel id="privDialogo">
+					<f:facet name="header">
+						<p:outputLabel value="Gerênciar Privilégio do Usuário - QWCFP" />
+					</f:facet>
+					 
+					 <p:dataTable id="privMemberTable" var="priv" value="#{notiBean.wrappedPrivs}" emptyMessage="O usuário não tem privilégios">
+					 	
+					 	<p:column headerText="Nome" >
+							<h:outputText value="#{priv.desc}"   style="font-weight: normal;" />
+						</p:column>
+						
+					 	<p:column headerText="Origem" >
+							<h:outputText value="#{priv.tipo}"   style="font-weight: normal;" />
+						</p:column>
+						
+					 	<p:column headerText="Data de expiração" >
+							<h:outputText value="#{priv.priv.expDate}"   style="font-weight: normal;"  converter="converteData"/>
+						</p:column>
+						
+						<p:column headerText="Ações" style="width:40px;text-align: center">
+							<p:commandButton update="formDIV:privMemberTable, formDIV:growl, :formDIV:configTabView"  action="#{notiBean.revogarPriv(priv.priv)}" icon="fa fa-fw fa-remove" title="Remover Privilégio" oncomplete="updateTableMembers();"  disabled="#{priv.tipo ne 'GRUPO'}" process="@this :formDIV:configTabView:editUsuario" />
+						</p:column>
+						
+					</p:dataTable>
+					</p:outputPanel> 
+		
+				</p:dialog>
+				
+				<p:dialog header="Atribuir privilégio - QWCFP" widgetVar="privDialog"
+				modal="false" showEffect="fade" hideEffect="fade" resizable="false"
+				closeOnEscape="true" >
+				
+					<p:outputPanel id="privDetail" >
+				
+								<h:panelGrid  columns="2" cellpadding="2" columnClasses="label,value" border="0">
+		
+									<f:facet name="header">
+									</f:facet>
+									
+									<h:outputText   value="#{notiBean.member.memberName}" />
+									<h:inputHidden  value="#{notiBean.groupToGrant}"	style="font-weight: normal;" />
+		
+									<p:outputLabel   value="Privilégios: " />
+									<h:column>
+										<p:selectManyCheckbox 
+											value="#{notiBean.privSelect}" layout="grid" columns="1">
+											<f:selectItems value="#{notiBean.domainPriv}" var="dom"
+												itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+										</p:selectManyCheckbox>
+									</h:column>
+									
+									<h:outputLabel   value=" Quantidade de dias: " />
+									<p:spinner   value="#{notiBean.qtdDias}" min="0" max="5000" />
+									
+								</h:panelGrid>
+								<div class="altura20"></div>
+									<p:commandButton value="Conceder Privilégios" icon="fa fa-fw fa-save"
+										action="#{notiBean.concederPrivGrpOutro()}"  
+										process="privDetail :formDIV:configTabView:editUsuario"
+										update=":formDIV:growl" 
+										oncomplete="handleDialogSubmit(args, 'privDialog'); updateTableMembers(); " />
+										<p:spacer width="20" />		
+			  							<p:commandButton value="Fechar" icon="fa fa-fw fa-close" onclick="PF('privDialog').hide()"  />
+										<div class="altura20"></div>
+						
+					</p:outputPanel>
+			</p:dialog>
+						
+
+		<script type="text/javascript">
+		    function handleDialogSubmit(args, dialogName) {
+		        if (!args.validationFailed) {
+		            PF(dialogName).hide();
+		        }
+		    }
+
+			function disableTxt() {
+				var fileLimitVerison = document.getElementById("formDIV:grupo_FileLimtVersions");
+				if ( document.getElementById("formDIV:grupo_AceptVersioning:0").checked )
+					fileLimitVerison.disabled = false;
+				else
+					fileLimitVerison.disabled = true;
+		 	}
+
+			(function() {
+				disableTxt();
+			})();
+
+				    
+	</script>
+
+	</ui:define>
+</ui:composition>
+</html>

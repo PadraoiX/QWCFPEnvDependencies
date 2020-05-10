@@ -1,0 +1,75 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<p:growl life="#{loginBean.messageTime}" id="msgs" showDetail="true" sticky="false" />
+		
+		<div class="ui-fluid">
+			 <div class="ui-g">
+			 	<div class="ui-g-12" style="width: 100%;">
+			 	 	<div class="card card-w-title shadow-box ui-shadow-3">
+					<h1>Configuração da Area -	<h:outputText style="color: #25aae1;" value="#{areaConfigBean.area.nome}" /></h1>
+							<h:panelGrid columns="2" cellpadding="2" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+			
+								<h:outputText value="Nome: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.nome}" />
+			
+								<h:outputText value="Sigla usada para referir-se à área: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.apelido}" />
+			
+								<h:outputText value="Nome do Gestor responsável pela área: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.managerName}" />
+			
+								<h:outputText value="Telefone do gestor: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.phoneManager}" />
+			
+								<h:outputText value="E-mail do gestor: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.emailManager}" />
+			
+								<h:outputText value="Descrição da área organizacional: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.description}" />
+								
+								<h:outputText value="Status Área: "	style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.statusId}" converter="#{converterDomain}" />
+								
+								<h:outputText value="Área Subordinada: " style="font-weight: bold;" />
+								<h:outputText value="#{areaConfigBean.area.subordinatedAreaId}"	converter="#{areaConverter}" />
+			
+							</h:panelGrid>
+							
+							
+							<p:separator/>
+							
+							<p:commandButton action="#{areasBean.setarId(areaConfigBean.area)}"  disabled="#{areaConfigBean.area.statusId == areasBean.areaInativa}" oncomplete="PF('solicPriv').show()" icon="fa fa-fw fa-plus-square-o" title="Solicitar Privilégio" >
+				                <f:setPropertyActionListener value="#{areaConfigBean.area}" target="#{areasBean.area}" />
+				            </p:commandButton> 
+					</div>
+				</div>
+		   </div>
+	</div>
+
+		<p:dialog header="Solicitar Privilégios" widgetVar="solicPriv" resizable="false" draggable="false" responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<p:outputLabel for="privilegios" value="Escolha os privilégios: " />
+					<br/>
+					<p:selectManyCheckbox id="privilegios" value="#{notiBean.privSelectSol}"  layout="responsive" columns="2" styleClass="form-group" required="true" requiredMessage="Escolha pelo menos um privilégio"   >
+						<f:selectItems value="#{notiBean.domainPrivSolArea}" var="dom"	itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+					</p:selectManyCheckbox>
+				</div>
+				<div class="ui-g-12">
+					<p:inputTextarea id="justificativaPriv" style="width:100%"  placeholder="Justificativa" value="#{notiBean.justificativa}"  required="true" requiredMessage="A justificativa é um campo obrigatório" />
+				</div>
+			</div>
+
+			<f:facet name="footer">
+				<p:commandButton value="Solicitar" type="submit" style="width:auto"  icon="fa fa-fw fa-bullhorn" actionListener="#{notiBean.solicitarPrivilegioArea()}" update=":formDIV:msgs"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('solicPriv').hide()" />
+			</f:facet>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pa="http://primefaces.org/barcelona">
+
+	<style>
+		/* Estilo aqui */
+		
+		.layout-wrapper .layout-sidebar-info {
+			  position: fixed;
+			  top: 60px;
+			  width: 60px;
+			  background-color: #f5f5f5;
+			  height: 100%;
+			  -webkit-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+			  -moz-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+			  box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+			  z-index: 10;
+			  -moz-transition: width 0.3s;
+			  -o-transition: width 0.3s;
+			  -webkit-transition: width 0.3s;
+			  transition: width 0.3s;
+			  right: 0px;
+		  }
+		  
+		  .layout-wrapper .layout-wrapper-menu-expanded:hover{
+		  	width: 310px;
+		  }
+	</style>
+
+	<!-- <div class="layout-sidebar-info layout-wrapper-menu-expanded"  id="layout-information">
+		<div  class="shadow-box ui-shadow-2 card card-w-title" >
+			<p:panelGrid id="groupDetailTab"  styleClass="nba-grid"  cellpadding="2">
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Nome do Grupo:</p:column>
+                    </p:row>
+                    <p:row>
+                    	<p:column >#{myGroupsBean.myGroupsDetail.myGroupsEx.groupName}</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column style="font-weight: bold; width:20%">Apelido:</p:column>
+                    </p:row>
+                    <p:row>
+                    	<p:column >#{myGroupsBean.myGroupsDetail.myGroupsEx.groupAlias}</p:column>                    	
+                    </p:row>
+                    
+                    <p:row>
+                    	<p:column  styleClass="rowColor" style="font-weight: bold; width:20%" rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx ne null}">
+                    		Compartilhado:#{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupChildreanSpace)} / #{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupTotalSpace)}
+                    	</p:column>
+					</p:row>
+                    <p:row>
+						<p:column  styleClass="rowColor" rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx ne null}"> 
+							<p:progressBar id="progressBarS"  value="#{groupBean.getSharedSpaceBarValue(myGroupsBean.myGroupsDetail.myGroupsEx)}" labelTemplate="{value}%" displayOnly="true" />
+						</p:column>		
+                    </p:row>
+					<p:row>
+						<p:column style="font-weight: bold; width:20%" rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupSubordinatedId ne null}">
+							Limite do grupo:  #{groupBean.convertByte(groupBean.getOcupiedSpace(myGroupsBean.myGroupsDetail.myGroupsEx))} / #{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupOriginalSpaceLimit)}
+						</p:column>
+       				</p:row>   
+                    <p:row>
+						<p:column rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupSubordinatedId ne null}">
+							<p:progressBar  id="progressBarG" value="#{groupBean.getGroupSpaceBarValue(myGroupsBean.myGroupsDetail.myGroupsEx)}" labelTemplate="{value}%" displayOnly="true" />
+						</p:column>
+                    </p:row>
+                    
+                     <p:row>
+                     <p:column>
+                     	 <p:commandButton type="submit" icon="fa fa-fw fa-gear"
+							title="Configurações" action="#{groupBean.setarIdRegraGrupo(myGroupsBean.myGroupsDetail)}"
+							id="escodeBotao">
+							<f:setPropertyActionListener target="#{groupBean.myGroup}" value="#{car}"/>
+						</p:commandButton>
+		
+						<p:commandButton type="submit" icon="fa fa-fw fa-folder-open"
+							title="Gerênciar Arquivos" 
+							action="#{groupBean.setarId(myGroupsBean.myGroupsDetail, false)}">
+							<f:setPropertyActionListener value="#{car}"   target="#{groupBean.myGroup}" />
+						</p:commandButton>
+		
+						<p:commandButton onclick="PF('uploadFile').show();"
+							update="formDIV:idGrupo" icon="fa fa-fw fa-upload" title="Upload"
+							disabled="#{!myGroupsBean.myGroupsDetail.canUpload()}"
+							action="#{groupBean.setarId(myGroupsBean.myGroupsDetail, true)}">
+							<f:setPropertyActionListener value="#{car}" target="#{groupBean.myGroup}" />
+						</p:commandButton>
+                     </p:column>  
+                    </p:row>
+                    
+			</p:panelGrid>
+			
+			<div id="divProgessContainer"></div>
+			
+		</div>
+	</div> -->
+</ui:composition>

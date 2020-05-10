@@ -1,0 +1,241 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pa="http://primefaces.org/barcelona">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+		</f:facet>
+		<title><ui:insert name="title">QWCFP - Pix</ui:insert></title>
+		<h:outputScript library="script" name="ajax.js" />
+		<style>
+#logo-qwcfp {
+	margin-top: 5px;
+	margin-left: 20px;
+	width: 200px;
+}
+
+#somedaqui {
+	display: none;
+}
+
+@media screen and (max-width:1024px) {
+	.topbar-menu-width {
+		width: 250px !important;
+	}
+	.search_input {
+		margin: 6px 10px !important;
+		margin-top: 6px;
+		margin-right: 10px;
+		margin-bottom: 6px;
+		margin-left: 10px;
+		width: 70% !important;
+		color: black !important;
+	}
+}
+
+.search_input {
+	padding: 0 !important;
+	font-size: 16px !important;
+	color: #BBDEFB;
+	border-bottom: 1px solid !important;
+	border-color: #0D47A1 !important;
+}
+
+.search_field {
+	display: inline-block !important;
+}
+
+.profile-info {
+	max-width: none !important;
+}
+.layout-main{
+	    margin-left: 0px !important;
+}
+
+</style>
+
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+			target="head" />
+
+		<script type="text/javascript">
+		 
+
+		//Oculta todos os button e inputs
+		$(document).ready(function() {
+			$("#formTopBar\\:button3").fadeOut();
+			$("#formTopBar\\:button4").fadeOut(); 
+			$("#formTopBar\\:button5").fadeOut();
+			$("#formTopBar\\:groupFilterValue1").fadeOut();
+			$("#formTopBar\\:groupFilterValue2").fadeOut();
+			$("#formTopBar\\:fileFilterValue1").fadeOut();
+
+		});
+
+		//Grupos
+		$(document).ready(function() {
+			$("#button1").click(function() {
+					$("#button1").fadeOut();
+					
+					if (!($("#button2").is(":visible"))){
+						$("#button2").fadeIn();
+						$("#formTopBar\\:button5").fadeOut();
+						$("#formTopBar\\:fileFilterValue1").fadeOut();
+					} 
+
+					$("#formTopBar\\:button3").fadeIn();
+					$("#formTopBar\\:button4").fadeIn(); 
+					$("#formTopBar\\:groupFilterValue1").fadeIn();
+					$("#formTopBar\\:groupFilterValue2").fadeIn();
+
+			});
+		});
+
+
+		//Arquivos
+		$(document).ready(function() {
+			$("#button2").click(function() {
+					$("#button2").fadeOut();
+
+					if (!($("#button1").is(":visible"))){
+						$("#button1").fadeIn();
+						$("#formTopBar\\:button3").fadeOut();
+						$("#formTopBar\\:button4").fadeOut(); 
+						$("#formTopBar\\:groupFilterValue1").fadeOut();
+						$("#formTopBar\\:groupFilterValue2").fadeOut();
+					} 
+					
+					$("#formTopBar\\:button5").fadeIn();
+					$("#formTopBar\\:fileFilterValue1").fadeIn();
+
+
+					var kids = $( this ).children();
+					kids.css("color", "#eae9f3");
+					
+					//$( this ).css("color", "#eae9f3");
+					
+			});
+			
+			$("#topbar-menu-button").click(function() {
+
+				var menuBar = $("#formTopBar .topbar-menu");
+				menuBar.removeClass('fadeInDown fadeOutUp');
+				
+
+	            if(menuBar.hasClass('topbar-menu-visible')) {
+	            	menuBar.addClass('fadeOutUp');
+	                
+	                setTimeout(function() {
+	                	menuBar.removeClass('fadeOutUp topbar-menu-visible topbar-menu-width');
+	                },500);
+	            }
+	            else {
+	            	menuBar.addClass('topbar-menu-visible topbar-menu-width fadeInDown');
+	            }
+	           
+			});
+			
+			$("#usuarioMenu").hover(
+				function(){
+					 $("#menuAlternavel").css('display','block');
+
+				 },
+				function (){
+					 $("#menuAlternavel").css('display','none');
+				}
+
+			 );
+			 	
+		});
+ 
+		
+	</script>
+
+	</h:head>
+
+	<div class="topbar">
+		<h:link outcome="/main">
+			<p:graphicImage id="logo-qwcfp" name="logoCFP_Branco.png"
+				library="images" />
+		</h:link>
+		<a id="topbar-menu-button" href="#"> <i class="fa fa-bars"></i>
+		</a>
+		<h:form id="formTopBar" style="margin-top: -3%;">
+		<!-- 	<ul class="topbar-menu fadeInDown animated">
+				<li class="profile-item" id="usuarioMenu"><a href="#">
+						<div class="profile-info">
+							<span class="topbar-item-name profile-role"
+								style="font-size: 18px">Usuário</span> <span
+								class="topbar-item-name profile-name" style="font-size: 18px">#{loginBean.member.memberName}</span>
+						</div>
+				</a>
+					<ul class="animated fadeInDown" style="margin-top: -5px"
+						id="menuAlternavel">
+						<li role="menuitem"><a href="alterarUser.faces"> <i
+								class="fa fa-fw fa-cog"></i> <span>Meu Perfil</span>
+						</a></li>
+						<li role="menuitem"><p:commandLink href="#"
+								action="#{loginBean.logout()}">
+								<i class="fa fa-fw fa-sign-out"></i>
+								<span>Logout</span>
+							</p:commandLink></li>
+					</ul></li>
+
+
+				<p:remoteCommand name="rmtGroupSearch" id="rmtGroupSearch"
+					action="#{myGroupsBean.updateListMyGroups()}"
+					rendered="#{pesquisaGrupoBean.main}" update=":formDIV:MeusGrupos"
+					process="@form"></p:remoteCommand>
+				<p:remoteCommand name="rmtGroupSearch2" id="rmtGroupSearch2"
+					action="#{pesquisaGrupoBean.redirectMain()}"
+					rendered="#{!pesquisaGrupoBean.main}"></p:remoteCommand>
+				<p:remoteCommand name="rmtFileSearch" id="rmtFileSearch"
+					action="#{myGroupsBean.redirectBrs()}"></p:remoteCommand>
+
+			</ul> -->
+		</h:form>
+
+		<style>
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #eae9f3 !important;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #eae9f3 !important;
+	opacity: 1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #eae9f3 !important;
+	opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #eae9f3 !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+	color: #eae9f3 !important;
+}
+</style>
+
+		<h:outputStylesheet name="css/nanoscroller.css"
+			library="barcelona-layout" />
+		<h:outputStylesheet name="css/animate.css" library="barcelona-layout" />
+		<h:outputStylesheet name="css/ripple.css" library="barcelona-layout" />
+		<h:outputStylesheet name="css/layout-blue.css"
+			library="barcelona-layout" />
+		<h:outputStylesheet name="css/geralBarcelona.css"
+			library="barcelona-layout" />
+
+	</div>
+
+</ui:composition>

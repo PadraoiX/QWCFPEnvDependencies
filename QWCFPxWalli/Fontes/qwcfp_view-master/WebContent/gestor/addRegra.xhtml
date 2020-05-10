@@ -1,0 +1,67 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+		<style>
+			.ui-widget-content{
+				border: none; 
+			}
+			.ui-widget-content{
+				border: none !important;
+			}
+		</style>
+		
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel">
+		
+			<h1>Cadastrar Nova Regra</h1>			
+
+			<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				
+				<h:panelGroup styleClass="md-inputfield">				
+					<p:inputText id="rulename" required="true"  style="width:50%;" value="#{rulesBean.rule.name}" maxlength="50" requiredMessage="O nome da regra é obrigatório" />
+					<label>Nome da Regra</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="ruleparmtype" required="true" maxlength="3000" style="width:50%;"  requiredMessage="Os parâmetros da regra são obrigatórios" value="#{rulesBean.rule.jsonStringParm}" />
+					<label>Parâmetros da regra (Json)</label>
+				</h:panelGroup>
+
+				<p:selectOneMenu id="rulecondition" style="width:50%;" value="#{rulesBean.rule.condition}" required="true" requiredMessage="A condição da regra é obrigatória">
+					<f:selectItem  itemLabel="Escolha uma condição" />
+					<f:selectItems value="#{rulesBean.getDomainList(1)}" var="rule" itemValue="#{rule.id}" itemLabel="#{rule.abbreveation}" />
+				</p:selectOneMenu>					
+				
+				<p:selectOneMenu id="rulestatus" style="width:50%;" value="#{rulesBean.rule.status}" required="true" requiredMessage="O status da regra é obrigatório">
+					<f:selectItem   itemLabel="Escolha um status" />
+					<f:selectItems value="#{rulesBean.getDomainList(0)}" var="rule" itemValue="#{rule.id}" itemLabel="#{rule.abbreveation}" />
+				</p:selectOneMenu>
+				
+				
+				<!-- <p:inputTextarea id="rulesource" required="true" requiredMessage="O Código da regra é obrigatório." cols="50" value="#{rulesBean.rule.sourceRuleJexl}" placeholder="Código da regra" />  -->
+				
+					<p:inputTextarea id="ruledesc" style="width:70%;"  required="true" requiredMessage="A descrição da regra é obrigatória." maxlength="2000" placeholder="Descrição da regra" value="#{rulesBean.rule.description}" />
+				
+					
+			</p:panelGrid>
+			
+			    <h4>Código da Regra</h4>
+			    
+			    <pe:codeMirror id="codeMirror2" mode="text/x-java" theme="eclipse"   
+    value="#{rulesBean.rule.sourceRuleJexl}" keyMap="default" lineNumbers="true"  
+    matchBrackets="true" />  
+			    
+				<!-- <pe:codeMirror style="width:70%;"  id="codeMirror" mode="text/x-java" theme="eclipse" value="#{rulesBean.rule.sourceRuleJexl}" lineNumbers="true" required="true" /> -->
+			
+				<p:commandButton value="Salvar" type="submit" action="#{rulesBean.inserir}" ajax="false" update="messages" icon="fa fa-fw fa-save" style="display:block; margin:10px 0" />
+								
+   		</p:panel>
+   		
+	</ui:define>
+</ui:composition>
+</html>

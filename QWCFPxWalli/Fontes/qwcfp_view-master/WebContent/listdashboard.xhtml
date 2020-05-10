@@ -1,0 +1,221 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<h:outputScript library="script" name="charts_jqplot.js" />
+		<link rel="stylesheet" href="resources/css/qwcfp-list-arquivos.css" />
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+			integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+			crossorigin="anonymous" />
+
+		<style>
+#filtro {
+	margin-bottom: 10px;
+}
+
+.dialogoWidth {
+	width: 20% !important;
+}
+
+.formDB_01 {
+	width: 50px;
+	height: 50px;
+	background: #20b99a;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.formDB_02 {
+	width: 50px;
+	height: 50px;
+	background: #1662a7;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.formDB_03 {
+	width: 50px;
+	height: 50px;
+	background: #cccccc;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.ui-datagrid-column {
+	padding: 10px;
+}
+
+.nomeArquivo {
+	padding: 2%;
+	text-align: center;
+	overflow: hidden;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 22px;
+	margin: 22px 0;
+}
+
+.margem10 {
+	margin-right: 10px;
+}
+
+.ui-widget-content {
+	border: 0px !important;
+}
+
+.altura20 {
+	height: 20px;
+}
+
+.ui-datatable-header {
+	padding: 1% !important;
+}
+
+.ui-g-5 {
+	float: right !important;
+}
+
+.dashboardpix {
+	/*display: flex;*/
+	
+}
+
+.logoBlueLink:hover {
+	background: #C4C4C4
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0.8),
+		rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
+	color: #25aae1;
+}
+</style>
+
+		<p:growl id="messages" widgetVar="messages" life="#{loginBean.messageTime}" showDetail="true" />
+		<div class="altura20"></div>
+		<p:dataTable emptyMessage="Você não tem DashBoard para visualizar!"
+			id="dbBoard" var="dbid" lazy="true"
+			filteredValue="#{dBoardMeta.filteredList}" resizableColumns="true"
+			value="#{dBoardMeta.itemList}" selectionMode="single"
+			selection="#{dBoardMeta.selectedMetaItem}" paginatorPosition="bottom"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Lotes)"
+			rowsPerPageTemplate="10,15,20,25,50,100" rows="10"
+			rowKey="#{dbid.fileName}" paginator="true">
+			<f:facet name="header" styleClass="spacoFiltro">Lotes do grupo - 
+       		 		<p:commandLink process="@this"
+					action="#{groupBean.setarId(groupBean.myGroupDeta, false)}"
+					disabled="#{groupBean.myWrappedGroupDeta.blindPrivileges or groupBean.myWrappedGroupDeta.myGroupsEx.groupStatus != 'ATIVO'}">
+					<h:outputText value="#{dBoardMeta.selectedGroup.nome}"
+						style="color: #ffc107;font-weight: bold;"
+						styleClass="logoBlueLink" />
+				</p:commandLink>
+				<div id="btfuncoes">
+					<div id="opcoes-btns-div">
+						<p:commandButton type="submit" action="#{dBoardMeta.goToDBGraph}"
+							title="DashBoard" style="margin-right: 10px;"
+							icon="fa faf fa-chart-pie" styleClass="direitaAlinhar"
+							rendered="false" />
+					</div>
+				</div>
+			</f:facet>
+			<p:ajax event="rowSelect" process="@parent formDIV:dashBoardId"
+				listener="#{dBoardMeta.updateFileStatus()}"
+				update="formDIV:dashBoardId" />
+			<p:columns value="#{dBoardMeta.metadataColumns}" var="column"
+				sortable="false" field="#{column.colName}"
+				filterBy="#{dbid.columnValueMap[column.colName]}">
+				<f:facet name="header">
+					<h:outputText value="#{column.colName}" />
+				</f:facet>
+				<h:outputText value="#{dbid.columnValueMap[column.colName]}" />
+			</p:columns>
+		</p:dataTable>
+
+		<div id="dashboardpix" class="dashboardpix ui-g">
+			<div class="ui-lg-3">
+				<p:dataScroller var="dbId" value="#{dBoardMeta.selectedStatus}"
+					id="dashBoardId" border="0" cellpadding="2">
+					<p:panel id="paneldb" styleClass="card card-w-title sombraPanel"
+						cellpadding="2">
+						<div class="nomeArquivo">
+							<h:outputText styleClass="nomeArquivo" value="#{dbId.fileName}" />
+						</div>
+						<p:separator />
+						<h:panelGrid columns="2">
+							<div class="${dbId.received}" />
+							<h:panelGroup>
+								<h:outputText style="font-weight: bold;width: 100%;"
+									value="RECEBIDO" />
+								<br />
+								<h:outputText value="#{dbId.receivedDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+								</h:outputText>
+								<br />
+								<h:outputText value="#{dbId.receivedIp}" />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<div class="${dbId.queued}" />
+							<h:panelGroup>
+								<h:outputText style="font-weight: bold;width: 100%;"
+									value="ENFILEIRADO" />
+								<br />
+								<h:outputText value="#{dbId.queuedDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+								</h:outputText>
+								<br />
+								<h:outputText value="#{dbId.queuedIp}" />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<div class="${dbId.available}" />
+							<h:panelGroup>
+								<h:outputText style="font-weight: bold;width: 100%;"
+									value="DISPONIBILIZADO" />
+								<br />
+								<h:outputText value="#{dbId.availableDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+								</h:outputText>
+								<br />
+								<h:outputText value="#{dbId.availableIp}" />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<div class="${dbId.processed}" />
+							<h:panelGroup>
+								<h:outputText style="font-weight: bold;width: 100%;"
+									value="PROCESSADO" />
+								<br />
+								<h:outputText value="#{dbId.processedDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+								</h:outputText>
+								<br />
+							</h:panelGroup>
+						</h:panelGrid>
+					</p:panel>
+				</p:dataScroller>
+			</div>
+			<div class="ui-lg-4" style="position: relative; text-align: right;">
+				<p:selectOneMenu id="console" autoWidth="150"
+					value="#{ChartJsViewDashBoard.selectedMonth}">
+					<f:selectItems value="#{ChartJsViewDashBoard.filter.monthNames()}" />
+				</p:selectOneMenu>
+			</div>
+
+			<div class="ui-lg-4">
+				<p:poll id="chartPoll" interval="30"
+					listener="#{ChartJsViewDashBoard.liveModelPutData()}"
+					update="dbchart" />
+				<p:chart id="dbchart" type="pie"
+					model="#{ChartJsViewDashBoard.pieModel1}" extender="chartExtender"
+					style="display:block;height:420px;" responsive="true" />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</HTML>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="loginPage::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="loginPage" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="loginPageMobile::#mobile.xhtml"
+    NAME="output" PATH="/mobile.xhtml" TARGET="rules:#mobile.xhtml"
+    TITLE="loginPageMobile" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="restrictAcess::#main.xhtml" NAME="output"
+    PATH="/main.xhtml" TARGET="rules:#main.xhtml" TITLE="restrictAcess" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#mobile.xhtml" PATH="/mobile.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#erro.xhtml" PATH="/erro.xhtml"
+  SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="discoVirtual::#discoVirtual.xhtml"
+    NAME="output" PATH="/discoVirtual.xhtml"
+    TARGET="rules:#discoVirtual.xhtml" TITLE="discoVirtual" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#main.xhtml" PATH="/main.xhtml"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addUser::#gestor#addUsuario.xhtml"
+    NAME="output" PATH="/gestor/addUsuario.xhtml"
+    TARGET="rules:#gestor#addUsuario.xhtml" TITLE="addUser" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listUser::#listUser.xhtml" NAME="output1"
+    PATH="/listUser.xhtml" TARGET="rules:#listUser.xhtml"
+    TITLE="listUser" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::1" SHAPE="32,833,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::1" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addArea::#gestor#addArea.xhtml"
+    NAME="output" PATH="/gestor/addArea.xhtml"
+    TARGET="rules:#gestor#addArea.xhtml" TITLE="addArea" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listArea::#listArea.xhtml" NAME="output1"
+    PATH="/listArea.xhtml" TARGET="rules:#listArea.xhtml"
+    TITLE="listArea" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::2" SHAPE="32,1089,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addGrupo::#addGrupo.xhtml" NAME="output"
+    PATH="/addGrupo.xhtml" TARGET="rules:#addGrupo.xhtml"
+    TITLE="addGrupo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listGrupo::#listGrupos.xhtml" NAME="output1"
+    PATH="/listGrupos.xhtml" TARGET="rules:#listGrupos.xhtml"
+    TITLE="listGrupo" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::3" SHAPE="32,1345,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::3" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addNode::#gestor#addNode.xhtml"
+    NAME="output" PATH="/gestor/addNode.xhtml"
+    TARGET="rules:#gestor#addNode.xhtml" TITLE="addNode" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listNode::#gestor#listNode.xhtml"
+    NAME="output1" PATH="/gestor/listNode.xhtml"
+    TARGET="rules:#gestor#listNode.xhtml" TITLE="listNode" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::4" SHAPE="32,1601,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::4" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addVolume::#gestor#addVolume.xhtml"
+    NAME="output" PATH="/gestor/addVolume.xhtml"
+    TARGET="rules:#gestor#addVolume.xhtml" TITLE="addVolume" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listVolume::#gestor#listVolume.xhtml"
+    NAME="output1" PATH="/gestor/listVolume.xhtml"
+    TARGET="rules:#gestor#listVolume.xhtml" TITLE="listVolume" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::5" SHAPE="32,1857,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::5" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addRegra::#gestor#addRegra.xhtml"
+    NAME="output" PATH="/gestor/addRegra.xhtml"
+    TARGET="rules:#gestor#addRegra.xhtml" TITLE="addRegra" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listRegras::#gestor#listRegras.xhtml"
+    NAME="output1" PATH="/gestor/listRegras.xhtml"
+    TARGET="rules:#gestor#listRegras.xhtml" TITLE="listRegras" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gestor#addArea.xhtml"
+  PATH="/gestor/addArea.xhtml" SHAPE="256,849,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#listRegras.xhtml"
+  PATH="/gestor/listRegras.xhtml" SHAPE="280,1944,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#addUsuario.xhtml"
+  PATH="/gestor/addUsuario.xhtml" SHAPE="256,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#listNode.xhtml"
+  PATH="/gestor/listNode.xhtml" SHAPE="256,1505,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#addRegra.xhtml"
+  PATH="/gestor/addRegra.xhtml" SHAPE="256,1824,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#listArea.xhtml" PATH="/listArea.xhtml"
+  SHAPE="256,993,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#addGrupo.xhtml" PATH="/addGrupo.xhtml"
+  SHAPE="256,1105,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#addVolume.xhtml"
+  PATH="/gestor/addVolume.xhtml" SHAPE="256,1617,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#listGrupos.xhtml" PATH="/listGrupos.xhtml"
+  SHAPE="256,1249,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#listUser.xhtml" PATH="/listUser.xhtml"
+  SHAPE="256,737,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#listVolume.xhtml"
+  PATH="/gestor/listVolume.xhtml" SHAPE="256,1761,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gestor#addNode.xhtml"
+  PATH="/gestor/addNode.xhtml" SHAPE="256,1361,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,721,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="erroPage::#erro.xhtml" NAME="output"
+    PATH="/erro.xhtml" TARGET="rules:#erro.xhtml" TITLE="erroPage" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#discoVirtual.xhtml"
+  PATH="/discoVirtual.xhtml" SHAPE="240,1249,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

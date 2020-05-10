@@ -1,0 +1,82 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+	<style>	
+		.ui-datatable tbody td.wrap {
+    		white-space: normal;
+		}	
+	</style>
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+			<h1>Pesquisar Histórico - QWCFP</h1>
+			<h:panelGrid columns="8" cellpadding="2" styleClass="filtrotable semBorda" >				
+					<p:column>
+						  <h:panelGroup styleClass="md-inputfield">
+				            	<p:inputText id="nameMemberHistory" value="#{listHistoricoBean.membro}" styleClass="tamanhoCamanho"  />
+				            	<label>Nome</label>       
+			            </h:panelGroup>
+					</p:column>
+					<p:column>
+						<h:panelGroup styleClass="md-inputfield">
+				            	<p:inputText id="descricaoHistory" value="#{listHistoricoBean.descricao}" styleClass="tamanhoCamanho"  />
+				            	<label>Descrição</label>       
+			            </h:panelGroup>
+					</p:column>
+					<p:column>
+						<h:panelGroup styleClass="md-inputfield">
+				            	<p:inputText id="hostHistory" value="#{listHistoricoBean.host}" styleClass="tamanhoCamanho"  />
+				            	<label>Host</label>       
+			            </h:panelGroup>
+					</p:column>
+					<p:column>
+						<p:outputLabel value="De:" /> 
+						<p:calendar id="data1" value="#{listHistoricoBean.dataInicio}" pattern="dd/MM/yyyy" size="10" locale="pt" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Até:" />
+						<p:calendar id="data2" value="#{listHistoricoBean.dataFim}" pattern="dd/MM/yyyy" size="10" locale="pt" />
+					</p:column>
+					<p:column>
+						<p:commandButton icon="fa fa-fw fa-filter" value="Filtro" actionListener="#{listHistoricoBean.populateEvents}" update=":formDIV:historicoList,:formDIV:msgs" ajax="false" style="display:block; margin:10px 0" />
+					</p:column>					
+			</h:panelGrid>
+			
+					<!-- <p:column >						
+						<p:commandButton id="toggler" type="button" value="Colunas" icon="fa fa-fw fa-columns" styleClass="direitaAlinhar" />
+						<p:columnToggler datasource="historicoList" trigger="toggler" />						
+					</p:column> -->				
+
+			<p:dataTable id="historicoList" value="#{listHistoricoBean.listHistoryLazy}" var="hist" resizableColumns="true" emptyMessage="Não há histórico para o filtro selecionando"
+				paginatorPosition="bottom" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="(Pág. {currentPage}/{totalPages})" rowsPerPageTemplate="10,15,20,25,50,100"  rows="10" paginator="true" lazy="true">
+
+				<p:column headerText="Membro" style="font-weight: bold">
+					<h:outputText value="#{hist.member}" converter="#{memberConverter}"	style="font-weight: normal" />
+				</p:column>
+
+				<p:column headerText="Descrição" style="font-weight: bold" styleClass="wrap">
+					<h:outputText value="#{hist.description}"	style="font-weight: normal" />
+				</p:column>
+
+				<p:column headerText="Tipo" style="font-weight: bold">
+					<h:outputText value="#{hist.eventType}" converter="#{converterDomain}"	style="font-weight: normal" />
+				</p:column>
+
+				<p:column headerText="Host" style="font-weight: bold;width:100px">
+					<h:outputText value="#{hist.host}" style="font-weight: normal" />
+				</p:column>
+
+				<p:column headerText="Data do Evento" style="font-weight: bold; width:100px; text-align: center;">
+					<h:outputText value="#{hist.creationDate}" converter="converteDataHist"
+						style="font-weight: normal; " />
+				</p:column>
+			</p:dataTable>
+			</p:panel>
+	</ui:define>
+</ui:composition>
+</HTML>

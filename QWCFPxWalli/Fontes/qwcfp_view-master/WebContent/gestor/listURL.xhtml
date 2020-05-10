@@ -1,0 +1,585 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<style>
+#filtro {
+	margin-bottom: 10px;
+}
+
+.inputSize100{
+	width:100% !important;
+}
+.dialogoWidth40 {
+	width: 42% !important;
+}
+.dialogoWidth60 {
+	width: 60% !important;
+}
+
+.alinharDireita {
+	float: right;
+}
+.fontLabel{
+    top: -20px;
+    font-size: 12px;
+    color: #1976d2;
+}
+.sombra{
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.parameterTable{
+	float: left;
+}
+
+.spacamento{
+	padding: 12px 16px;
+}
+
+.tamanhoDialogOperation{
+	width: 50% !important;
+}
+</style>
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel">
+			<h1>Lista de Web Services Cadastrados no QWCFP</h1>
+			<p:columnToggler datasource="editURL" trigger="toggler" />
+			<div id="filtro" align="right">
+				<p:commandButton id="toggler" type="button" value="Colunas"
+					icon="fa fa-fw fa-columns" styleClass="direitaAlinhar" />
+				<p:commandButton id="addURL" type="button"
+					onclick="PF('ADDURLS').show()" value="Criar"
+					icon="fa fa-fw fa-plus" styleClass="direitaAlinhar" />
+				<p:commandButton value="Publicar"
+					action="#{qwcfpWServiceBean.saveURL()}" type="submit"
+					icon="fa fa-fw fa-cloud-upload" process="@this" />
+			</div>
+			<p:dataTable border="1" cellspacing="0" cellpadding="2"
+				resizableColumns="true" var="varr"
+				value="#{qwcfpWServiceBean.listWsdlDoc}" id="editURL" rows="10"
+				rowsPerPageTemplate="10,15,20,25,50,100"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Web Services)"
+				paginatorPosition="bottom" paginator="true" styleClass="borderless"
+				selection="#{qwcfpWServiceBean.selectedUrl}" selectionMode="single"
+				rowKey="#{varr.wsId}" emptyMessage="Não há serviços cadastrados">
+				<p:ajax event="contextMenu" listener="#{qwcfpWServiceBean.onChangeUrl()}" update=":formDIV:ctxMenuURLId, :formDIV:URLDialog"
+					oncomplete="PF('ctxMenuListURL').show(currentEvent);"></p:ajax>
+					
+				<p:ajax event="rowSelect" update=":formDIV:ctxMenuURLId, :formDIV:URLDialog" />
+				<p:column headerText="Apelido" style="font-weight: bold">
+					<h:outputText value="#{varr.idService}" style="font-weight: normal" />
+				</p:column>
+				<p:column headerText="Nome" style="font-weight: bold">
+					<h:outputText value="#{varr.name}" style="font-weight: normal" />
+				</p:column>
+				<p:column headerText="Descrição" style="font-weight: bold">
+					<h:outputText value="#{varr.description}"
+						style="font-weight: normal" />
+				</p:column>
+				<p:column headerText="Chaves" style="font-weight: bold">
+					<h:dataTable value="#{varr.parametros}" var="map">
+						<h:column>
+							<h:outputText value="#{map.nome}" style="font-weight: normal" />
+						</h:column>
+						<h:column>
+							<h:outputText value="#{map.valor}" style="font-weight: normal" />
+						</h:column>
+					</h:dataTable>
+				</p:column>
+
+			</p:dataTable>
+			<p:contextMenu for="editURL" id="ctxMenuURLId" widgetVar="ctxMenuListURL">
+				
+				<p:menuitem value="Editar WS" update=":formDIV:URLDialog, :formDIV:editURL" oncomplete="PF('URLDialog').show()" icon="fa fa-fw fa-edit"
+					title="Editar WS" process="@this editURL" rendered="#{loginBean.isGi()}" action="#{qwcfpWServiceBean.updateParams()}" >
+					<p:resetInput target="URLDialog" />
+				</p:menuitem>
+
+				<p:menuitem value="Mais Privilégios" update=":formDIV:URLDialogPrivs" oncomplete="PF('URLDialogPrivs').show()" icon="fa fa-fw fa-plus"
+					title="Editar Volume" process="@this URLDialogPrivs" />
+
+				<p:menuitem value="Excluir URL" update=":formDIV:editURL" icon="fa fa-fw fa-remove" title="Excluir URL"
+					rendered="#{loginBean.isGi()}" process="@this editURL" action="#{qwcfpWServiceBean.removeURL()}">
+					<p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-alert" />
+				</p:menuitem>
+			</p:contextMenu>
+		</p:panel>
+
+		<p:menuitem
+			update=":formDIV:carDetail, :formDIV:carDetailId, :formDIV:ADD_VOLUME_SIZE_EXP"
+			oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit"
+			title="Editar Volume" value="Editar Volume"
+			process="@this editVolume" />
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+		<p:dialog header="Adicionar EndPoint" widgetVar="ADDURLS" id="ADDURLS" styleClass="dialogoWidth40" resizable="false" draggable="true" responsive="true" >
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" id="ADDURLFORM">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="identificadorNome" required="true" size="100" requiredMessage="Nome" value="#{qwcfpWServiceBean.newdUrl.idService}" />
+					<label>Nome</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="identificador" size="100"  disabled="true" />
+					<label>Identificador</label>
+				</h:panelGroup>
+			
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="DESWSDL" required="true" cols="100" requiredMessage="Descrição" value="#{qwcfpWServiceBean.newdUrl.description}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				
+				<h:panelGrid columns="4" style="margin-bottom:10px; width:100%" cellpadding="5">
+					<p:outputLabel for="tipo_servico"  value="Tipo Serviço" styleClass="fontLabel"/>
+					<p:selectOneMenu id="tipo_servico"  size="100" requiredMessage="Tipo Serviço" value="#{qwcfpWServiceBean.tipoServico}">
+						<f:selectItem itemLabel="SOAP" itemValue="WSDL"/>
+						<f:selectItem itemLabel="RESTFUL" itemValue="Rest"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="usa_certificado"  value="Usa Certificado" styleClass="fontLabel"/>
+					<p:selectOneRadio id="usa_certificado"  size="100" value="#{qwcfpWServiceBean.usaCertificado}" required="true">
+						<f:selectItem itemLabel="NÃO" itemValue="false" id="False" selected="selected" />
+						<f:selectItem itemLabel="SIM" itemValue="true" id="True"/>						
+						<p:ajax event="change" oncomplete="disableTxt();"  process="@this"/>
+					</p:selectOneRadio>
+			 
+					<p:outputLabel for="tipoAutorização"  value="Tipo Autorização" styleClass="fontLabel"/>
+					<p:selectOneMenu id="tipoAutorização"  size="100" value="#{qwcfpWServiceBean.newdUrl.tipoAutorizacao}">
+						<f:selectItem itemLabel="Ativado" itemValue="1"/>
+						<f:selectItem itemLabel="Desativado" itemValue="2"/>
+					</p:selectOneMenu>
+						
+				<!-- 	<p:outputLabel for="created_at"  value="Data de Criação" styleClass="fontLabel"/>
+					<p:calendar id="created_at"  size="11" requiredMessage="Data de Criação" pattern="dd/MM/yyyy"  value="#{qwcfpWServiceBean.created_at}" /> -->
+				</h:panelGrid>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="Certificado" required="true" size="100" requiredMessage="EndPoint" value="#{qwcfpWServiceBean.newdUrl.WSDLUrl}"  />
+					<label>Certificado</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="endpoint" required="true" size="100" requiredMessage="EndPoint" value="#{qwcfpWServiceBean.newdUrl.WSDLUrl}" />
+					<label>EndPoint</label>
+				</h:panelGroup>
+				
+				<p:spacer height="20"/>
+			</p:panelGrid>
+			
+			<f:facet name="footer">
+				<p:commandButton id="addnewUrl" value="salvar" action="#{qwcfpWServiceBean.addURL()}" process="@this :formDIV:ADDURLS"
+					update=":formDIV:ADDURLS,:formDIV:msgs" icon="fa fa-fw fa-save" type="submit" />
+			</f:facet>
+		</p:dialog>
+		
+		<p:dialog header="ADD Operation -  #{qwcfpWServiceBean.newdUrl.idService}" styleClass="tamanhoDialogOperation" id="AddOperation" widgetVar="AddOperation" resizable="false" draggable="true" responsive="true" height="250px" >
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="idOperatopm" required="true" styleClass="inputSize100"   requiredMessage="Identificador" value="#{operationBean.operation.identificador}" />
+					<label>Identificador</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="descOperation" required="true" styleClass="inputSize100" requiredMessage="Descrição" value="#{operationBean.operation.descricao}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="labelOperation" required="true" styleClass="inputSize100" requiredMessage="Descrição" value="#{operationBean.operation.label}" />
+					<label>Label</label>
+				</h:panelGroup>
+				
+				<h:panelGrid columns="4" style="margin-bottom:10px; width:100%" cellpadding="5">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="endpointOperation" required="true" styleClass="inputSize100" requiredMessage="Endpoint" value="#{operationBean.operation.url}" />
+					<label>Endpoint</label>
+				</h:panelGroup>
+				
+					<p:outputLabel for="operation_method"  value="Metodo Http" styleClass="fontLabel"/>
+					<p:selectOneMenu id="operation_method"  size="100" value="#{operationBean.operation.http_method}">
+						<f:selectItem itemLabel="GET"  itemValue="GET"/>
+						<f:selectItem itemLabel="POST"  itemValue="POST"/>
+						<f:selectItem itemLabel="PUT"  itemValue="PUT"/>
+						<f:selectItem itemLabel="DELETE"  itemValue="DELETE"/>
+					</p:selectOneMenu>
+					
+				</h:panelGrid>					
+			</p:panelGrid>			
+			<f:facet name="footer">
+				<p:commandButton id="addOperationAdd" value="salvar" action="#{operationBean.addOperation}"
+					process="formDIV:AddOperation"
+					update="formDIV:msgs,formDIV:AddOperation,formDIV:URLDialog" icon="fa fa-fw fa-save" type="submit" >
+						<f:setPropertyActionListener target="#{operationBean.wsDoc}" value="#{qwcfpWServiceBean.newdUrl}" >
+						</f:setPropertyActionListener>
+					</p:commandButton>
+			</f:facet>			
+		</p:dialog>
+		
+		<p:dialog header="Editar Operation -  #{qwcfpWServiceBean.newdUrl.idService}" styleClass="tamanhoDialogOperation" id="editOperation" widgetVar="editOperation" resizable="false" draggable="true" responsive="true" height="250px" >
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="idOperatonEdt" required="true" styleClass="inputSize100" requiredMessage="Identificador" value="#{operationBean.operation.identificador}" />
+					<label>Identificador</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="descOperationEdt" required="true" styleClass="inputSize100" requiredMessage="Descrição" value="#{operationBean.operation.descricao}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="labelOperationEdt" required="true" styleClass="inputSize100" requiredMessage="Descrição" value="#{operationBean.operation.label}" />
+					<label>Label</label>
+				</h:panelGroup>
+			<h:panelGrid columns="4" style="margin-bottom:10px; width:100%" cellpadding="5">	
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="endpointOperationEdt" required="true" styleClass="inputSize100" requiredMessage="Endpoint" value="#{operationBean.operation.url}" />
+					<label>Endpoint</label>
+				</h:panelGroup>
+				<p:spacer width="50" />
+				<p:outputLabel for="operation_methodEdt"  value="Metodo Http" styleClass="fontLabel"/>
+				<p:selectOneMenu id="operation_methodEdt"  size="100" value="#{operationBean.operation.http_method}">
+					<f:selectItem itemLabel="GET"  itemValue="GET"/>
+					<f:selectItem itemLabel="POST"  itemValue="POST"/>
+					<f:selectItem itemLabel="PUT"  itemValue="PUT"/>
+					<f:selectItem itemLabel="DELETE"  itemValue="DELETE"/>
+				</p:selectOneMenu>			
+				</h:panelGrid>					
+			</p:panelGrid>			
+			<f:facet name="footer">
+				<p:commandButton id="EditOperationBtn" value="salvar" action="#{operationBean.editOperation()}"
+					process="formDIV:editOperation"
+					update="formDIV:msgs,formDIV:editOperation,formDIV:URLDialog" icon="fa fa-fw fa-save" type="submit" >
+						<f:setPropertyActionListener target="#{operationBean.wsDoc}" value="#{qwcfpWServiceBean.newdUrl}" >
+						</f:setPropertyActionListener>
+					</p:commandButton>
+			</f:facet>			
+		</p:dialog>
+		
+		<p:dialog header="ADD Parameter -  #{qwcfpWServiceBean.newdUrl.idService}" styleClass="tamanhoDialogOperation" id="AddParameter" widgetVar="AddParameter" resizable="false" draggable="true" responsive="true" height="250px" >
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="idParameter" required="true" styleClass="inputSize100" requiredMessage="Nome" value="#{parameterBean.parameter.identificador}" />
+					<label>Nome</label>
+				</h:panelGroup>				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="descParameter" required="true" styleClass="inputSize100" requiredMessage="Tipo" value="#{parameterBean.parameter.descricao}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="labelParameter" required="true" styleClass="inputSize100" requiredMessage="Tipo" value="#{parameterBean.parameter.label}" />
+					<label>Label</label>
+				</h:panelGroup>
+				<h:panelGrid columns="6" style="margin-bottom:10px; width:100%" cellpadding="5">
+					<p:outputLabel for="operation_method"  value="Tipo" styleClass="fontLabel"/>
+					<p:selectOneMenu size="200" requiredMessage="Tipo" value="#{parameterBean.parameter.tipo}">
+						<f:selectItems value="#{parameterBean.parameterTypes}"/>
+					</p:selectOneMenu>					
+					<p:outputLabel for="operation_method"  value="Obrigatório" styleClass="fontLabel"/>
+					<h:panelGroup styleClass="md-inputfield">
+						<p:selectBooleanCheckbox value="#{parameterBean.parameter.obrigatorio}" />
+					</h:panelGroup>
+					<p:spacer width="50" />
+					<p:spacer width="50" />
+				</h:panelGrid>
+			</p:panelGrid>		
+				
+			<f:facet name="footer">
+				<p:commandButton id="AddParameterAdd" value="salvar" action="#{parameterBean.addParameter()}"
+					process="formDIV:AddParameter"
+					update="formDIV:msgs,formDIV:AddParameter,formDIV:URLDialog" icon="fa fa-fw fa-save" type="submit" >
+						<f:setPropertyActionListener target="#{parameterBean.wsDoc}" value="#{qwcfpWServiceBean.newdUrl}" >
+						</f:setPropertyActionListener>
+						<f:setPropertyActionListener target="#{parameterBean.operation}" value="#{qwcfpWServiceBean.selectedOperation}" >
+						</f:setPropertyActionListener>
+					</p:commandButton>
+			</f:facet>			
+		</p:dialog>
+		
+		<p:dialog header="Editar Parameter -  #{qwcfpWServiceBean.newdUrl.idService}" styleClass="tamanhoDialogOperation" id="editParameter" widgetVar="editParameter" resizable="false" draggable="true" responsive="true" height="250px" >
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="idParameteredit" required="true" styleClass="inputSize100" requiredMessage="Nome" value="#{parameterBean.parameter.identificador}" />
+					<label>Nome</label>
+				</h:panelGroup>				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="descParameteredit" required="true" styleClass="inputSize100" requiredMessage="Tipo" value="#{parameterBean.parameter.descricao}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="labelParameteredit" required="true" styleClass="inputSize100" requiredMessage="Tipo" value="#{parameterBean.parameter.label}" />
+					<label>Label</label>
+				</h:panelGroup>
+				<h:panelGrid columns="6" style="margin-bottom:10px; width:100%" cellpadding="5">
+					<p:outputLabel for="operation_method"  value="Tipo" styleClass="fontLabel"/>
+					<p:selectOneMenu size="200" requiredMessage="Tipo" value="#{parameterBean.parameter.tipo}">
+						<f:selectItems value="#{parameterBean.parameterTypes}"/>
+					</p:selectOneMenu>					
+					<p:outputLabel for="operation_method"  value="Obrigatório" styleClass="fontLabel"/>
+					<h:panelGroup styleClass="md-inputfield">
+						<p:selectBooleanCheckbox value="#{parameterBean.parameter.obrigatorio}" />
+					</h:panelGroup>
+					<p:spacer width="50" />
+					<p:spacer width="50" />
+				</h:panelGrid>
+			</p:panelGrid>		
+				
+			<f:facet name="footer">
+				<p:commandButton id="EditParameterAdd" value="salvar" action="#{parameterBean.editParameter()}"
+					process="formDIV:editParameter"
+					update="formDIV:msgs,formDIV:editParameter,formDIV:URLDialog" icon="fa fa-fw fa-save" type="submit" >
+						<f:setPropertyActionListener target="#{parameterBean.wsDoc}" value="#{qwcfpWServiceBean.newdUrl}" >
+						</f:setPropertyActionListener>
+						<f:setPropertyActionListener target="#{parameterBean.operation}" value="#{qwcfpWServiceBean.selectedOperation}" >
+						</f:setPropertyActionListener>
+					</p:commandButton>
+			</f:facet>			
+		</p:dialog>
+		
+		
+		<p:dialog header="Test Operation" styleClass="tamanhoDialogOperation" id="testOperation" widgetVar="testOperation" resizable="false" draggable="true" responsive="true"  >
+			<p:panelGrid layout="grid" style="width:100%;" cellpadding="5" columns="2">
+			
+					<p:column width="50%">
+						<pe:codeMirror  id="codeMirror" mode="css"  theme="eclipse" value="#{testOperationBean.codeContent}" lineNumbers="true" required="true"  />
+					</p:column>
+					 <p:column width="50%">
+					 	<pe:codeMirror id="testRespose"  value="#{testOperationBean.response}" readonly="true" />
+					</p:column>
+										
+			</p:panelGrid>
+						<p:commandButton id="testButtonDlg" action="#{testOperationBean.test}" icon="fa fa-fw fa-plus" value="Testar" style="width: 220px;" update=":formDIV:testRespose" process="@this testOperation codeMirror"/>
+						<p:spacer width="50" />
+			
+		</p:dialog>
+
+		<p:dialog header="Editar Web Service Cadastrados" styleClass="dialogoWidth60" id="URLDialog" widgetVar="URLDialog" resizable="false" draggable="true" responsive="true">
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" id="EditarURL">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="identificadorED" required="true" styleClass="inputSize100" requiredMessage="Nome" value="#{qwcfpWServiceBean.newdUrl.idService}" />
+					<label>Nome</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="DESWSDLED" required="true" styleClass="inputSize100" requiredMessage="Descrição" value="#{qwcfpWServiceBean.newdUrl.description}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+
+				<h:panelGrid columns="4" style="margin-bottom:10px; width:100%" cellpadding="5">
+					<p:outputLabel for="tipo_servicoED"  value="Tipo Serviço" styleClass="fontLabel"/>
+					<p:selectOneMenu id="tipo_servicoED"  size="100" requiredMessage="Tipo Serviço" value="#{qwcfpWServiceBean.tipoServico}">
+						<f:selectItem itemLabel="SOAP"  itemValue="WSDL"/>
+						<f:selectItem itemLabel="RESTFUL"  itemValue="Rest"/>
+					</p:selectOneMenu>
+							
+					<p:outputLabel for="usa_certificadoED"  value="Usa Certificado" styleClass="fontLabel"/>
+					<p:selectOneMenu id="usa_certificadoED"  size="100" value="#{qwcfpWServiceBean.usaCertificado}">
+						<f:selectItem itemLabel="NÃO"  itemValue="false"/>
+						<f:selectItem itemLabel="SIM"  itemValue="true"/>
+					</p:selectOneMenu>		
+					
+					<p:outputLabel for="tipo_autorizacaoED"  value="Tipo Autorização" styleClass="fontLabel"/>
+					<p:selectOneMenu id="tipo_autorizacaoED"  size="100" value="#{qwcfpWServiceBean.newdUrl.tipoAutorizacao}">
+						<f:selectItem itemLabel="Ativado" itemValue="1"/>
+						<f:selectItem itemLabel="Desativado" itemValue="2"/>
+					</p:selectOneMenu>		
+					
+					<!-- <p:outputLabel for="created_atED"  value="Data de Criação" styleClass="fontLabel"/>
+						<p:calendar id="created_atED"  size="11" requiredMessage="Data de Criação" pattern="dd/MM/yyyy"  value="#{qwcfpWServiceBean.created_at}" /> -->
+					</h:panelGrid>
+				
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="CertificadoED" required="true" styleClass="inputSize100" value="#{qwcfpWServiceBean.newdUrl.WSDLUrl}"  />
+						<label>Certificado</label>
+					</h:panelGroup>
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="endpointED" required="true" styleClass="inputSize100" requiredMessage="EndPoint" value="#{qwcfpWServiceBean.newdUrl.WSDLUrl}" />
+					<label>EndPoint</label>
+				</h:panelGroup>
+		
+				<h:panelGrid columns="1" layout="grid" style="width:100%"  border="0">	
+					<p:row >
+						<p:column >
+							<p:commandButton id="btnCopy" value="Copy" icon="fa fa-copy"  />  
+					        <pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="txtCopy">  
+					            <p:ajax event="success" listener="#{downloadLink.successListener}" />  
+					            <p:ajax event="error" listener="#{downloadLink.errorListener}" />  
+					        </pe:clipboard>
+						</p:column>
+						<p:column>						
+					     <p:spacer width="10px"/>   <p:inputText disabled="false" id="txtCopy" value="#{qwcfpWServiceBean.endProxy}"  style="width:85%" readonly="true"/>		
+						</p:column>
+					</p:row>							
+				</h:panelGrid>
+								
+				
+				<p:contextMenu for="cars3" id="EdtOper" widgetVar="ctxMenuListOper">				
+					<p:menuitem value="Editar Operation" update=":formDIV:editOperation, :formDIV:editURL" oncomplete="PF('editOperation').show()" icon="fa fa-fw fa-edit" title="Editar Operation" process="@this editURL"  rendered="#{loginBean.isGi()}" disabled="#{!qwcfpWServiceBean.restful}">
+					<f:setPropertyActionListener target="#{operationBean.operation}" value="#{qwcfpWServiceBean.detailedOperation}" >
+						</f:setPropertyActionListener>
+					</p:menuitem>
+					<p:menuitem value="Testar" update=":formDIV:testOperation" oncomplete="PF('testOperation').show()" icon="fa fa-fw fa-edit" title="Testar Operation" process="@this editURL" >
+					</p:menuitem>
+					<p:menuitem value="Excluir Operation" update=":formDIV:editURL" icon="fa fa-fw fa-remove" title="Excluir Operation" rendered="#{loginBean.isGi()}" process="@this editURL" action="#{operationBean.removeOperation()}" oncomplete="PF('URLDialog').hide()" disabled="#{!qwcfpWServiceBean.restful}">
+						<p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-alert" />
+						<f:setPropertyActionListener target="#{operationBean.wsDoc}" value="#{qwcfpWServiceBean.newdUrl}" >
+						</f:setPropertyActionListener>
+						<f:setPropertyActionListener target="#{operationBean.operation}" value="#{qwcfpWServiceBean.detailedOperation}" >
+						</f:setPropertyActionListener>
+					</p:menuitem>
+				</p:contextMenu>
+				
+				<p:contextMenu for="parameterTable" id="Edtparm" widgetVar="ctxMenuListParm">				
+					<p:menuitem value="Editar Parameter" update=":formDIV:editParameter" oncomplete="PF('editParameter').show()" icon="fa fa-fw fa-edit" title="Editar Parameter" process="@this editURL"  rendered="#{loginBean.isGi()}" disabled="#{!qwcfpWServiceBean.restful}" >
+						<f:setPropertyActionListener target="#{parameterBean.parameter}" value="#{qwcfpWServiceBean.detailedParameter}" >
+						</f:setPropertyActionListener>
+					</p:menuitem>
+					<p:menuitem value="Excluir Parameter" update=":formDIV:editURL" icon="fa fa-fw fa-remove" title="Excluir Parameter" rendered="#{loginBean.isGi()}" process="@this editURL" action="#{parameterBean.removeParameter()}" disabled="#{!qwcfpWServiceBean.restful}">
+						<p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-alert" />
+					</p:menuitem>
+				</p:contextMenu>
+				
+				<p:panelGrid columns="2" layout="grid" styleClass="parameterTable">
+					<p:row>
+						<p:column>
+							<p:dataTable id="cars3" var="car" value="#{qwcfpWServiceBean.operations}" widgetVar="cars3"  rowKey="#{car.id}"
+										selection="#{qwcfpWServiceBean.selectedOperation}" selectionMode="single"
+										 paginator="true" rows="6" rowsPerPageTemplate="10,15,20,25,50,100" paginatorPosition="bottom">
+								<f:facet name="header">
+									Operation								
+								</f:facet>
+								<p:ajax event="rowSelect" update=":formDIV:parameterTable, :formDIV:addParButton" listener="#{qwcfpWServiceBean.onChangeOperation()}"/>
+								<p:column headerText="Identificador" width="20%">
+											<h:outputText value="#{car.identificador}" style="color: black;" />
+								</p:column>		
+								<p:column headerText="Descrição">
+											<h:outputText value="#{car.label}" style="color: black;" />
+								</p:column>
+							</p:dataTable>						
+							<div align="center" class="spacamento">
+								<p:commandButton icon="fa fa-fw fa-plus" value="Adicionar Operation" style="width: 220px;" oncomplete="PF('AddOperation').show()" update=":formDIV:AddOperation" disabled="#{!qwcfpWServiceBean.restful}" process="@this editURL">
+									<p:resetInput target="AddOperation"></p:resetInput>
+								</p:commandButton>
+							</div>
+						</p:column>
+					</p:row>	
+					<p:row>
+						<p:column>
+							<p:dataTable id="parameterTable" var="parameter" value="#{qwcfpWServiceBean.parameters}" widgetVar="parameterTable" rowKey="#{parameter.identificador}"
+										 selection="#{qwcfpWServiceBean.selectedParameter}" selectionMode="single" 
+										 paginator="true" rows="6" rowsPerPageTemplate="10,15,20,25,50,100" paginatorPosition="bottom" emptyMessage="Não há parametros (Selecione uma operation)">
+								<f:facet name="header">
+									Parameter								
+								</f:facet>
+								:formDIV:editParameter
+								<p:ajax event="rowSelect" update=":formDIV:editParameter" listener="#{qwcfpWServiceBean.onChangeParameter()}"/>
+								<p:column headerText="Nome" width="20%">
+											<h:outputText value="#{parameter.identificador}" style="color: black;" />
+								</p:column>
+			
+								<p:column headerText="descrição" width="20%">
+											<h:outputText value="#{parameter.label}" style="color: black;" />
+								</p:column>
+							</p:dataTable>						
+							<div align="center" class="spacamento" >
+								<p:commandButton id="addParButton" icon="fa fa-fw fa-plus" value="Adicionar Parameter" style="width: 220px;" oncomplete="PF('AddParameter').show()" disabled="#{!qwcfpWServiceBean.restful or empty qwcfpWServiceBean.selectedOperation}"/>
+							</div>
+						</p:column>
+					</p:row>			
+				</p:panelGrid>
+				<div class="ui-g">
+				<!-- 	<div class="ui-g-12">
+						<p:commandButton value="Add novo parâmetro"
+							styleClass="ui-priority-primary" process="@this"
+							actionListener="#{qwcfpWServiceBean.onAddNewEd()}"
+							oncomplete="PF('cars3').addRow();" />
+					</div> 
+					<div class="ui-g-12">
+						<p:commandButton value="Adicionar Operation" oncomplete="PF('AddOperation').show()"/>
+						
+					</div>-->
+				</div>
+
+			</p:panelGrid>
+			<f:facet name="footer">
+				<p:commandButton id="addnewUrla" value="salvar"
+					action="#{qwcfpWServiceBean.editURL()}"
+					process="@this :formDIV:URLDialog :formDIV:tipo_servicoED :formDIV:usa_certificadoED formDIV:editURL"
+					update="formDIV:editURL,:formDIV:URLDialog,:formDIV:msgs" icon="fa fa-fw fa-save"
+					oncomplete="handleDialogSubmit(args, 'URLDialog')"/>
+			</f:facet>
+		</p:dialog>
+		<!--  Adicionado pelo ANDERSON -->
+		<p:dialog header="Adicionar privilégios aos Web Service Cadastrados" styleClass="dialogoWidth40" id="URLDialogPrivs" widgetVar="URLDialogPrivs" resizable="false" draggable="false"
+			responsive="true">
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" id="addURIPrivs">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="PNNAMEEditPriv" readonly="true" size="100" requiredMessage="Nome do projeto" value="#{qwcfpWServiceBean.selectedUrl.name}" />
+					<label>Nome do projeto</label>
+				</h:panelGroup>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="WSDLEditPriv" readonly="true" size="100" requiredMessage="Caminho do arquivo WSDL" value="#{qwcfpWServiceBean.selectedUrl.WSDLUrl}" />
+					<label>Initial WSDL</label>
+				</h:panelGroup>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputTextarea id="DESWSDLEditPriv" readonly="true" cols="100" requiredMessage="Caminho do arquivo WSDL" value="#{qwcfpWServiceBean.selectedUrl.description}" />
+					<label>Descrição</label>
+				</h:panelGroup>
+				<p:pickList id="usersPrivs" value="#{qwcfpWServiceBean.moListUserPrivs}" var="user" effect="bounce" itemLabel="#{user.memberName}" itemValue="#{user}"
+					showSourceControls="false" showTargetControls="false" responsive="true" showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains" showCheckbox="true"
+					converter="#{memberConverterEx}">
+					<f:facet name="sourceCaption">Usuários Possíveis</f:facet>
+					<f:facet name="targetCaption">Usuários com Privilégios</f:facet>
+				</p:pickList>
+			</p:panelGrid>
+			<f:facet name="footer">
+				<p:commandButton id="addnewPriv" value="salvar"
+					action="#{qwcfpWServiceBean.adicionarPrivilegio()}"
+					process="@this :formDIV:URLDialogPrivs"
+					update="formDIV:editURL,:formDIV:URLDialogPrivs"
+					icon="fa fa-fw fa-save" type="submit" />
+			</f:facet>
+		</p:dialog>
+		<!--  FIM De Adicionado pelo ANDERSON -->
+
+		<script type="text/javascript">
+			function handleDialogSubmit(args, dialogName) {
+				if (!args.validationFailed) {
+					PF(dialogName).hide();
+				}
+			}
+		</script>
+			<script>
+	function disableTxt() {
+		var fileLimitVerison = document.getElementById("formDIV:Certificado");
+		if ( document.getElementById("formDIV:usa_certificado:0").checked )
+			fileLimitVerison.disabled = true;
+		else
+			fileLimitVerison.disabled = false;
+ 	}
+
+	(function() {
+		disableTxt();
+	})();
+
+	</script>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

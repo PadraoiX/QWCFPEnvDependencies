@@ -1,0 +1,198 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+	<h:outputScript library="script" name="jquery.mask.js" />
+	   	<script>
+
+   	
+            function validatePhone() {
+
+                var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+                    maskBehavior = function(val, e, field, options) {
+                        return val.length > 14 ? masks[0] : masks[1];
+                    };
+
+                $('.phone').mask(maskBehavior, {onKeyPress:
+                            function(val, e, field, options) {
+                                field.mask(maskBehavior(val, e, field, options), options);
+                            }
+                });
+            }
+            $(document).ready(function() {
+                validatePhone();
+                
+                
+            });
+      
+            function toggle(){
+
+				var atLeastOneIsChecked = $('#formDIV\\:checkLdap_input:checked').length > 0; ;
+
+				console.log(atLeastOneIsChecked);
+
+				if( atLeastOneIsChecked ) {
+					$("#formDIV\\:userIdLdap").css("opacity","1");
+					
+				}else{
+					$('#formDIV\\:MEMBER_LDAP').val('');
+				}
+
+				$("#formDIV\\:userIdLdap").toggle();
+
+			}
+			
+    </script>
+	<script type="text/javascript">
+	function mascara(o, f) {
+		v_obj = o
+		v_fun = f
+		setTimeout("execmascara()", 1)
+	}
+
+	function execmascara() {
+		v_obj.value = v_fun(v_obj.value)
+	}
+	
+	function mtel(v) {
+		v = v.replace(/D/g, ""); //Remove tudo o que não é dígito
+		v = v.replace(/^(d{2})(d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+		v = v.replace(/(d)(d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+		return v;
+	}
+	
+	function id(el) {
+		return document.getElementById(el);
+	}
+	
+	window.onload = function() {
+		id('telefone').onkeypress = function() {
+			mascara(this, mtel);
+		}
+	}
+</script>
+	<style>
+        .ui-widget-content{
+		 border: none !important; 
+		}
+        
+    </style>
+    
+		<p:growl id="growl" life="#{loginBean.messageTime}" showDetail="true" sticky="false" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+		<h1>Editar Perfil</h1>
+			 <p:panelGrid id="editProfGrid" columns="2" cellpadding="2" layout="grid" styleClass="ui-panelgrid-blank form-group" > 
+
+				<h:inputHidden value="#{loginBean.member.memberId}" style="font-weight: normal;" />
+				<h:inputHidden value="#{loginBean.member.areaCodePhone1}" style="font-weight: normal;" />
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_USER" value="#{loginBean.member.memberName}" required="true" maxlength="100" requiredMessage="O nome do usuário é obrigatório." style="width:100%" />
+					<label>Nome do Usuário</label>	
+				</h:panelGroup>
+					
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputMask id="MEMBER_CPF" value="#{loginBean.member.loginCpfId}"	style="width:100%" autocomplete="false" mask="999.999.999-99"  converter="converterCpf" required="#{loginBean.cpfRequired}" requiredMessage="CPF é um campo obrigatório"  >
+							<f:validator validatorId="validCpf" for="MEMBER_CPF"/>
+							<p:ajax event="change" update="MEMBER_CPF,growl" process="@this"/>
+					</p:inputMask>
+					<label>CPF</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_MAIL" value="#{loginBean.member.memberEmail}"  style="width:100%"  required="true" maxlength="128" requiredMessage="Email é um campo obrigatório" >
+						<f:validator validatorId="validateEmail" for="MEMBER_MAIL"/>
+						<p:ajax event="change" update="MEMBER_MAIL,:formDIV:growl" />
+					</p:inputText>
+					<label>E-Mail</label>
+				</h:panelGroup>
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_PERSONAL_MAIL"	value="#{loginBean.member.memberEmailPersonal}"  maxlength="128" style="width:100%" />
+					<label>E-mail Pessoal</label>
+				</h:panelGroup>
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText name="telefone" id="telefone" value="#{loginBean.member.numberPhone1}"  converterMessage="O telefone é inválido." converter="converterFone"  style="width:100%" required="true" requiredMessage="Telefone é um campo obrigatório" />
+					<label>Telefone</label>
+				</h:panelGroup>				
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_ADDRESS" value="#{loginBean.member.phisicalAddress}" required="true" maxlength="100"  style="width:100%" requiredMessage="Endereço é um campo obrigatório" />
+					<label>Endereço</label>
+				</h:panelGroup>
+
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputMask id="MEMBER_CEP" value="#{loginBean.member.zipCode}" mask="99.999-999" style="width:100%" maxlength="10" required="true" requiredMessage="CEP é um campo obrigatório"/>
+					<label>CEP</label>
+				</h:panelGroup>
+				
+				<p:selectOneMenu id="MEMBER_AREA_PR" value="#{loginBean.member.areaIdFk}" required="true" filter="true"	requiredMessage="Área de Trabalho é um campo obrigatório" style="width:100%" effect="fade">
+					<f:selectItem itemLabel="Área de Trabalho" />
+					<f:selectItems value="#{areasBean.areas}" var="area"	itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+				</p:selectOneMenu>
+				
+				<h:panelGroup id="userIdLdap" style="#{loginBean.usuarioAutenticouComLdap ? '' : 'display: none'}" styleClass="md-inputfield" >
+						<p:inputText id="MEMBER_LDAP" requiredMessage="A identificação do usuário no Ldap é obrigatória" value="#{loginBean.member.ldapKeyForCorpAuth}"  style="width:100%" required="#{memberBean.authenticationUserLdap and (memberBean.pass eq null)}" size="30" />
+						<label>User Id Ldap</label>
+				</h:panelGroup>
+				
+			</p:panelGrid>
+			<p:spacer width="25" />
+			<p:commandButton value="Alterar" action="#{memberBean.editProfile()}"  icon="fa fa-fw fa-save" update="growl" process="@this editProfGrid"/>
+			<p:spacer width="10" />
+			
+			<p:commandButton id="alterarSenhaBtn" rendered="#{empty loginBean.member.ldapKeyForCorpAuth}"  icon="fa fa-fw fa-key" value="Alterar Senha" oncomplete="PF('alterarsenha').show();" update="formDIV:UpdatePass @this">
+				 <f:setPropertyActionListener value="#{loginBean.member}" target="#{memberBean.member}" />
+			</p:commandButton>
+			<p:spacer width="10" />
+		</p:panel>
+
+		<p:dialog header="Alterar Senha" widgetVar="alterarsenha" modal="false" width="500" height="250" styleClass="card card-w-title">
+			
+			<h:panelGrid columns="1" cellpadding="4" layout="grid" styleClass="ui-panelgrid-blank form-group" id="UpdatePass" style="width:100%">
+				
+				<p:selectOneMenu id="MEMBER_AREA" value="#{memberBean.member.areaIdFk}" filter="true" effect="fade"  style="width:100%" >
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{areasBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+				</p:selectOneMenu>
+				<div class="EmptyBox5"></div>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:password id="MEMBER_PASS_OLD" value="#{memberBean.passOld}" style="width:100%" styleClass="tamanhoCamanho" />
+					<label>Senha Antiga</label>
+				</h:panelGroup>				
+				
+				<div class="EmptyBox5"></div>
+				<h:panelGroup styleClass="md-inputfield">
+				<p:password id="MEMBER_PASS4"   binding="#{startComponent}" value="#{memberBean.pass}" style="width:100%" styleClass="tamanhoCamanho" 
+					label="Senha" promptLabel="Informe um senha." 
+					feedback="true" weakLabel="Fraca" goodLabel="Razoável" strongLabel="Forte" autocomplete="false"  redisplay="true"   >
+				</p:password>
+				<label>Senha</label>
+				</h:panelGroup>
+				
+				<div class="EmptyBox5"></div>
+				<h:panelGroup styleClass="md-inputfield">
+					<p:password id="MEMBER_PASS5"  redisplay="true" value="#{memberBean.pass}" style="width:100%" autocomplete="false" styleClass="tamanhoCamanho" >
+						<f:validator validatorId="passwordValidator" for="MEMBER_PASS5" />
+					 	<f:attribute name="startComponent" value="#{startComponent}" />
+						<p:ajax event="change" update="MEMBER_PASS4, MEMBER_PASS5,growl" process="@this MEMBER_PASS4" />
+					</p:password>
+					<label>Confirmar Senha</label>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<br />
+			<p:commandButton value="Alterar" action="#{memberBean.alterarSenha()}" icon="fa fa-fw fa-save" oncomplete="PF('alterarsenha').hide()" update="growl"/>
+			<p:spacer width="20" />
+			<p:commandButton value="Fechar" icon="fa fa-fw fa-close" oncomplete="PF('alterarsenha').hide()" />
+		</p:dialog>
+
+	
+	</ui:define>
+</ui:composition>
+</html>

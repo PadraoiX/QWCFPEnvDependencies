@@ -1,0 +1,170 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"		
+				xmlns="http://www.w3.org/1999/xhtml"				
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+<ui:define name="conteudo">
+<style>
+	.alinhar{
+		margin-left: 10px;		
+		position: absolute;
+	}
+	.ui-widget-content{
+	 border: none;
+}
+.ui-widget-content{
+	 border: none !important; 
+	 
+}
+.ui-inputfield{
+	width: 100%
+}
+
+</style>
+<p:growl id="msgs" showDetail="true" /> 
+    <p:panel id="panel"   styleClass="card card-w-title sombraPanel" >   
+	<h1>Cadastrar Novo Grupo</h1>
+    
+        <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+          
+            <h:panelGroup styleClass="md-inputfield">
+            	<p:inputText id="grupo_Name" value="#{groupBean.group.nome}" styleClass="tamanhoCamanho" required="true" maxlength="100" requiredMessage="O Campo Nome é obrigatório."/>
+            	<label>Nome</label>       
+            </h:panelGroup>
+            
+ 			
+            <h:panelGroup styleClass="md-inputfield">
+            	<p:inputText id="grupo_Acronym" value="#{groupBean.group.apelido}" styleClass="tamanhoCamanho" required="true" maxlength="20" validator="validateGroupAlias" requiredMessage="O Campo Apelido é obrigatório."  />
+            	<label>Apelido do grupo</label>
+            </h:panelGroup>
+            
+            <h:panelGroup styleClass="md-inputfield">
+            	<p:inputText id="grupo_DaysLimitDiscard" value="#{groupBean.group.daysLimitDiscart}" styleClass="tamanhoCamanho" size="6" required="true" requiredMessage="O Campo Dias Limite é obrigatório." converterMessage="O Campo Dias Limite deve ser um número entre 1 e 999999 Exemplo: 9346" maxlength="6"/>
+            	<label>Dias Limite de arquivo</label>
+            </h:panelGroup>
+            
+            <h:panelGroup styleClass="md-inputfield">
+            	<p:calendar id="grupo_InputDateLimite"  value="#{groupBean.inputDate}" style="width: 100%;" required="true" requiredMessage="O Campo Data Limite Envio é obrigatório."  locale="pt" pattern="dd/MM/yyyy" maxlength="11" />
+            	<label>Data Limite Envio</label>
+            </h:panelGroup>
+            
+            <h:panelGroup styleClass="md-inputfield">
+            	<p:calendar id="grupo_OutputDateLimite" value="#{groupBean.outputDate}" style="width: 100%;" required="true" requiredMessage="O Campo Data Limite Download é obrigatório."  locale="pt"  pattern="dd/MM/yyyy" maxlength="11" />
+             	<label>Data Limite Download</label>
+            </h:panelGroup>
+            
+            <h:panelGroup>
+            	<h:panelGroup styleClass="md-inputfield">
+	        		<p:inputText id="grupo_SpaceLimit" value="#{groupBean.group.sizeInBytes}" style="width: 90%;" required="true" converterMessage="O campo Limite de Espaço Usado deve ser um número decimal com sinal formado por zero ou mais dígitos, que pode ser seguido de um ponto ou fração decimal. Exemplo: 198.23" requiredMessage="O Campo Limite de Espaço Usado é obrigatório." maxlength="8" />
+	        		<label>Limite de Espaço Usado</label>
+	            <p:selectOneMenu  id="grupo_SpaceLimitValor" value="#{groupBean.sizeValue}"  effect="fade" styleClass="alinhar" >
+            		<f:selectItem itemLabel="MB" itemValue="1048576" />
+            		<f:selectItem itemLabel="GB" itemValue="1073741824" />
+            		<f:selectItem itemLabel="TB" itemValue="1099511627776" />
+	            </p:selectOneMenu>   
+	        	</h:panelGroup>       		            
+	       </h:panelGroup>
+	       
+			<h:panelGrid columns="3" layout="grid">			
+            	<h:outputText value="Versionamento" />
+            	<h:panelGroup style="width:70%" layout="grid">
+	            	<p:selectOneRadio  id="grupo_AceptVersioning" value="#{groupBean.group.aceptVersion}" required="true"  columns="2">
+		            	<f:selectItem itemLabel="Sim" itemValue="S" id="versionTrue" />
+		            	<f:selectItem itemLabel="Não" itemValue="N" id="versionFalse" selected="true"  />
+		            	<p:ajax event="change" oncomplete="disableTxt();"  process="@this"/>
+		            </p:selectOneRadio> 
+            	</h:panelGroup>  
+            	<p:inputText id="grupo_FileLimtVersions" required="#{groupBean.group.aceptVersion eq 'S'}" style="width:30%" value="#{groupBean.group.versionLimit}"  validator="validateVLimit"  />
+			</h:panelGrid>    
+			
+            <p:selectOneMenu id="BOOS_GROUP" filter="true" filterMatchMode="startsWith" value="#{groupBean.group.managerGroup}" required="true" style="width:100%" effect="fade" requiredMessage="Selecione o usuário dono do grupo!"  rendered="#{loginBean.isGi()}">
+				<f:selectItem itemLabel="Dono do Grupo" />
+				<f:selectItems  value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}"  itemLabel="#{member.memberName}"/>
+			</p:selectOneMenu>       
+            
+            	<p:selectOneMenu id="grupo_SupportPerson1" filter="true" filterMatchMode="startsWith"
+						value="#{groupBean.group.suporte1}" required="true"
+						style="width: 100%;"
+						effect="fade" requiredMessage="Selecione o primeiro usuário de suporte!.">
+						<f:selectItem itemLabel="Suporte 1" />
+						<f:selectItems  value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}"  itemLabel="#{member.memberName}"/>
+					</p:selectOneMenu>       
+            
+				<p:selectOneMenu id="grupo_SupportPerson2" filter="true" filterMatchMode="startsWith"
+						value="#{groupBean.group.suporte2}"
+						style="width: 100%;"
+						required="true"
+						effect="fade" requiredMessage="Selecione o segundo usuário de suporte!.">
+						<f:selectItem itemLabel="Suporte 2" />
+					<f:selectItems  value="#{listMemberBean.members}" var="member"
+            	itemValue="#{member.memberId}"  itemLabel="#{member.memberName}"/>
+					</p:selectOneMenu>               
+            
+            <p:selectOneMenu  
+		            	id="MEMBER_AREA" 
+		            	value="#{groupBean.group.areaId}" 
+		            	required="true" filter="true" filterMatchMode="startsWith"
+		            	style="width: 100%;"
+		            	effect="fade" requiredMessage="Selecione uma Área.">
+		            	<f:selectItem itemLabel="Área de Trabalho" />
+		            	<f:selectItems value="#{areasBean.areas}" var="area"
+		            	itemValue="#{area.areaId}" itemLabel="#{area.nome}"/>
+		     </p:selectOneMenu>            
+            
+				<p:selectOneMenu id="grupo_SubordinatedGroup" filter="true" filterMatchMode="startsWith"
+						value="#{groupBean.group.subordinateGroup}" required="false"
+						style="width: 100%;"
+						effect="fade" >
+						<f:selectItem itemLabel="Grupo Subordinado" />
+					<f:selectItems  value="#{listGroupsBean.groups}" var="grupo"
+            			itemValue="#{grupo.groupId}"  itemLabel="#{grupo.nome}"/>
+				</p:selectOneMenu>               
+            
+            	<p:selectOneMenu id="grupo_Storage"
+						value="#{groupBean.group.fileSystemStorageDomain}" required="true"
+						style="width: 100%;"
+						effect="fade" requiredMessage="Selecione o tipo de armazenamento.">
+						<f:selectItem itemLabel="Tipo de armazenamento" />
+						<f:selectItems  value="#{groupBean.storageType}" var="type" itemValue="#{type.id}"  itemLabel="#{type.description}"/>
+					</p:selectOneMenu>
+					
+				<p:selectOneMenu id="listLayouts" filter="true" 	filterMatchMode="startsWith" value="#{groupBean.group.layoutIdFk}"	 effect="fade"  style="width: 100%;">
+					<f:selectItem itemLabel="Escolha um layout" />
+					<f:selectItems value="#{layoutBean.listLayouts}" var="layout" itemValue="#{layout.id}" itemLabel="#{layout.name}" />
+				</p:selectOneMenu>      
+					 
+           		<h:panelGroup styleClass="md-inputfield">
+            		<p:inputTextarea id="grupo_ShortDescription" styleClass="tamanhoCamanho" value="#{groupBean.group.description}" maxlength="2000" required="true" requiredMessage="O campo descrição é obrigatório" cols="32"/>
+            		<label>Descrição</label>         
+ 				</h:panelGroup>
+ 				
+ 				
+ 				
+ 				
+        </p:panelGrid>
+         
+			<div class="EmptyBox10"></div>
+ 			<p:commandButton value="Salvar" action="#{groupBean.salvar}" update="msgs" type="submit" icon="fa fa-fw fa-save"  style="display:block; margin:10px 25px" process="@parent grupo_FileLimtVersions"/>
+ 			
+    </p:panel> 	
+    <div class="EmptyBox30"></div>
+            * Campo de preenchimento obrigatório			       
+ 	<script>
+	function disableTxt() {
+		var fileLimitVerison = document.getElementById("formDIV:grupo_FileLimtVersions");
+		if ( document.getElementById("formDIV:grupo_AceptVersioning:0").checked )
+			fileLimitVerison.disabled = false;
+		else
+			fileLimitVerison.disabled = true;
+ 	}
+
+	(function() {
+		disableTxt();
+	})();
+
+	</script>
+
+</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,224 @@
+<ui:composition template="/templates/template-barcelona.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="conteudo">
+		<script type="text/javascript" src="resources/script/main.js">			</script>
+		<link rel="stylesheet" href="resources/css/qwcfp-main.css"/>  
+		<style type="text/css">
+
+
+</style>
+
+
+		<p:growl id="messages" widgetVar="messages" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:remoteCommand id="updateTable" name="updateTable" oncomplete="Init(); Init2();"
+			actionListener="#{myGroupsBean.updateListMyGroups}" process="@this"
+			update=":formDIV:MeusGrupos" />
+		<p:remoteCommand id="validSession" name="validSession"
+			actionListener="#{loginBean.validSession}" process="@this"
+			update=":formDIV:MeusGrupos" />
+		<p:remoteCommand id="invalidSession" name="invalidSession"
+			actionListener="#{loginBean.invalidSession}" process="@this"
+			update=":formDIV:MeusGrupos" />
+
+		<h3>Meus Grupos</h3>
+		<p:commandButton id="groupDetailButton" styleClass="groupDetailButton" title="Abrir/Fechar Detalhes" process="@this formDIV:groupDetailTab"
+			onclick="expandInfo();" actionListener="#{myGroupsBean.expandDetail()}"	icon="#{myGroupsBean.buttonDetailIcon}"
+			update="formDIV:groupDetailWrapper, formDIV:groupDetailButton" />
+		<p:remoteCommand id="fileManaged" name="fileManaged"
+			actionListener="#{groupBean.setarId(myGroupsBean.myGroupsDetail, false)}"
+			process="@this" update=":formDIV:MeusGrupos" />
+		<!-- <p:remoteCommand id="displayInfo" name="displayInfo" process="formDIV:groupDetailTab :formDIV:MeusGrupos"	update="formDIV:groupDetailTab" /> -->
+		<p:dataGrid widgetVar="MeusGrupos" lazy="true" var="car" value="#{myGroupsBean.myGroupsEx}" columns="6" emptyMessage="Você ainda não tem grupos para acessar!" 
+		layout="grid" rows="18" paginator="true" id="MeusGrupos" paginatorPosition="bottom" styleClass="MeusGrupos_content" rowsPerPageTemplate="9,18,27,36">
+			<p:commandLink ondblclick="fileManaged()"  onclick="eventSelected()" ajax="true" update="formDIV:groupDetailTab, formDIV:fileManaged, formDIV:groupDetailWrapper"
+				process="formDIV:MeusGrupos formDIV:groupDetailTab">
+				<div id="filedrag2-#{car.myGroupsEx.groupId}"	style="display: flex;align-self: center;padding: 10px;border: 1px solid #db" class="shadow-box ui-shadow-2 card card-w-title transforma" >
+					<!-- <h:panelGrid style="padding: 16px;width: 100%;text-align: left" onclick="eventSelected()" columns="1">  -->
+							<div style="align-self: center;min-width: 7%;max-width: 7%;width: 7%;">
+								<div id="cardGroup"  >
+									<h:graphicImage id="downIcon" library="images" name="#{car.getDownloadName()}" styleClass="iconpriv" />
+									<p:tooltip for="downIcon" value="#{car.getDownloadTitle()}" trackMouse="true" />
+								</div>
+								<div>
+									<h:graphicImage id="upIcon" library="images" name="#{car.getUploadName()}" styleClass="iconpriv" />
+									<p:tooltip for="upIcon" value="#{car.getUploadTitle()}" trackMouse="true" />
+								</div>
+							</div>
+							
+							<div style="align-self: center;min-width: 17%;max-width: 17%;width: 17%;">
+								<p:commandButton type="submit" title="Gerênciar Arquivos" process="@this" action="#{groupBean.setarId(car, false)}" icon="fa fa-folder" />							
+							</div>
+							
+							<div style="align-self: center;">
+								<p>#{car.myGroupsEx.groupName.toUpperCase()}</p>							
+							</div>
+							
+					<!-- </h:panelGrid>  -->
+				</div>
+				<f:setPropertyActionListener value="#{car}" target="#{myGroupsBean.myGroupsDetail}" />
+
+			</p:commandLink>
+		</p:dataGrid>
+		
+		<h:inputHidden value="#{listArquivosBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{listArquivosBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{listArquivosBean.statusFile}" id="statusFile" />
+		<h:inputHidden value="#{listArquivosBean.httpUrlTransf}" id="urlHttpTransf" />
+		<h:inputHidden value="#{listArquivosBean.ticket}" id="ticket" />
+		<h:inputHidden value="#{groupBean.grupoId}" id="idGrupo" />
+
+		<p:dialog dynamic="false" widgetVar="uploadFile" resizable="true"
+			modal="true" appendTo="@(body)" loseOnEscape="true"
+			minimizable="true" maximizable="true" hideEffect="explode"
+			width="500" showEffect="explode"
+			styleClass="qwfileupload_modal sembordas qwfileuploadcss"
+			id="qwfileupload">
+			<f:facet name="header">
+				<span id="countBytes">Upload Arquivos</span>
+			</f:facet>
+			<div id="filedrag">
+				Deseja substituir arquivo caso exista? <input type="checkbox"
+					id="substituir" />
+				<h:panelGrid columns="1">
+					<p:inputTextarea id="aditionalInformation"
+						placeholder="Comentários adicionais não obrigatórios..." rows="5"
+						style="width:100%" />
+					<input type="file" name="fileinput" id='fileinput'
+						multiple="multiple" onchange="showFileSize();" />
+
+					<br />
+					<br />
+				</h:panelGrid>
+			</div>
+			<div id="divProgessContainer"></div>
+		</p:dialog>
+		<div class="layout-sidebar-info" id="layout-information">
+			<div class="shadow-box ui-shadow-2 card card-w-title"
+				style="height: inherit;">
+				<h:panelGroup id="groupDetailWrapper">
+					<h:panelGrid id="groupDetailTab" columns="2"
+						styleClass="nba-grid, groupDetailTab" cellpadding="2"
+						rendered="#{myGroupsBean.expandedDetail and myGroupsBean.myGroupsDetail != null}">
+						<p:row>
+							<p:column >
+								<p:outputLabel styleClass="fontCinza fontBold">Nome do Grupo:</p:outputLabel>	
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column styleClass="fontLighter fontCinza">#{myGroupsBean.myGroupsDetail.myGroupsEx.groupName}</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column >
+								<p:outputLabel styleClass="fontCinza fontBold">Apelido:</p:outputLabel> 
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column styleClass="fontLighter fontCinza">#{myGroupsBean.myGroupsDetail.myGroupsEx.groupAlias}</p:column>
+						</p:row>
+					</h:panelGrid>
+					<p:panelGrid styleClass="nba-grid, groupDetailTab" cellpadding="2"
+						rendered="#{myGroupsBean.expandedDetail and myGroupsBean.myGroupsDetail != null}">
+						<p:row>
+							<p:column styleClass="rowColor"
+								style="font-weight: bold; width:20%"
+								rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx ne null}">
+                    		Compartilhado:#{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupChildreanSpace)} / #{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupTotalSpace)}
+                    	</p:column>
+						</p:row>
+						<p:row>
+							<p:column styleClass="rowColor"
+								rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx ne null}">
+								<p:progressBar id="progressBarS"
+									value="#{groupBean.getSharedSpaceBarValue(myGroupsBean.myGroupsDetail.myGroupsEx)}"
+									labelTemplate="{value}%" displayOnly="true" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold; width:20%"
+								rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupSubordinatedId ne null}">
+							Limite do grupo:  #{groupBean.convertByte(groupBean.getOcupiedSpace(myGroupsBean.myGroupsDetail.myGroupsEx))} / #{groupBean.convertByte(myGroupsBean.myGroupsDetail.myGroupsEx.groupOriginalSpaceLimit)}
+						</p:column>
+						</p:row>
+						<p:row>
+							<p:column
+								rendered="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupSubordinatedId ne null}">
+								<p:progressBar id="progressBarG"
+									value="#{groupBean.getGroupSpaceBarValue(myGroupsBean.myGroupsDetail.myGroupsEx)}"
+									labelTemplate="{value}%" displayOnly="true" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton type="submit" icon="fa fa-fw fa-gear"
+									title="Configurações"
+									action="#{groupBean.setarIdRegraGrupo(myGroupsBean.myGroupsDetail)}"
+									id="escodeBotao">
+									<f:setPropertyActionListener target="#{groupBean.myGroup}"
+										value="#{car}" />
+								</p:commandButton>
+								<p:commandButton type="submit" icon="fa fa-fw fa-folder-open"
+									title="Gerênciar Arquivos"
+									action="#{groupBean.setarId(myGroupsBean.myGroupsDetail, false)}">
+									<f:setPropertyActionListener value="#{car}" target="#{groupBean.myGroup}" />
+								</p:commandButton>
+								<p:commandButton onclick="PF('uploadFile').show();"
+									update="formDIV:idGrupo" icon="fa fa-fw fa-upload"
+									title="Upload"
+									disabled="#{!myGroupsBean.myGroupsDetail.canUpload()}"
+									action="#{groupBean.setarId(myGroupsBean.myGroupsDetail, true)}">
+									<f:setPropertyActionListener value="#{car}" target="#{groupBean.myGroup}" />
+								</p:commandButton>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<h:panelGrid id="groupDetailTab3" columns="2"
+						styleClass="nba-grid, groupDetailTab" cellpadding="5"
+						rendered="#{myGroupsBean.expandedDetail and myGroupsBean.myGroupsDetail != null}">
+						<p:row>
+							<p:column>
+								<p:outputLabel styleClass="fontCinza fontBold">Data de Criação:</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText styleClass="fontLighter fontCinza" value="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupDtCreation}" converter="converteData" size="10" locale="pt" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel  styleClass="fontCinza fontBold ">Data limite upload:</p:outputLabel> 
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column><h:outputText styleClass="fontLighter fontCinza" value="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupInputDtLimit}" converter="converteData" size="10" locale="pt" /></p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel styleClass="fontCinza fontBold">Data limite download:</p:outputLabel> 
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column><h:outputText styleClass="fontLighter fontCinza" value="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupOutputDtLimit}" converter="converteData" size="10" locale="pt" /></p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel styleClass="fontCinza fontBold">Limite de versões:</p:outputLabel> 
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column><h:outputText styleClass="fontLighter fontCinza" value="#{myGroupsBean.myGroupsDetail.myGroupsEx.groupFileLimitVersion}" size="10" locale="pt" /></p:column>
+						</p:row>
+					</h:panelGrid>
+				</h:panelGroup>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

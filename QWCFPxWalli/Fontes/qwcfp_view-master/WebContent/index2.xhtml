@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+		<title >QWCFP - Padrão iX  </title>
+				
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />	
+   	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="theme-color" content="#ffffff" />
+	<meta name="msapplication-TileImage" content="resources/images/icon_qwcfp_144x144.png" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />  
+			
+	<link href="resources/images/icon_qwcfp_16x16.png" rel="shortcut icon"/> 
+	<link href="resources/images/icon_qwcfp_16x16.png" rel="icon"/>
+	<link href="icons/icon_qwcfp_96x96.png" rel="icon"/>
+	
+	<link rel="icon" type="image/png" sizes="16x16" href="resources/images/icon_qwcfp_16x16.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="resources/images/icon_qwcfp_32x32.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="resources/images/icon_qwcfp_57x57.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="resources/images/icon_qwcfp_60x60.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="resources/images/icon_qwcfp_72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="resources/images/icon_qwcfp_76x76.png" />
+	<link rel="icon" type="image/png" sizes="96x96" href="resources/images/icon_qwcfp_96x96.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="resources/images/icon_qwcfp_114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="resources/images/icon_qwcfp_120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="resources/images/icon_qwcfp_144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="resources/images/icon_qwcfp_152_152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="resources/images/icon_qwcfp_180x180.png" />
+	<link rel="icon" type="image/png" sizes="192x192"  href="resources/images/icon_qwcfp_192_192.png" />
+	<link rel="shortcut icon" type="image/png" href="resources/images/icon_qwcfp.png"/>
+		
+	<h:outputStylesheet name="geral.css" library="css" />
+	<h:outputStylesheet library="css" name="showcase.css"/>		
+		<h:outputScript library="script" name="showcase.js"/>
+		<h:outputScript library="script" name="locale-primefaces.js"/>
+		<h:outputScript library="script" name="perfect-scrollbar.js"/>
+		<h:outputScript library="script" name="ajax.js"/>
+	<h:outputScript library="script" name="jquery.mask.js" />
+   	<script>
+            function validatePhone() {
+
+                var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+                    maskBehavior = function(val, e, field, options) {
+                        return val.length > 14 ? masks[0] : masks[1];
+                    };
+
+                $('.phone').mask(maskBehavior, {onKeyPress:
+                            function(val, e, field, options) {
+                                field.mask(maskBehavior(val, e, field, options), options);
+                            }
+                });
+            }
+            $(document).ready(function() {
+                validatePhone()
+            }
+            );
+    </script>
+	<script type="text/javascript">
+		if(window.PrimeFaces){}
+	</script>
+
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<h:outputScript name="login.js" library="scripts" />
+	<style>
+	body {
+    margin: 0px;
+    background-image: url("/spark/javax.faces.resource/images/background.png.xhtml?ln=spark-layout");
+    background-repeat: repeat;
+    background-position: center;
+    background-color: #C3CCD5;
+    background-attachment: fixed;
+    font-family: 'ralewaymedium';
+}
+
+.TexAlCenter {
+    text-align: center;
+}
+
+.Container90 {
+    width: 90%;
+    float: left;
+}
+
+.MarAuto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Fnone {
+    float: none !important;
+}
+
+a, div, span, input, textarea, li, strong, button {
+    outline: none;
+    text-decoration: none;
+}
+
+user agent stylesheetdiv {
+    display: block;
+}
+#layout-portlets-cover {
+	width: 60%;
+	margin: 0px auto;
+	display: block;
+}
+	#layout-portlets-cover{ overflow-y:hidden; padding-top: 55px; color:#72828B; overflow-x:auto;}
+
+input[type="text"], input[type="password"], textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.Fs18 {
+    font-size: 18px !important;
+}
+
+.Container80 {
+    width: 80%;
+    float: left;
+}
+.ShadowGray {
+    -webkit-box-shadow: 0px 1px 0px 0px rgba(159,172,183,0.7);
+    -moz-box-shadow: 0px 1px 0px 0px rgba(159,172,183,0.7);
+    box-shadow: 0px 1px 0px 0px rgba(159,172,183,0.7);
+}
+.other-pages-box {
+    overflow: hidden;
+    background-color: #F6FAFC;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+.Container40 {
+   /*  width: 40%; */
+    float: left;
+}
+.MarTop10 {
+    margin-top: 10px;
+}
+
+.Responsive50 {
+}
+	
+	</style>
+</h:head>
+
+<h:body>
+	<h:form id="mainForm">
+
+		<div id="layout-portlets-cover">
+			<div class="other-pages-box Container40 Responsive50 MarAuto Fnone TexAlCenter ShadowGray MarTop10" style="margin-top: 5%; background-image: url(/spark/javax.faces.resource/images/loginpageillust.svg.xhtml?ln=spark-layout); background-repeat: no-repeat; background-position: center; background-size: cover;">
+				<div class="Container90 Fnone MarAuto TexAlCenter">
+					<div class="EmptyBox50"></div>
+					<img src="/spark/javax.faces.resource/images/LOGO.svg.xhtml?ln=spark-layout" class="MarAuto MarTop20 MarBot10"/>
+						<div class="EmptyBox20"></div>
+						<input id="j_idt13" name="j_idt13" type="text" value="" placeholder="Usuário" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all Container80 Fnone MarAuto Fs18"
+						role="textbox" aria-disabled="false" aria-readonly="false"/>
+							<div class="EmptyBox10"></div>
+							<input id="j_idt15" name="j_idt15" type="password" class="ui-inputfield ui-password ui-widget ui-state-default ui-corner-all Container80 Fnone MarAuto Fs18"
+							placeholder="Senha" role="textbox" aria-disabled="false" aria-readonly="false"/>
+								<div class="EmptyBox20"></div>
+								<div class="Container85 Fnone MarAuto softgray">
+									<div class="EmptyBox5"></div>
+				
+								</div>
+								<div class="EmptyBox30"></div>
+								<button id="j_idt19" name="j_idt19" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only Fs16"  onclick="window.open('dashboard.xhtml','_self')" role="button"
+									aria-disabled="false">
+									<span icon="fa fa-fw fa-sign-in" class="ui-button-text ui-c">Login</span>
+								</button>
+								<div class="EmptyBox10"></div>
+								<div class="Seperator"></div>
+								<div class="EmptyBox10"></div>
+						
+								<div class="EmptyBox50"></div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</h:form>
+</h:body>
+
+</html>

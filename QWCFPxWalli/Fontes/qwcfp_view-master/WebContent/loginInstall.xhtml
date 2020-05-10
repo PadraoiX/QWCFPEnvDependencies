@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+
+	<title>QWCFP - Padrão iX</title>
+
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>QWCFP - PIX</title>
+	<h:outputScript name="js/ripple.js" library="barcelona-layout" />
+	<h:outputScript name="js/layout.js" library="barcelona-layout" />
+	<h:outputStylesheet name="geral.css" library="css" />
+
+	<h:outputScript library="script" name="jquery.mask.js" />
+	<h:outputScript library="script" name="ajax.js" />
+</h:head>
+ 
+
+<h:body styleClass="login-body">
+
+	
+<h:form id="form">
+	<p:growl id="growl" life="#{loginBean.messageTime}" showDetail="true" />
+	
+	<div class="login-panel ui-fluid">
+		<div class="ui-g">
+			<div class="ui-g-12 login-header" style="width: 500px;" >
+				<p:graphicImage name="logoCFP_Branco.png" library="images" />
+				<h1>Login para Instalação</h1>
+			</div>
+			
+			<div class="ui-g-12">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="user" value="#{connectInstallBean.user}" label="Usuário" required="true" requiredMessage="Usuário orbigatório" />
+					<label >Usuário</label>
+				</h:panelGroup>
+			</div>
+			
+			<div class="ui-g-12">
+				<h:panelGroup styleClass="md-inputfield">
+					<p:password id="pass" value="#{connectInstallBean.pass}"  label="Senha" required="true" requiredMessage="Senha orbigatório" />
+					<label >Senha</label>
+				</h:panelGroup>
+			</div>
+			
+			 <div class="ui-g-12" >
+			 	<p:commandButton value="Login" icon="fa fa-fw fa-sign-in" update=":form:growl" action="#{connectInstallBean.autenticar}" style="margin-right:10px;" />
+				 </div>
+				 
+			</div>
+		</div>
+		
+		<h:outputStylesheet name="css/layout-blue.css" library="barcelona-layout" />
+		<h:outputStylesheet name="css/ripple.css" library="barcelona-layout" />
+		
+	</h:form>
+
+<div class="abs bar_bottom" align="center">
+	Padrão iX Sistemas Abertos S/A  Copyright © 2015 All rights reserved.
+</div>
+		
+</h:body>
+</html>

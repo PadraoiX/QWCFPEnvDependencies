@@ -1,0 +1,713 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+<ui:composition template="/templates/template-barcelona-out.xhtml">
+	<ui:define name="conteudo">
+<h:outputScript library="script" name="jQuery.js" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+<h:outputScript library="script" name="index.js" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"></link>
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+     
+    .ui-datatable {
+        margin-bottom: 25px
+    }
+     
+    .ui-datatable .ui-datatable-footer {
+        text-align:left;
+    }
+     
+    .ui-datalist ul {
+        padding: 0 0 0 10px;
+        margin: 5px 0;
+    }
+     
+    .ui-datatable .ui-button-icon-only .ui-button-text {
+        padding: 0;
+        line-height: 1.2;
+    }
+    .ui-tabs{
+    	overflow: auto;
+    }
+    .abaAtivos{
+    	display:initial !important;
+    }
+    .limite70{
+    	white-space: nowrap; 
+		width: 70px; 
+		overflow: hidden;
+		text-overflow: clip; 
+    }
+</style>
+<script type="text/javascript">
+	function $id(id) {
+		return document.getElementById(id);
+	}
+	
+	$( document ).ready(function() {
+	    if (window.File  &#38;&#38; window.FileList &#38;&#38; window.FileReader) {
+			Init();
+		}
+
+	    $('.one-line').ellipsis({ lines: 1 });
+		
+	});
+	
+	function Init() {
+	
+		var filedrag = $id("filedrag");
+	
+		// is XHR2 available?
+		var xhr = new XMLHttpRequest();
+		if (xhr.upload) {
+		
+			// file drop
+			filedrag.addEventListener("dragover", FileDragHover, false);
+			filedrag.addEventListener("dragleave", FileDragHover, false);
+			filedrag.addEventListener("drop", showFileSize, false);
+			filedrag.style.display = "block";
+			 
+		}
+	
+	}
+
+	/* $(document).ready(function(){
+		if($("#formDIV\\:iconFile").attr('src') == 'RES_NOT_FOUND'){
+			$("#formDIV\\:iconFile").attr("src", "../resources/iconFile/icon_default.png");
+		}
+	}); */
+	
+	
+	function FileDragHover(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		e.target.className = (e.type == "dragover" ? "hover" : "");
+	}
+	
+	function liveScroll(){
+		PF('datatable').scrollOffset=0;    
+	    PF('datatable').scrollBody.scrollTop(1);   
+	    PF('datatable').allLoadedLiveScroll = false;  
+	 }
+</script>
+
+<link rel="stylesheet" href="resources/css/qwcfp-list-arquivos.css"/>  
+<style>
+	.ui-datatable .ui-column-filter {
+		display: none;
+	}
+	
+	.myTable td:nth-child(3) {
+    width: 20px;
+}
+	
+	.breakLineName
+	{
+	    white-space: initial !important;
+	}
+	
+	.ui-dialog-titlebar-close {
+		/* margin-top: 5px !important; */
+		margin-right: 5px !important;
+	}
+	
+	.ui-dialog-titlebar-maximize {
+		/* 	 margin-right: 25px !important; */
+		
+	}
+	
+	.ui-widget thead th,
+	.ui-widget tbody,
+	.ui-widget tbody tr,
+	.ui-widget tbody td, {
+	 	font-size: 0.8em !important;
+	}
+	
+	.ui-datatable tbody td.wrap {
+	    white-space: normal;
+	}
+	
+	.old {
+	   background-color: lavenderblush ;
+	}
+	
+/* 	.old:hover {
+	   background-color: #FFC107 !important;
+	} */
+	
+	.ui-widget-content .ui-datatable-even .ui-datatable-selectable .old .ui-state-highlight{
+	   background-color: #FFC107 !important;
+	}
+	.altura5{
+		height: 5px;
+	}
+	.altura10{
+		height: 10px;
+	}
+	
+	.altura20{
+		height: 20px;
+	}
+	.largura10{
+		width: 10px;
+	}
+		.ui-widget-content{
+		 border: none;
+	}
+	
+	.ui-tabs-panels{
+		margin-top: 20px; 
+	}
+	
+	body .ui-datatable .ui-datatable-header, body .ui-datatable .ui-datatable-footer {
+		padding: 15px 14px !important;
+	}
+
+	/* body .ui-button{
+		-webkit-box-shadow: none;
+		box-shadow:navy;
+		border-radius: 0px !important;
+		-webkit-border-radius:0px !important;
+		padding: 5px;
+		} */
+		
+	
+	
+	.fontoBold{
+		font-weight: bold;
+		color: #6a6a7d;
+		font-family: "Roboto", "Helvetica Neue", sans-serif;
+	}
+	
+	
+ 
+/* necessary plugin styles */
+.ellip {
+  display: block;
+  height: 100%;
+}
+.ellip-line {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.ellip,
+.ellip-line {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+	
+	.ui-datatable.borderless thead th,
+	.ui-datatable.borderless tbody,
+	.ui-datatable.borderless tbody tr,
+	.ui-datatable.borderless tbody td {
+	border-bottom: none !important;
+    border-style: none;
+    
+	}
+	.qwfileupload_modal{
+	z-index: 1000 !important;
+}
+
+</style>
+
+		<p:growl id="messages" widgetVar="messages" life="#{loginBean.messageTime}" showDetail="true" />
+
+		<h:inputHidden value="#{listArquivosBean.saveAs}" id="saveAs" />
+		<h:inputHidden value="#{listArquivosBean.fileName}" id="fileName" />
+		<h:inputHidden value="#{listArquivosBean.statusFile}" id="statusFile" />
+
+		<h:inputHidden value="#{listArquivosBean.httpUrlTransf}" id="urlHttpTransf" />
+		<h:inputHidden value="#{listArquivosBean.ticket}" id="ticket" />
+		<h:inputHidden value="#{groupBean.grupoId}" id="idGrupo" />
+		
+		
+		  
+
+		<div class="altura20"></div>
+		
+		
+		
+		<p:dataTable styleClass="myTable ui-shadow-content borderless"  
+			resizableColumns="false" 
+			id="downloadFile" var="car" 
+			rowIndexVar="rowId" 
+			widgetVar="datatable" 
+			value="#{listArquivosBean.fileListLazy}" 
+			scrollRows="20"  
+			rows="20"
+			liveScroll="true" 
+			scrollHeight="500" 
+			lazy="true" 
+			scrollable="true" 
+			selection="#{listArquivosBean.selectedFileList}"  
+			rowKey="#{car.fileDTO.fileid}" 
+			rowStyleClass="#{car.fileDTO.dataLimitValidate le listArquivosBean.currentTime ? 'old' : null}"
+			emptyMessage="Não há arquivos neste grupo!">
+			
+			
+			<f:facet name="header" >Arquivos do grupo - #{groupBean.myGroupDeta.nome.toUpperCase()}
+				<div id="filtroGrupos" >
+					        <p:inputText placeholder="Pesquisar..." id="nomePesquisar" value="#{listArquivosBean.filterValue}"  />
+					        <p:commandButton type="submit"   icon="fa fa-fw fa-search"  
+									title="Filtrar" actionListener="#{listArquivosBean.updateList()}"
+									update=":formDIV:downloadFile" />
+				</div>
+				<div id="btfuncoes">
+				
+	<!-- 				<div id="opcoes-btn-div">
+						<p:menuButton id="opcoes" icon="fa fa-bars">
+							
+							<p:menuitem  title="Configurações" value="Configurações" icon="fa fa-fw fa-gears" action="#{groupBean.setarIdRegraGrupo()}"/>
+					    	<p:menuitem update=":formDIV:downloadFile, :formDIV:quantArquivos" value="Atualizar"
+									styleClass="direitaAlinhar" process="@this" actionListener="#{listArquivosBean.updateList}" icon="fa fa-fw fa-refresh" />
+					    	
+					    	<p:menuitem onclick="PF('uploadFile').show();" update="formDIV:idGrupo" icon="fa fa-fw fa-upload" title="Upload" value="Upload" 
+										actionListener="#{groupBean.setarId(groupBean.myGroupDeta, true)}" disabled="#{!listArquivosBean.myGroupWrapped.canUpload()}" />
+							<p:menuitem title="Download" value="Download"
+							 update=":formDIV:messages, :formDIV:saveAs, :formDIV:fileName, :formDIV:statusFile, :formDIV:urlHttpTransf, :formDIV:ticket" 
+							  icon="fa fa-fw fa-download" oncomplete="getFile()"   actionListener="#{listArquivosBean.getInputStream()}"/>
+						</p:menuButton>
+					</div> 
+					<div id="opcoes-btns-div">
+						
+						<p:commandButton type="submit" icon="fa fa-fw fa-gears" title="Configurações" style="margin-right: 10px;" action="#{groupBean.setarIdRegraGrupo()}" styleClass="direitaAlinhar">
+							<f:setPropertyActionListener target="#{groupBean.myGroup}" value="#{car}" />
+						</p:commandButton>
+						<p:commandButton ajax="true" type="submit" icon="fa fa-fw fa-refresh" title="Refresh"  update=":formDIV:downloadFile, :formDIV:quantArquivos"
+								styleClass="direitaAlinhar" process="@this" actionListener="#{listArquivosBean.updateList}" style="margin-right: 10px;" />
+						<p:commandButton type="submit" onclick="PF('uploadFile').show();" update="formDIV:idGrupo" icon="fa fa-fw fa-upload" title="Upload"  styleClass="direitaAlinhar"
+									actionListener="#{groupBean.setarId(groupBean.myGroupDeta, true)}" disabled="#{!listArquivosBean.myGroupWrapped.canUpload()}" />					
+									
+						<p:commandButton type="submit" title="Download"
+						 update=":formDIV:messages, :formDIV:saveAs, :formDIV:fileName, :formDIV:statusFile, :formDIV:urlHttpTransf, :formDIV:ticket" style="margin-left: 10px;"
+						  icon="fa fa-fw fa-download" oncomplete="getFile()"  styleClass="direitaAlinhar" actionListener="#{listArquivosBean.getInputStream()}" />
+					</div>-->
+									
+				</div>									
+			</f:facet>
+			
+			
+			<p:ajax event="filter" update="downloadFile" oncomplete="liveScroll();" />
+    		<p:ajax event="sort" update="downloadFile" oncomplete="liveScroll();" />
+    		
+    		<p:column selectionMode="multiple" resizable="false" style="width:5%;text-align:center"/>
+    		
+			<p:column style="width: 5%;">
+				<p:graphicImage  library="iconFile" name="#{car.fileDTO.iconeName}"  cache="false"    />
+			</p:column>	
+			
+			<p:column headerText="Nome" style="width: 20%;font-weight: bold;text-center" sortBy="#{car.fileDTO.fileName}" filterBy="#{car.fileDTO.fileName}"  priority="1" >
+					<h:outputText value="#{car.fileDTO.fileName}" style="font-weight: normal;" title="#{car.fileDTO.fileName}" styleClass="box box--fixed one-line" />
+			</p:column>
+							
+			<p:column headerText="Proprietário"  sortBy="#{car.fileDTO.ownerMemberName}" style="width: 15%;font-weight: bold;text-align: center; "  >
+					<h:outputText value="#{car.fileDTO.ownerMemberName.toUpperCase()}" title="#{car.fileDTO.ownerMemberName}" style="font-weight: normal;text-align: center;" styleClass="box box--fixed one-line"  />
+			</p:column>
+			
+				<p:column headerText="Status" style="font-weight: bold;text-align: center; width: 10%" priority="4"  >
+					<h:outputText value="#{listArquivosBean.status(car.getLastVersion())}"
+						style="font-weight: normal;" />
+				</p:column>
+					
+				<p:column headerText="Data de Criação" style="font-weight: bold;text-align: center;width: 15%"  
+					sortBy="#{car.getLastVersion().creationDate}" priority="2" >
+					<h:outputText value="#{car.getLastVersion().creationDate}" converter="converteDataHist"
+						style="font-weight: normal;float:left;text-align: center;" />
+				</p:column>
+				
+				<p:column headerText="Comentário" styleClass="wrap" sortBy="#{car.lastVersionInfo()}" priority="5"	style="width: 20%;font-weight: bold;">
+					<h:outputText value="#{car.lastVersionInfo()}"  style="font-weight: normal;" />
+				</p:column>
+				
+				<p:column headerText="Versões" style="font-weight: bold; width: 5%; text-align: center;">
+					<h:outputText value="#{car.getLastVersionIndex() + 1}"  style="font-weight: normal;" />
+				</p:column>
+				
+				<p:column headerText="Tamanho" sortBy="#{car.getLastVersion().sizeInBytes}" style="font-weight: bold;  width: 5%;" priority="3" >
+					<h:outputText value="#{car.getLastVersion().sizeInBytes}" converter="#{convertVersionSize}" style="font-weight: normal;text-align: left" />
+				</p:column>
+			</p:dataTable>
+			<!-- <pe:tooltip for="downloadFile"  value="Dica: Pressione (Shift ou Ctrl) + Click para selecionar vários arquivos."  
+            mouseTracking="true" myPosition="top left" adjustX="10" adjustY="10" />   -->
+            
+            <p:contextMenu for="downloadFile">
+				<p:menuitem value="Download" update="messages, saveAs, fileName, statusFile, urlHttpTransf, ticket" icon="fa fa-fw fa-download" ajax="true" oncomplete="getFile()" actionListener="#{listArquivosBean.getInputStream()}" />
+				<p:menuitem value="Compartilhar" update="messages,sharedFileId" icon="fa fa-fw fa-share-alt" oncomplete="PF('sharedFile').show()" />
+				<p:menuitem value="Mover" update="messages,moveFileId" icon="fa fa-fw fa-share" oncomplete="PF('moveFile').show()" />
+				<p:menuitem value="Gerenciar versões" update="messages,manageVersionsIdDialog" actionListener="#{listArquivosBean.cleanVersionManager()}" icon="fa fa-fw fa-clock-o" oncomplete="PF('gversoes').show()" />
+				<p:separator />
+				<p:menuitem value="Remover" update="messages" oncomplete="updateTable()" icon="fa fa-fw fa-remove" actionListener="#{listArquivosBean.removeFiles()}">
+					<p:confirm header="Confirmação" message="Tem certeza?" icon="ui-icon-alert" />
+				</p:menuitem>
+			</p:contextMenu>
+	
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+			<p:fieldset id="dataFieldSet" legend="Dados do grupo" toggleable="true"	toggleSpeed="200" collapsed="false" >
+				<div class="ui-g dashboard">            
+	            	<div class="ui-g-12 ui-md-6 ui-lg-3 notifDivTamanho">
+	                	<h:outputText value="Espaço compartilhado:"  styleClass="fontoBold"/> <h:outputLabel value="" styleClass="logoBlueText" />                	
+	                </div>
+	                <div class="ui-g-12 ui-md-6 ui-lg-3 notifDivTamanho">
+						<h:outputText value="Espaço limite:" styleClass="fontoBold"/>	<h:outputLabel value="" styleClass="logoBlueText" />
+	                </div>
+	                <div class="ui-g-12 ui-md-6 ui-lg-3 notifDivTamanho">
+							<h:outputText value="Versionamento:" styleClass="fontoBold"/>
+							<h:outputText styleClass="logoBlueText" rendered="#{groupBean.myGroupDeta.aceptVersion == 'S'}" value=" SIM" />
+							<h:outputText styleClass="logoBlueText" rendered="#{groupBean.myGroupDeta.aceptVersion == 'N'}" value=" NÂO" />                	
+	                </div>
+	                <div class="ui-g-12 ui-md-6 ui-lg-3 notifDivTamanho">
+						<h:outputText value="Limite de versões:" styleClass="fontoBold"/>	<h:outputText styleClass="logoBlueText" value="#{groupBean.myGroupDeta.versionLimit}" />                		
+	                </div>
+	                <div class="ui-g-12 ui-md-6 ui-lg-3 notifDivTamanho">
+					<h:outputText value="Quantidade de Arquivos:" styleClass="fontoBold"/><h:outputLabel value=" #{listArquivosBean.fileListLazy.rowCount}" styleClass="logoBlueText" id="quantArquivos" />
+	                </div>
+	            </div>
+	            
+				<h:panelGrid columns="3" cellpadding="7" cellspacing="5">				
+					<p:column>
+						<p:panelGrid style="border: none;">
+							<h:graphicImage id="downIcon" library="images"
+								name="#{listArquivosBean.myGroupWrapped.getDownloadName()}"
+								styleClass="iconpriv" />
+							<p:tooltip for="downIcon"
+								value="#{listArquivosBean.myGroupWrapped.getDownloadTitle()}"
+								trackMouse="true" />
+							<h:graphicImage id="upIcon" library="images"
+								name="#{listArquivosBean.myGroupWrapped.getUploadName()}"
+								styleClass="iconpriv" />
+							<p:tooltip for="upIcon"
+								value="#{listArquivosBean.myGroupWrapped.getUploadTitle()}"
+								trackMouse="true" />
+						</p:panelGrid>
+						<p:outputLabel value="" />
+					</p:column>
+				</h:panelGrid>
+			</p:fieldset>
+		
+			<p:dialog dynamic="false" widgetVar="uploadFile" modal="true" appendTo="@(body)" loseOnEscape="true" minimizable="true" maximizable="true"
+				hideEffect="explode" width="500" showEffect="explode" resizable="true" styleClass="qwfileupload_modal" id="qwfileupload">
+				<f:facet name="header">
+					<span id="countBytes">Upload Arquivos</span>
+				</f:facet>
+	
+				<div id="filedrag">
+					Deseja substituir arquivo caso exista? <input type="checkbox"
+						id="substituir" />
+					<h:panelGrid columnClasses="label,value">
+						<p:inputTextarea id="aditionalInformation" counter="display"
+							placeholder="Comentários adicionais não obrigatórios..." rows="5"
+							counterTemplate="{0} caracteres restantes." maxlength="140"
+							style="width: 400px" />
+						<h:outputText id="display" />
+						<input type="file" name="fileinput" id='fileinput'
+							multiple="multiple" onchange="showFileSize();" />
+						<br />
+						<br />
+					</h:panelGrid>
+				</div>
+				<div id="divProgessContainer"></div>	
+			</p:dialog>
+	
+			<p:remoteCommand id="updateTable" name="updateTable" actionListener="#{listArquivosBean.updateList}" process="@this" update="downloadFile,dataFieldSet" />
+			<p:remoteCommand id="validSession" name="validSession" actionListener="#{loginBean.validSession}" process="@this" update="downloadFile" />
+			<p:remoteCommand id="invalidSession" name="invalidSession" actionListener="#{loginBean.invalidSession}" process="@this" update="downloadFile" />
+<!-- 			<p:remoteCommand id="updateSharedFile" name="updateSharedFile" action="#{sharedBean.updateSharedFiles}" update=":formTopBar:qtdSharedFiles" process="@this"/>		 
+ -->		
+			<p:dialog id="sharedFileId" header="Compartilhar Arquivo" widgetVar="sharedFile" modal="false" showEffect="fade" hideEffect="fade" resizable="true" width="550" height="400" closeOnEscape="true">
+				<p:tabView id="tabDown" dynamic="true" style="height: 350px;">
+					<p:tab title="Interno">
+						<p:outputPanel id="sharedFilePanel" style="text-align:center;height:170px">
+							<h:panelGrid columns="1" style="width:100% ">
+								<div class="altura10"></div>						
+								<h:panelGroup styleClass="md-inputfield">
+								<p:inputText disabled="true" style="width:100%" value="#{listArquivosBean.selectedAmount()}" styleClass="esquerdaAlinhar" />
+									<label>Arquivos selecionados</label>
+								</h:panelGroup>
+								<div class="altura20"></div>	
+								<p:selectOneMenu id="membro" value="#{listArquivosBean.memberToId}" style="width:100%" styleClass="esquerdaAlinhar" requiredMessage="Selecione um usuário!." filter="true" filterMatchMode="startsWith">
+									<f:selectItem itemLabel="Membro de destino*" />
+									<f:selectItems value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+								</p:selectOneMenu>											
+								<div class="altura20"></div>				
+								<h:panelGroup styleClass="md-inputfield">
+									<p:inputText requistyleClass="esquerdaAlinhar" value="#{listArquivosBean.qtdDias}" style="width:100%" />
+									<label>Quantidade de dias*</label>
+								</h:panelGroup>	
+							</h:panelGrid>
+						</p:outputPanel>
+						<div style="position: absolute; bottom: 10px; width: 95%;"> 
+							<p:commandButton value="Compartilhar" oncomplete="PF('sharedFile').hide(), updateSharedFile()" action="#{listArquivosBean.shareFiles}" icon="fa fa-fw fa-share-alt"  />
+						</div>
+					</p:tab>
+					<p:tab title="Externo - Link" >
+							<h:panelGrid columns="2" style="width:100% ">								
+									<p:column>										 
+								        <p:commandButton id="btnCopy" value="Copy" icon="fa fa-copy" update=":formDIV:messages" />  
+								        <pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="txtCopy">  
+								            <p:ajax event="success" listener="#{downloadLink.successListener}" />  
+								            <p:ajax event="error" listener="#{downloadLink.errorListener}" />  
+								        </pe:clipboard>
+									</p:column>
+									<p:column>
+								        <p:inputText disabled="false" id="txtCopy" value="#{downloadLink.link}"  style="width:95%"/>									
+									</p:column>								
+							</h:panelGrid>
+							<div class="altura10"></div>
+							<p:outputLabel style="font-weight: 700" value="Atenção"/>
+							<div class="altura10"></div>
+							<p:outputLabel style="margin-top:10px" value="O link pode ser acessado indefinidamente durante sua validade."/>
+							<div class="altura20"></div>
+							<p:outputLabel style="margin-top:10px;color:red;">O compartilhamento irá expirar em <span style="font-weight: 700">2 dias</span>.</p:outputLabel>
+							
+					</p:tab>
+					<p:tab title="Externo - E-mail">
+							<h:panelGrid columns="1" style="width:100% ">
+								<p:row>
+									<h:panelGroup styleClass="md-inputfield">
+									<p:inputTextarea cols="40" rows="4" style="width:100% " />
+									<label>Lista de arquivo(s)</label>
+									</h:panelGroup>
+								</p:row>	
+								<div class="altura20"></div>							
+								<p:row>
+									<h:panelGroup styleClass="md-inputfield">
+									<p:inputText requistyleClass="esquerdaAlinhar"  style="width:100%" />
+									<label>E-mail*</label>
+									</h:panelGroup>
+								</p:row>
+								<div class="altura10"></div>
+								<p:row>
+									<p:commandButton value="Enviar"  icon="fa fa-fw fa-send"  />
+								</p:row>
+							</h:panelGrid>								
+					</p:tab>
+					<p:tab title="Ativos" style="display:none !important;"  id="abaAtivos" >
+					<!-- testeNOW -->
+						<p:dataTable var="car" value="#{dtSelectionView.cars1}" paginatorPosition="bottom" paginator="true" rows="5" width="100%">
+						    <p:column headerText="Link">
+						        <h:outputText value="#{car.color}" styleClass="limite70" title="#{car.color}" />
+						    </p:column>
+						 
+						    <p:column headerText="Versão" style="width:15%; text-align:center;">
+						        <h:outputText value="#{car.brand}" />
+						    </p:column>
+						 
+						    <p:column headerText="QTD" style="width:10%">
+						        <h:outputText value="001" />
+						    </p:column>
+						 
+						    <p:column headerText="Validade" style="width:20%">
+						        <h:outputText value="20/06/2019" />
+						    </p:column>
+						    
+						    <p:column headerText=" " style="text-align:center;width:10%;">
+						        <p:commandButton  icon="fa fa-close"  title="Cancelar compartilhamento" style="width:20px;height:25px;font-size: 16px !important;"/>
+						    </p:column>
+						</p:dataTable>
+					</p:tab>
+				</p:tabView>
+				<div style="position: absolute; bottom: 10px; width: 95%;" align="right">
+					<p:commandButton value="Cancelar" oncomplete="PF('sharedFile').hide()" icon="ui-icon-cancel"   />
+				</div>
+			</p:dialog>
+
+			<p:dialog id="moveFileId" header="Mover Arquivo" widgetVar="moveFile" modal="false" showEffect="fade" hideEffect="fade" resizable="true" width="400" height="250" closeOnEscape="true">
+				<p:outputPanel id="moveFilePanel" style="text-align:center;">
+					<h:panelGrid columns="1" style="width:100%">
+						<div class="altura20"></div>
+						<h:panelGroup styleClass="md-inputfield">	
+							<p:inputText disabled="true" value="#{listArquivosBean.selectedAmount()}" styleClass="esquerdaAlinhar" />
+							<label>Quantidade de Arquivos selecionados</label>
+						</h:panelGroup>
+						<div class="altura20"></div>
+						
+						<p:selectOneMenu id="selectedGroupId"
+							value="#{listArquivosBean.groupToId}" style="width:100%" styleClass="esquerdaAlinhar" requiredMessage="Grupo de destino" filter="true" filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{listMyManagedGroups.myManagedGroups}" var="group" itemValue="#{group.groupId}" itemLabel="#{group.nome}" />
+						</p:selectOneMenu>
+						<div class="altura20"></div>
+						
+							
+						<p:selectOneRadio value="#{listArquivosBean.moveCondition}">
+							<f:selectItem itemLabel="Versionar" itemValue="NEW-GRP" />
+							<f:selectItem itemLabel="Atualizar" itemValue="REPL-GRP" />
+						</p:selectOneRadio>
+				
+						
+					</h:panelGrid>
+				</p:outputPanel>
+	
+				<div style="position: absolute; bottom: 10px; width: 95%;">
+					<p:commandButton value="Cancelar" oncomplete="PF('moveFile').hide()" icon="ui-icon-cancel" update="messages" />
+					<p:spacer width="10" />
+					<p:commandButton value="Mover" actionListener="#{listArquivosBean.moveFiles}"
+						oncomplete="PF('moveFile').hide(),updateTable()" icon="fa fa-fw fa-arrow-circle-right" update="messages" />
+				</div>
+			</p:dialog>
+
+			<p:dialog id="manageVersionsIdDialog"
+				header="Gerênciar versões de #{listArquivosBean.fileToBeVersioned.fileName}"
+				widgetVar="gversoes" modal="false" showEffect="fade"
+				hideEffect="fade" resizable="false" width="700" height="350"
+				closeOnEscape="true">
+				<p:contextMenu for="versionsTableId" id="contextVersionMenu" style="border: none;">
+					<p:menuitem value="Download"
+						update=":formDIV:messages,  :formDIV:saveAs, :formDIV:fileName, :formDIV:statusFile, :formDIV:urlHttpTransf, :formDIV:ticket"
+						icon="fa fa-fw fa-download" ajax="true" oncomplete="getFile()"
+						rendered="#{listArquivosBean.renderDownloadVs}"
+						actionListener="#{listArquivosBean.getInputStreamVersioned()}">
+					</p:menuitem>
+					<p:menuitem value="Compartilhar"
+						action="#{listArquivosBean.shareVersion()}"
+						oncomplete="PF('gversoes').hide(),updateTable()" update="messages"
+						icon="fa fa-fw fa-share-alt"
+						rendered="#{listArquivosBean.renderShareVs}" />
+	
+					<p:menuitem value="Mover" action="#{listArquivosBean.moveVersion()}"
+						oncomplete="PF('gversoes').hide(),updateTable()" update="messages"
+						icon="fa fa-fw fa-share"
+						rendered="#{listArquivosBean.renderMoveVs}" />
+	
+					<p:menuitem value="Remover" update="messages"
+						icon="fa fa-fw fa-remove"
+						actionListener="#{listArquivosBean.removeCancelVersion()}"
+						oncomplete="PF('gversoes').hide(),updateTable()">
+						<p:confirm header="Confirmação" message="Tem certeza?"
+							icon="ui-icon-alert" />
+					</p:menuitem>
+				</p:contextMenu>
+ 				
+				<p:tabView id="versionTabViewId" widgetVar="widVersionTabViewId" dynamic="true" cache="false" style="border: none; margen-top:10px;"
+					activeIndex="#{listArquivosBean.tabIndex}">
+					<p:ajax event="tabChange" listener="#{listArquivosBean.onTabChange}"
+						update="formDIV:contextVersionMenu,formDIV:versionsTableId, formDIV:opcoesVer, formDIV:versionTabViewId" >
+						</p:ajax>
+					<p:tab title="Geral" id="gerVer">
+						<h:panelGrid id="comentPanel" columns="3" style="border: none;">
+						<p:outputLabel id="justLabel" style="font-weight: bold;"
+							styleClass="esquerdaAlinhar" value="Comentário:"></p:outputLabel>
+				            <p:inputTextarea id="aditionalInformationVers" 
+							placeholder="Comentário..." rows="5" value="#{listArquivosBean.justify}" 
+							 maxlength="140"
+							style="width: 535px" />
+							<p:commandButton   icon="fa fa-fw fa-pencil-square-o"  
+									title="Editar" actionListener="#{listArquivosBean.editAddInfo}" update="formDIV:contextVersionMenu,formDIV:versionsTableId, formDIV:opcoesVer, formDIV:versionTabViewId, :formDIV:messages"/>
+							<!-- <p:outputLabel styleClass="esquerdaAlinhar"
+								value="#{listArquivosBean.justify}"></p:outputLabel> -->
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Mover Versão">
+						<h:panelGrid columns="3" id="movVer" width="100%" style="border: none;">						
+							<p:selectOneMenu value="#{listArquivosBean.groupToIdVs}" panelStyle="width:180px" styleClass="esquerdaAlinhar"  filter="true" filterMatchMode="startsWith"
+								requiredMessage="Selecione um usuário!.">
+								<f:selectItem itemLabel="Grupo de destino" />
+								<f:selectItems value="#{listMyManagedGroups.myManagedGroups}" var="group" itemValue="#{group.groupId}" itemLabel="#{group.nome}" />
+							</p:selectOneMenu>
+							<p:outputLabel style="font-weight: bold;"  styleClass="esquerdaAlinhar" value="Condição:" />
+							<p:selectOneRadio value="#{listArquivosBean.moveConditionVs}">
+								<f:selectItem itemLabel="Versionar" itemValue="NEW-GRP" />
+								<f:selectItem itemLabel="Atualizar" itemValue="REPL-GRP" />
+							</p:selectOneRadio>					
+						</h:panelGrid>
+					</p:tab>
+	
+					<p:tab title="Compartilhar Versão">
+						<h:panelGrid columns="1" id="comVer" width="100%" style="border: none;">						
+							<p:selectOneMenu value="#{listArquivosBean.memberToIdVs}"  styleClass="esquerdaAlinhar" requiredMessage="Selecione um usuário!."  filter="true" filterMatchMode="startsWith" >
+								<f:selectItem itemLabel="Membro de destino*" />
+								<f:selectItems value="#{listMemberBean.members}" var="member" itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+							</p:selectOneMenu>
+							
+							<div class="altura20"></div>
+							
+							<h:panelGroup styleClass="md-inputfield">
+								<p:inputMask mask="9?9999" value="#{listArquivosBean.qtdDiasVs}" />
+								<label>Quantidade de dias*</label>
+							</h:panelGroup>
+							
+						</h:panelGrid>
+						<div class="altura20"></div>
+					</p:tab>
+				</p:tabView>
+				
+				
+				<div id="opts" align="right">
+       				<p:menuButton id="opcoesVer" value="Opções" styleClass="direitaAlinhar" disabled="">
+						<p:menuitem value="Download"
+						update=":formDIV:messages,  :formDIV:saveAs, :formDIV:fileName, :formDIV:statusFile, :formDIV:urlHttpTransf, :formDIV:ticket"
+						icon="fa fa-fw fa-download" ajax="true" oncomplete="getFile()"
+						rendered="#{listArquivosBean.renderDownloadVs and listArquivosBean.selectedVersion ne null}"
+						actionListener="#{listArquivosBean.getInputStreamVersioned()}">
+					</p:menuitem>
+					<p:menuitem value="Compartilhar"
+						action="#{listArquivosBean.shareVersion()}"
+						oncomplete="PF('gversoes').hide(),updateTable()" update="messages"
+						icon="fa fa-fw fa-share-alt"
+						rendered="#{listArquivosBean.renderShareVs and listArquivosBean.selectedVersion ne null}" />
+	
+					<p:menuitem value="Mover" action="#{listArquivosBean.moveVersion()}"
+						oncomplete="PF('gversoes').hide(),updateTable()" update="messages"
+						icon="fa fa-fw fa-share"
+						rendered="#{listArquivosBean.renderMoveVs and listArquivosBean.selectedVersion ne null}" />
+	
+					<p:menuitem value="Remover" update="messages"
+						icon="fa fa-fw fa-remove"
+						actionListener="#{listArquivosBean.removeCancelVersion()}"
+						rendered="#{listArquivosBean.selectedVersion ne null}"
+						oncomplete="PF('gversoes').hide(),updateTable()">
+						<p:confirm header="Confirmação" message="Tem certeza?"
+							icon="ui-icon-alert" />
+					</p:menuitem>
+					<p:menuitem value="selecione um arquivo da tabela." rendered="#{listArquivosBean.selectedVersion eq null}">
+					</p:menuitem>
+					</p:menuButton>
+ 				</div>
+ 				
+				<p:dataTable id="versionsTableId" var="version"
+					value="#{listArquivosBean.listVersions()}"
+					selection="#{listArquivosBean.selectedVersion}"
+					rowKey="#{version.id}" selectionMode="single">
+					<p:ajax event="rowSelect"
+						listener="#{listArquivosBean.onVersionSelect()}"
+						update="formDIV:versionsTableId, formDIV:opcoesVer, formDIV:versionTabViewId:comentPanel" />
+					<p:column headerText="Versão">
+						<h:outputText value="#{version.version}" />
+					</p:column>
+					<p:column headerText="Status">
+						<h:outputText value="#{version.fileStatusDomStringValue}" />
+					</p:column>
+					<p:column headerText="Data de Transferência">
+						<h:outputText value="#{version.transferDate}"
+							converter="converteData" />
+					</p:column>
+				</p:dataTable>
+				
+				<div class="altura20"></div>
+				
+				<div style="position: absolute; width: 95%;">
+					<p:commandButton value="Cancelar" oncomplete="PF('gversoes').hide()" icon="ui-icon-cancel" update="messages" />
+				</div>
+				
+			</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</HTML>

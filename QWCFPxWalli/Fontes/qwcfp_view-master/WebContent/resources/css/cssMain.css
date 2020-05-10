@@ -1,0 +1,85 @@
+.ui-datagrid-column {
+	padding: 10px;
+}
+
+label {
+	font-weight: bold;
+}
+
+div {
+	border: none;
+}
+
+#qwfileupload {
+	background-color: blue;
+}
+
+#filtroGrupos {
+	margin-bottom: 10px;
+	background: #e5e5e5;
+	padding: 10px;
+	box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.groupTitle {
+	font-weight: bold;
+	text-decoration: underline;
+	color: blue;
+}
+
+.SubMenuLink4:hover {
+	background: #C4C4C4
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0.8),
+		rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
+	color: #4682B4;
+}
+
+.colorRed  .ui-widget-header {
+	background: #fc9e70
+		-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+		0.8)), to(rgba(255, 255, 255, 0)));
+	background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600
+		75%, #c72200 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%,
+		#ff6600 75%, #c72200 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600
+		75%, #c72200 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd',
+		endColorstr='#c72200', GradientType=0); /* IE6-9 */
+}
+
+.ui-widget-header {
+	margin: 0.2px !important;
+}
+
+.qwfileuploadcss {
+	height: 300px;
+	width: 800px";
+}
+
+.progress {
+	color: #000000;
+}
+
+.botoes {
+	margin-right: .1em;
+	text-decoration: none !important;
+	cursor: pointer;
+	text-align: center;
+	zoom: 1;
+	overflow: visible;
+	font-family: 'Roboto', sans-serif !important;
+	font-size: 15px;
+	border-radius: 2px !important;
+	height: 30px !important;
+}
+
+.ContentSideSections {
+	border-bottom: none !important;
+}
+
+.groupFilterValue {
+	/* height: 30px !important; */
+	
+}

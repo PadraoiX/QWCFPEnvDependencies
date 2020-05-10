@@ -1,0 +1,87 @@
+ <html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<h:outputScript library="script" name="jquery.mask.js" />
+		<script>
+
+            function validatePhone() {
+
+                var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+                    maskBehavior = function(val, e, field, options) {
+                        return val.length > 14 ? masks[0] : masks[1];
+                    };
+
+                $('.phone').mask(maskBehavior, {onKeyPress:
+                            function(val, e, field, options) {
+                                field.mask(maskBehavior(val, e, field, options), options);
+                            }
+                });
+            }
+            $(document).ready(function() {
+                validatePhone()
+            }
+            );
+        </script>
+        <style>
+        	.ui-grid-row{
+        		border: none !important;
+        	}
+    
+        	.ui-widget-content{
+        		 border: none; 
+        	}
+			.ui-widget-content{
+				border: none !important;
+			}       
+		    .semBorda{
+		      	border: none !important;
+		    }        
+        </style>
+        
+		<p:growl id="area-growl" showDetail="true"  />
+
+		<div class="ui-fluid">
+			<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+			<h3>Cadastrar Nova Área</h3>
+				<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" id="tabela"   >				
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="AREA_NAME" value="#{areasBean.area.nome}" required="true"  maxlength="49" requiredMessage="Nome da área organizacional obrigatório" />
+						<label>Nome da área organizacional</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="AREA_ACRONYM" value="#{areasBean.area.apelido}" maxlength="19" requiredMessage="Sigla usada para referir-se à área obrigatório" required="true" size="10" />
+						<label>Sigla usada para referir-se à área</label>
+					</h:panelGroup>
+
+					<p:selectOneMenu id="AREA_MANAGER" filter="true" filterMatchMode="startsWith" value="#{areasBean.bossFk}" required="true" converter="#{memberConverterEx}" requiredMessage="O gestor da área é obrigatório"  size="30" style="width:100%" effect="fade">
+						<f:selectItem itemLabel="Gestor da Área" /> 
+						<f:selectItems value="#{areasBean.membros}" var="boss"  itemValue="#{boss}"  itemLabel="#{boss.memberName}" />
+					</p:selectOneMenu>
+					
+					<p:selectOneMenu id="AREA_SUBORDINATED" value="#{areasBean.area.subordinatedAreaId}" required="false" requiredMessage="Área de subordinação Obrigatório" style="width:100%" effect="fade">
+						<f:selectItem itemLabel="Área de subordinação" /> 
+						<f:selectItems value="#{areasBean.areas}" var="area" itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+					</p:selectOneMenu>
+					
+					<p:inputTextarea id="AREA_DESCRIPTION" placeholder="Descrição da área organizacional" maxlength="2000"	value="#{areasBean.area.description}" required="true"  requiredMessage="A descrição da área é obrigatória." cols="30" />
+
+					<h:inputHidden  />
+
+					<p:commandButton value="Save" action="#{areasBean.salvar}" ajax="false" type="submit" icon="fa fa-fw fa-save"  />
+
+				</p:panelGrid>		
+				
+		    </p:panel>
+
+</div>
+<div class="EmptyBox30"></div>
+		            * Campo de preenchimento obrigatório 
+	</ui:define>
+</ui:composition>
+</html>

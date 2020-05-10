@@ -1,0 +1,154 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	<style>
+		#filtro{
+			margin-bottom: 10px;
+		}
+	</style>
+		<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel">
+			<h1>Lista de Volumes - QWCFP</h1>
+			
+					<p:columnToggler datasource="editVolume" trigger="toggler" />
+				<div id="filtro" align="right">
+					<p:commandButton id="toggler" type="button" value="Colunas"
+						icon="fa fa-fw fa-columns" styleClass="direitaAlinhar" />
+					<p:menuButton id="opcoes" disabled="#{volumeBean.disable}"
+						value="Opções" styleClass="direitaAlinhar">
+						<p:menuitem update=":formDIV:carDetail, :formDIV:carDetailId"
+							oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit"
+							title="Editar Volume" value="Editar Volume"
+							process="@this editVolume" />
+					</p:menuButton>
+				</div>
+	
+		<p:dataTable resizableColumns="true" id="editVolume" border="1"
+			cellspacing="0" cellpadding="2" selectionMode="single"
+			rowKey="#{car.volId}" selection="#{volumeBean.volume}" var="car"
+			value="#{volumeBean.volumes}"
+			rowsPerPageTemplate="10,15,20,25,50,100" rows="10"
+			paginatorPosition="bottom"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Volumes)"
+			paginator="true">
+			
+		<!-- 	<p:ajax event="contextMenu" update=":formDIV:ctxMenuListVolumeId" oncomplete="alert('Olá');" ></p:ajax> -->
+
+			<p:ajax event="rowSelect"
+				oncomplete="#{volumeBean.setDisable('false')}"
+				update=":formDIV:opcoes" />
+
+			<p:column headerText="Caminho" style="font-weight: bold"
+				sortBy="#{car.rootFullPathVol}">
+				<h:outputText value="#{car.rootFullPathVol}"
+					style="font-weight: normal" />
+			</p:column>
+
+			<p:column headerText="Data" style="font-weight: bold;">
+				<h:outputText value="#{car.dateLastModified}"
+					style="font-weight: normal" converter="converteData" />
+			</p:column>
+
+			<p:column headerText="Status" style="font-weight: bold;">
+				<h:outputText value="#{volumeBean.getStatus(car.status)}"
+					style="font-weight: normal" />
+			</p:column>
+
+			<p:column headerText="Tamanho" style="font-weight: bold;">
+				<h:outputText value="#{volumeBean.convertByte(car.sizeInBytes)}"
+					style="font-weight: normal" />
+			</p:column>
+
+		</p:dataTable>
+		
+		<p:contextMenu for="editVolume" id="ctxMenuListVolumeId"
+			widgetVar="ctxMenuListVolume">
+			<p:menuitem update=":formDIV:carDetail, :formDIV:carDetailId, :formDIV:ADD_VOLUME_SIZE_EXP"
+				oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit"
+				title="Editar Volume" value="Editar Volume"
+				process="@this editVolume" />
+		</p:contextMenu>
+
+		</p:panel>
+		<p:dialog id="carDetailId" header="Editar Volume - QWCFP"
+			widgetVar="carDialog" modal="false" showEffect="fade"
+			hideEffect="fade" resizable="false" closeOnEscape="true">
+			<p:outputPanel id="carDetail">
+					
+	 	<h:panelGrid columns="1" layout="grid" style="width: 100%;height: 100%;" styleClass="ui-panelgrid-blank form-group"  >
+					<p:selectOneMenu id="STATUS_VOLUME_ADD"
+						value="#{volumeBean.volume.status}" panelStyle="width:180px"
+						effect="fade" required="true" requiredMessage="O status do volume é obrigatório" >
+						<f:selectItem itemLabel="Selecione o status..." />
+						<f:selectItems value="#{volumeBean.statusList}" var="status"
+							itemValue="#{status.id}" itemLabel="#{status.description}" />
+					</p:selectOneMenu>
+					<h:inputHidden value="#{volumeBean.volume.volId}"
+						style="font-weight: normal;" />
+						
+						<div style="height: 30px !important;"></div>
+
+					<h:panelGrid columns="2">
+
+					<h:panelGroup styleClass="md-inputfield" >
+						<p:spinner max="999999" id="VOLUME_SIZE_IN_BYTES" min="1"  
+							value="#{volumeBean.volume.sizeInBytes}" converter="convertByteVol" required="true" requiredMessage="O tamanho do volume é obrigatório" >
+							<p:ajax    update=":formDIV:ADD_VOLUME_SIZE_EXP" process="@this carDetailId"  />
+						</p:spinner>
+						<label>Tamanho total do volume</label>
+					</h:panelGroup>
+					<p:selectOneMenu id="ADD_VOLUME_SIZE_EXP" value="#{volumeBean.sizeVol}"  style="margin-top: 2px;"  >
+							<f:selectItem itemLabel="KB" itemValue="1024" />
+							<f:selectItem itemLabel="MB" itemValue="1048576" />
+							<f:selectItem itemLabel="GB" itemValue="1073741824" />
+							<f:selectItem itemLabel="TB" itemValue="1099511627776" />
+						</p:selectOneMenu>
+						
+					</h:panelGrid>  
+					
+
+					<div style="height: 30px !important;"></div>
+
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="VOLUME_ROOT_FULL_PATH_VOL"
+							value="#{volumeBean.volume.rootFullPathVol}" required="true" maxlength="1024" requiredMessage="O caminho do volume é obrigatório" />
+						<label>Caminho absoluto da raiz do Volume</label>
+					</h:panelGroup>
+					<h:inputHidden value="#{volumeBean.volume.volId}"
+						style="font-weight: normal;" />
+				</h:panelGrid>
+				
+				
+			</p:outputPanel>
+			<div class="altura20"></div>
+			<p:commandButton value="Salvar" icon="fa fa-fw fa-save"
+				action="#{volumeBean.editar()}"
+				update=":formDIV:editVolume, :formDIV:msgs"
+				oncomplete="handleDialogSubmit(args, 'carDialog')" process="@this :formDIV:carDetail" />
+			<p:spacer width="10" />
+			<p:commandButton value="Fechar" oncomplete="PF('carDialog').hide()"
+				icon="fa fa-fw fa-close" />
+
+			<div class="altura20"></div>
+		</p:dialog>
+
+		<script type="text/javascript">
+			function handleDialogSubmit(args, dialogName) {
+				if (!args.validationFailed) {
+					PF(dialogName).hide();
+				}
+			}
+		</script>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

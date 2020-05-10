@@ -1,0 +1,146 @@
+<HTML 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+	<style>
+		#filtro{
+			margin-bottom: 10px;
+		}
+	</style>
+    <p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />    
+    	
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+	 		<h1>Lista de Grupos - QWCFP</h1>
+	 		
+       				<p:columnToggler datasource="editGrupo" trigger="toggler" />
+       		<div id="filtro" align="right">
+       				<p:commandButton id="toggler" type="button" value="Colunas"  icon="fa fa-fw fa-columns" styleClass="direitaAlinhar"  />
+       				<p:menuButton id="opcoes" 
+						value="Opções" styleClass="direitaAlinhar">
+						<p:menuitem  value="Solicitar Permissão" process="@this editGrupo" actionListener="#{groupBean.setarId(listGroupsBean.group, true)}" type="submit" rendered="#{listGroupsBean.group ne null}" onclick="PF('solicitarPermissaoGrp').show()" disabled="#{listGroupsBean.group.status != groupBean.statusAtivo || listGroupsBean.group.groupId == 0}" icon="fa fa-fw fa-plus-square-o" title="Solicitar Permissão" >
+			            </p:menuitem>   
+			            
+			            <p:menuitem value="Configurações"  icon="fa fa-fw fa-gears" disabled="#{!(groupBean.isGg(listGroupsBean.group))}" process="@this editGrupo"  rendered="#{listGroupsBean.group ne null}"  title="Configurações" actionListener="#{groupBean.setarIdRegraGrupo(listGroupsBean.group)}"  >
+						</p:menuitem>   
+						
+						<p:menuitem value="Copiar Grupo" process="@this" update=":formDIV:editGrupo,:formDIV:msgs" actionListener="#{listGroupsBean.copyGroup('COPY')}" icon="fa fa-fw fa-copy" rendered="#{listGroupsBean.group ne null}" />
+				        <p:menuitem value="Criar Sub-Grupo" process="@this" disabled="#{listGroupsBean.group.status != groupBean.statusAtivo || listGroupsBean.group.groupId == 0}" rendered="#{listGroupsBean.group ne null}" update=":formDIV:editGrupo,:formDIV:msgs" actionListener="#{listGroupsBean.copyGroup('SUB')}" icon="fa fa-fw fa-plus" />
+						
+						<p:menuitem value="Ativar" icon="fa fa-fw fa-check-square-o"  action="#{listGroupsBean.altStatus(true,listGroupsBean.group)}"  rendered="#{listGroupsBean.altStatusVis(0 ,listGroupsBean.group) and listGroupsBean.group ne null }" update=":formDIV:editGrupo,:formDIV:msgs" 
+							title="Ativar" process="@this editGrupo" />
+						<p:menuitem icon="fa fa-fw fa-ban" action="#{listGroupsBean.altStatus(false,listGroupsBean.group)}" rendered="#{listGroupsBean.altStatusVis('1',listGroupsBean.group) and listGroupsBean.group ne null}" update=":formDIV:editGrupo,:formDIV:msgs" 
+							value="Desativar" title="Desativar" process="@this editGrupo"/> 
+						
+						<p:menuitem value="DashBoard"  icon="fa fa-fw fa-gears" title="DashBoard"></p:menuitem>	
+						
+						<p:menuitem process="@this" value="Selecione um grupo" rendered="#{listGroupsBean.group eq null}"/>
+					</p:menuButton>
+			</div>
+       
+      	
+    	<p:dataTable 
+	    	id="editGrupo" 
+	    	var="car"     	
+	    	resizableColumns="true"
+	    	value="#{listGroupsBean.groups}"   
+	    	selection="#{listGroupsBean.group}"   	
+			widgetVar="carsTable"
+			rowKey="#{car.groupId}"
+			selectionMode="single"
+	    	paginatorPosition="bottom"  	
+	    	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Grupos)"  
+	    	rowsPerPageTemplate="10,15,20,25,50,100" 
+	    	rows="10" 
+	    	paginator="true" >
+	    	
+	    	<p:ajax event="rowSelect" update=":formDIV:opcoes, :formDIV:solPrivDialog" />
+	    	<p:ajax event="contextMenu" update=":formDIV:cmEditGrupo, :formDIV:opcoes, :formDIV:solPrivDialog" oncomplete="PF('ctxMenuGroup').show(currentEvent);"  ></p:ajax>
+	        <p:column  style="font-weight: bold" filterBy="#{car.nome}"  >
+	            <h:outputText value="#{car.nome}"  style="font-weight: normal"/>
+	        </p:column>
+	        
+	        <p:column headerText="Apelido" style="font-weight: bold;" >
+	            <h:outputText value="#{car.apelido}"  style="font-weight: normal" />
+	        </p:column>
+	        
+	        <p:column headerText="Dono" style="font-weight: bold;" >
+	            <h:outputText value="#{car.ownerCreator}"  style="font-weight: normal" />
+	        </p:column>        
+        
+	        <p:column headerText="Descrição" style="font-weight: bold">
+	            <h:outputText value="#{car.description}"  style="font-weight: normal"/>
+	        </p:column>
+	        
+	         <p:column headerText="Tamanho" style="font-weight: bold;">
+	            <h:outputText value="#{groupBean.convertByte(car.sizeInBytes)}"  style="font-weight: normal"/>
+	        </p:column>
+	        
+	        <p:column headerText="Status" style="font-weight: bold;" sortBy="#{car.status}" >
+	            <h:outputText value="#{car.status}" converter="#{converterDomain}"  style="font-weight: normal"/>
+	        </p:column>
+
+       		<!-- <p:column   style=" text-align: center" id="funcao">
+	             <p:commandButton action="#{groupBean.setarId(car, true)}" type="submit" update=":formDIV:solicPerm" onclick="PF('solicitarPermissaoGrp').show()" disabled="#{car.status != groupBean.statusAtivo || car.groupId == 0}" icon="fa fa-fw fa-plus-square-o" title="Solicitar Permissão" >
+	                <f:setPropertyActionListener value="#{car}" target="#{groupBean.group}" />
+	            </p:commandButton>   
+	            
+	             <p:commandButton type="submit"  icon="fa fa-fw fa-gears" disabled="#{!(groupBean.isGg(car))}" title="Configurações" action="#{groupBean.setarIdRegraGrupo(car)}"  >
+				</p:commandButton>   
+				
+				<p:commandButton icon="fa fa-fw fa-check-square-o"  action="#{listGroupsBean.altStatus(true,car)}"  rendered="#{listGroupsBean.altStatusVis(0 ,car)}" update=":formDIV:editGrupo,:formDIV:msgs"
+					title="Ativar" process="@this editGrupo"/>
+				<p:commandButton icon="fa fa-fw fa-ban" action="#{listGroupsBean.altStatus(false,car)}" rendered="#{listGroupsBean.altStatusVis('1',car)}" update=":formDIV:editGrupo,:formDIV:msgs"
+					title="Desativar" process="@this editGrupo"/>    
+        	</p:column>  -->       	           
+    	</p:dataTable> 
+    	
+    	<p:contextMenu id="cmEditGrupo" for="editGrupo" widgetVar="ctxMenuGroup">
+    	
+   		 	<p:menuitem  value="Solicitar Permissão"  process="@this editGrupo" actionListener="#{groupBean.setarId(listGroupsBean.group, true)}" type="submit"  onclick="PF('solicitarPermissaoGrp').show()" disabled="#{listGroupsBean.group.status != groupBean.statusAtivo || listGroupsBean.group.groupId == 0}" icon="fa fa-fw fa-plus-square-o" title="Solicitar Permissão" >
+                <f:setPropertyActionListener value="#{car}" target="#{groupBean.group}" />
+            </p:menuitem>   
+            
+            <p:menuitem value="Configurações" icon="fa fa-fw fa-gears" disabled="#{!(groupBean.isGg(listGroupsBean.group))}" title="Configurações"  process="@this editGrupo" actionListener="#{groupBean.setarIdRegraGrupo(listGroupsBean.group)}"  />
+			
+			<p:menuitem value="Copiar Grupo" update=":formDIV:editGrupo,:formDIV:msgs" actionListener="#{listGroupsBean.copyGroup('COPY')}" icon="fa fa-fw fa-copy"  process="@this editGrupo" />
+			<p:menuitem value="Criar Sub-Grupo" update=":formDIV:editGrupo,:formDIV:msgs" disabled="#{listGroupsBean.group.status != groupBean.statusAtivo || listGroupsBean.group.groupId == 0}" actionListener="#{listGroupsBean.copyGroup('SUB')}" icon="fa fa-fw fa-plus"  process="@this editGrupo" />
+			
+			<p:menuitem value="Ativar" icon="fa fa-fw fa-check-square-o"  action="#{listGroupsBean.altStatus(true,listGroupsBean.group)}"  rendered="#{listGroupsBean.altStatusVis(0 ,listGroupsBean.group)}" update=":formDIV:editGrupo,:formDIV:msgs"	title="Ativar" process="@this editGrupo" />
+			<p:menuitem icon="fa fa-fw fa-ban" action="#{listGroupsBean.altStatus(false,listGroupsBean.group)}" rendered="#{listGroupsBean.altStatusVis('1',listGroupsBean.group)}" update=":formDIV:editGrupo,:formDIV:msgs" 	value="Desativar" title="Desativar" process="@this editGrupo"/>    
+			<p:menuitem value="DashBoard"  icon="fa fa-fw fa-gears" action="#{groupBean.setarDashBoard(car)}" title="DashBoard"></p:menuitem>	
+		</p:contextMenu>
+    	
+	 	</p:panel>
+   		
+   		<p:dialog  id="solPrivDialog" 
+			widgetVar="solicitarPermissaoGrp" header="Solicitar Privilégio -  #{groupBean.myGroupDeta.nome}" modal="false"  resizable="false"
+			draggable="false" responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<p:outputLabel for="privilegios" value="Escolha os privilégios: " />
+					<br/>
+					<p:selectManyCheckbox id="privilegios" value="#{notiBean.privSelectSol}"  layout="responsive" columns="2" styleClass="form-group" required="true" requiredMessage="Escolha pelo menos um privilégio"   >
+						<f:selectItems value="#{notiBean.domainPrivSol}" var="dom" itemLabel="#{dom.description}" itemValue="#{dom.stringValue}" />
+					</p:selectManyCheckbox>
+				</div>
+				<div class="ui-g-12">
+					<p:inputTextarea id="justificativaPriv" style="width:100%"  placeholder="Justificativa" value="#{notiBean.justificativa}"  required="true" requiredMessage="A justificativa é um campo obrigatório" />
+				</div>
+			</div>
+
+			<f:facet name="footer">
+				<p:commandButton value="Solicitar" icon="fa fa-fw fa-save" actionListener="#{notiBean.solicitarPrivilegio()}" update=":formDIV:editGrupo, :formDIV:msgs, :formDIV:solPrivDialog" process="@this solPrivDialog" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('solicitarPermissaoGrp').hide()" />
+			</f:facet>
+		</p:dialog>
+		
+ 
+   		
+	</ui:define>
+</ui:composition>
+</HTML>

@@ -1,0 +1,184 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<h:outputScript library="script" name="jquery.mask.js" />
+		<script>
+			function validatePhone() {
+		    	var masks = ['(00) 00000-0000', '(00) 0000-00009'],
+		        maskBehavior = function(val, e, field, options) {
+		        	return val.length > 14 ? masks[0] : masks[1];
+		        };
+		        $('.phone').mask(maskBehavior, {onKeyPress:
+		        function(val, e, field, options) {
+		        	field.mask(maskBehavior(val, e, field, options), options);
+		        }
+		        });
+		     }
+		     $(document).ready(function() {
+		     	validatePhone()
+		     }
+		     );
+
+		     function toggle(){
+
+					var atLeastOneIsChecked = $('#formDIV\\:checkLdap_input:checked').length > 0; ;
+
+					console.log(atLeastOneIsChecked);
+
+					if( atLeastOneIsChecked ) {
+						$('#formDIV\\:MEMBER_PASS').val('');
+						$('#formDIV\\:MEMBER_PASS2').val('');
+					}else{
+						$('#formDIV\\:MEMBER_LDAP').val('');
+					}
+
+					$("#formDIV\\:userIdLdap").toggle();
+					$("#formDIV\\:senhaB").toggle();
+					$("#formDIV\\:senhaA").toggle();
+					
+				}
+				
+		</script>
+		
+		<style>
+			.ui-widget-content{
+				border: none !important;
+			}       
+		    .semBorda{
+		      	border: none !important;
+		    }        
+		</style>
+		
+		<p:growl id="growl" showDetail="true" sticky="false" />
+		
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel"  >
+		
+			<h1>Cadastrar Novo Usuário</h1>	
+			 
+			 <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">  
+			
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_USER" maxlength="100" value="#{memberBean.member.memberName}" required="true"  requiredMessage="O nome do usuário é um campo obrigatório" style="width:100%" />
+					<label>Nome do Usuário*</label>					
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+				<p:inputMask id="MEMBER_CPF" value="#{memberBean.member.loginCpfId}" autocomplete="false" mask="999.999.999-99"   requiredMessage="O cpf do usuário um campo é obrigatório"
+					converter="converterCpf" style="width:100%"  required="#{loginBean.cpfRequired}">
+					<f:validator validatorId="validCpf" />
+				</p:inputMask>
+					<label>CPF*</label>
+				</h:panelGroup>			
+				
+				<h:panelGroup   style="#{loginBean.authenticationLdap eq '1' ? 'display: none;' : '' }"  >
+					<p:selectBooleanCheckbox id="checkLdap" rendered="#{loginBean.authenticationLdap}" value="#{memberBean.authenticationUserLdap}"  onchange="toggle()" >
+						 <p:ajax event="change" listener="#{memberBean.checkLdapInternal()}" process="@this" update="formDIV:MEMBER_LDAP,formDIV:MEMBER_PASS,formDIV:MEMBER_PASS2 , formDIV:submitCadastroEx"  />
+					</p:selectBooleanCheckbox>
+					<label style="color: #9c9c9c">Utilizar protocolo Ldap para autenticação?</label>
+				</h:panelGroup>
+				
+				<h:panelGroup id="userIdLdap"  style="display: none;" styleClass="md-inputfield" >
+					<p:inputText id="MEMBER_LDAP" requiredMessage="A identificação do usuário no Ldap é obrigatória" value="#{memberBean.member.ldapKeyForCorpAuth}"  style="width:100%" required="true" size="30"/>
+					<label>User Id Ldap*</label>
+				</h:panelGroup>
+				
+				<h:panelGroup id="senhaA" styleClass="md-inputfield">
+				<p:password id="MEMBER_PASS" value="#{memberBean.pass}" redisplay="true"  binding="#{startComponent}" required="#{memberBean.authenticationUserLdap and (memberBean.pass eq null)}" style="width:100%" size="30"  requiredMessage="A senha do usuário um campo é obrigatório"
+					promptLabel="Informe um senha." feedback="true"  weakLabel="Fraca" goodLabel="Razoável" strongLabel="Forte" autocomplete="false" />
+					<label>Senha*</label>
+				</h:panelGroup>	
+
+				<h:panelGroup id="senhaB" styleClass="md-inputfield">
+					<p:password id="MEMBER_PASS2" value="#{memberBean.member.qwarePasswordEnc}"  redisplay="true" required="#{!memberBean.authenticationUserLdap}"  autocomplete="false" style="width:100%"  requiredMessage="A comprovação da senha do usuário um campo é obrigatório" >
+						<f:validator validatorId="passwordValidator" for="MEMBER_PASS2" />
+					 	<f:attribute name="startComponent" value="#{startComponent}" />
+						<p:ajax event="change" update="MEMBER_PASS, MEMBER_PASS2,growl" process="@this MEMBER_PASS" />
+					</p:password>
+					<label >Confirmar Senha*</label>
+				</h:panelGroup>				
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_MAIL" value="#{memberBean.member.memberEmail}" style="width:100%" maxlength="128" required="true"  requiredMessage="O e-mail do usuário um campo é obrigatório" >
+						<f:validator validatorId="validateEmail" for="MEMBER_MAIL"/>
+						<p:ajax event="change" update="MEMBER_MAIL,:formDIV:growl" />						
+					</p:inputText>
+					<label>E-Mail*</label>
+				</h:panelGroup>
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_PERSONAL_MAIL" style="width:100%" value="#{memberBean.member.memberEmailPersonal}"  maxlength="128" required="false" >
+						<f:validator validatorId="validateEmail" for="MEMBER_MAIL"/>
+						<p:ajax event="change" update="MEMBER_MAIL,:formDIV:growl" />	
+					</p:inputText>
+					<label>E-Mail Pessoal</label>
+				</h:panelGroup>	
+			
+				<p:selectOneMenu id="countryCode" value="#{memberBean.code}" style="width:100%" required="true" filter="true"  requiredMessage="O código do país um campo é obrigatório" > 
+						<f:selectItem itemLabel="Código País*" itemValue=""/>
+            			<f:selectItems  value="#{memberBean.codigoPais}" />
+            			<p:ajax update=":formDIV:telefone1" event="change" listener="#{memberBean.getValueHasMap()}" process="@this"/>
+				</p:selectOneMenu>
+								
+				<h:panelGroup  >
+					<h:inputHidden value="#{memberBean.valueHasMap}" />
+					<h:panelGrid columns="2" style="width:100%">
+						<h:panelGroup styleClass="md-inputfield">
+							<p:inputMask id="telefone1" value="#{memberBean.valueHasMap}" mask="#{memberBean.mask()}" disabled="true" maxlength="2" required="true" size="3" />
+							<label>Código*</label>
+						</h:panelGroup>
+						
+						<h:panelGroup styleClass="md-inputfield" style="width:100%">
+							<p:inputText name="telefone" id="telefone" value="#{memberBean.member.numberPhone1}"   converter="converterFone"  requiredMessage="O telefone do usuário um campo é obrigatório" required="true" style="width:100%" styleClass="phone "/>
+							<label>Telefone*</label>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGroup>			
+				
+				<h:panelGroup styleClass="md-inputfield">
+					<p:inputText id="MEMBER_ADDRESS"  maxlength="100" value="#{memberBean.member.phisicalAddress}" required="true" requiredMessage="O endereço é obrigatório." style="width:100%"/>
+					<label>Endereço*</label>
+				</h:panelGroup>
+						
+				<h:panelGroup styleClass="md-inputfield" >
+					<p:inputMask id="MEMBER_CEP" value="#{memberBean.member.zipCode}" required="true"  requiredMessage="O cep do usuário um campo é obrigatório" mask="99.999-999" maxlength="10" style="width:100%" />
+					<label>CEP*</label>
+				</h:panelGroup>
+
+				<p:selectOneMenu id="MEMBER_BOSS" value="#{memberBean.member.bossIdFk}" required="false" requiredMessage="Chefe da Área" style="width:100%">
+					<f:selectItem itemLabel="Chefe da Área" />
+					<f:selectItems value="#{listMemberBean.members}" var="member"
+						itemValue="#{member.memberId}" itemLabel="#{member.memberName}" />
+				</p:selectOneMenu>
+								
+				<!-- <p:outputLabel for="IS_EMAIL" value="Receber emails: " />
+				<p:selectOneRadio  id="IS_EMAIL" value="#{memberBean.member.justificativa}"  >
+	            	<f:selectItem itemLabel="Sim" itemValue="S"  />
+	            	<f:selectItem itemLabel="Não" itemValue="N" selected="true"  />
+	            </p:selectOneRadio>      
+				<p:tooltip id="toolTipFade" for="IS_EMAIL" value="O Sistema realiza as notificações por padrão via interface. Mas escolhendo esta opção o sistema enviará as notificações por email também." />
+				<p:message for="MEMBER_BOSS" /> -->
+				
+				<p:selectOneMenu id="MEMBER_AREA" value="#{memberBean.member.areaIdFk}" required="true" requiredMessage="A área de trabalho é obrigatória." filter="true" style="width:100%">
+					<f:selectItem itemLabel="Área de Trabalho*" />
+					<f:selectItems value="#{areasBean.areas}" var="area" styleClass="tamanhoCamanho"
+						itemValue="#{area.areaId}" itemLabel="#{area.nome}" />
+				</p:selectOneMenu>
+
+				<p:inputTextarea id="MEMBER_JUSTIFICATIVA" value="#{memberBean.member.justificativa}" maxlength="2000" required="true" requiredMessage="A justificatia é obrigatória."  style="width:100%" placeholder="Justificativa de Cadastro*"/>
+				<div class="EmptyBox50"></div>
+			</p:panelGrid>
+		<p:commandButton style="margin:10px 25px" value="Salvar" id="submitCadastroEx"  process="@this #{memberBean.elementosProcessarInterno}" action="#{memberBean.salvar('false',loginBean.isGi())}" type="submit" icon="fa fa-fw fa-save" update="growl" />
+		</p:panel>
+		
+		<div class="EmptyBox30"></div>
+ 		* Campo de preenchimento obrigatório <br />
+ 		<div class="EmptyBox30"></div>
+ 		<p:spacer width="25" />
+	</ui:define>
+</ui:composition>
+</html>

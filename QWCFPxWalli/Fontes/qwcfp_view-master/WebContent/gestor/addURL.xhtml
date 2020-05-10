@@ -1,0 +1,40 @@
+ <html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<h:outputScript library="script" name="jquery.mask.js" />
+		       
+        
+		<p:growl id="area-growl" showDetail="true"  />
+
+		<div class="ui-fluid">
+			<p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+				<h3>Cadastrar Web Services</h3>
+					
+				<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" id="tabela"   >					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="PNNAME" required="true"  maxlength="49" requiredMessage="Nome do projeto" value="#{urlsBean.name}" />
+						<label>Nome do projeto</label>
+					</h:panelGroup>
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="WSDL" required="true"  maxlength="49" requiredMessage="Caminho do arquivo WSDL"  value="#{urlsBean.WSDLUrl}"/>
+						<label>Initial WSDL</label>
+					</h:panelGroup>
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputTextarea id="DESWSDL" required="true"  maxlength="49" requiredMessage="Caminho do arquivo WSDL"  value="#{urlsBean.description}"/>
+						<label>Descrição</label>
+					</h:panelGroup>
+				</p:panelGrid>
+			
+				
+				<p:commandButton value="Salvar" action="#{urlsBean.salvar()}" ajax="false" type="submit" icon="fa fa-fw fa-save" style="width:90px"  />
+		    </p:panel>
+		</div>
+		<div class="EmptyBox30"></div>
+		* Campo de preenchimento obrigatório 
+	</ui:define>
+</ui:composition>
+</html>

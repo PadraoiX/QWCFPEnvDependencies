@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>QWCFP - Error</title>
+
+
+<meta name="keywords"
+	content="404 iphone web template, Android web template, Smartphone web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+
+
+<link href="resources/barcelona-layout/css/nanoscroller.css"
+	rel="stylesheet" type="text/css" />
+<link href="resources/barcelona-layout/css/animate.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/barcelona-layout/css/ripple.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/barcelona-layout/css/layout-blue.css"
+	rel="stylesheet" type="text/css" />
+<link href="resources/barcelona-layout/css/geralBarcelona.css"
+	rel="stylesheet" type="text/css" />
+	
+
+<script type="text/javascript">
+
+        function loginPage(){
+        	var base = document.getElementsByTagName('base')[0];
+            if (base  &#38;&#38; base.href  &#38;&#38; (base.href.length > 0)) {
+                base = base.href;
+            } else {
+                base = document.URL;
+            }
+            var contextRoot  = base.substr(0, base.indexOf("/", base.indexOf("/", base.indexOf("//") + 2) + 1)); 
+        	location.href= contextRoot + "/" + "index.faces";
+        }
+        
+        </script>
+
+</h:head>
+
+<h:body class="exception-body error-body">
+	<div class="exception-panel">
+
+		<img src="resources/barcelona-layout/images/exception/icon-error.png" />
+
+		<button id="j_idt8" name="j_idt8" type="button"
+			class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only error-page-btn"
+			onclick="loginPage()"
+			role="button" aria-disabled="false">
+			<span class="ui-button-text ui-c">DASHBOARD</span>
+		</button>
+
+	</div>
+
+	<div class="exception-band">
+		<div class="exception-content">
+			<h1 style="width: 444px;">OCORREU UM ERRO</h1>
+			<p style="width: 400px;">Por favor, tente mais tarde</p>
+		</div>
+	</div>
+
+</h:body>
+</html>

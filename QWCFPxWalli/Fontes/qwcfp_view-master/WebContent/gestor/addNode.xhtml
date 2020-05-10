@@ -1,0 +1,125 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	<style>
+        .ui-widget-content{
+	 border: none; 
+}
+.ui-widget-content{
+	 border: none !important; 
+	 
+}
+</style>
+
+			<p:growl id="growl" showDetail="true" />
+			<p:panel id="panel"  styleClass="card card-w-title sombraPanel">
+			<h1>Cadastrar Novo Nó</h1>
+
+				<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group" >				
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_NAME" value="#{nodeBean.node.name}" required="true" maxlength="50" requiredMessage="O nome do Nó é um campo obrigatório" />
+						<label>Nome do Nó</label>
+					</h:panelGroup>					
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_ACRONYM" value="#{nodeBean.node.apelido}" required="true" maxlength="20" requiredMessage="A sigla do Nó é um campo obrigatório" />
+						<label>Sigla, única para identificar o Nó</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_IP_ADDRESS" value="#{nodeBean.node.ipAddress}" required="true" maxlength="16" requiredMessage="O endereço do Nó é um campo obrigatório" />
+						<label>Endereço IP do Host</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_OS_QWARE_USER" value="#{nodeBean.node.osQwareUser}" required="true" maxlength="30" requiredMessage="O usuário do Q-Ware no S.O é um campo obrigatório" />
+						<label>Usuário Q-Ware no S.O.</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="OS_QWARE_PASWD_ENC" value="#{nodeBean.node.osQwarePaswdEnc}" required="true" maxlength="30" requiredMessage="A senha do usuário do Q-Ware no S.O é um campo obrigatório" />
+						<label>Senha do Usuário Q-Ware</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_QWARE_USER" value="#{nodeBean.node.qwareUser}" required="true" maxlength="30" requiredMessage="O usuário administrador do Q-Ware é um campo obrigatório" />
+						<label>Usuário administrador do Q-Ware</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="NO_QWARE_PASSWD_ENC" value="#{nodeBean.node.qwarePasswdEnc}" required="true" maxlength="30" requiredMessage="A senha do usuário administrador do Q-Ware é um campo obrigatório" />
+						<label>Senha administrador Q-Ware</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:spinner  id="NO_PORT_CONNECTION" value="#{nodeBean.node.portConnection}" required="true"  requiredMessage="A porta de conexão do Q-Ware é um campo obrigatório" />
+						<label>Porta de conexão com o Q-Ware Server</label>
+					</h:panelGroup>					
+					
+					<p:selectOneMenu id="STATUS_NO_ADD" value="#{nodeBean.node.status}" required="true" style="width:100%" effect="fade" requiredMessage="Por favor escolha o status">
+						<f:selectItem itemLabel="Indicador de status do nó" />
+						<f:selectItems value="#{nodeBean.statusList}"  var="domain" itemValue="#{domain.id}"  itemLabel="#{domain.description}"/>
+					</p:selectOneMenu>					
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_ROOT_FULL_PATH_4_FILES" value="#{nodeBean.node.rootFullPath4Files}" maxlength="1024" required="true" requiredMessage="O caminho do ponto de montagem do Nó é um campo obrigatório" />
+						<label>Caminho do ponto de montagem</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_QWARE_HOME_PATH" value="#{nodeBean.node.qwareHomePath}" required="true" maxlength="1024"  requiredMessage="O caminho da instalação do Q-Ware é um campo obrigatório" />
+						<label>Caminho da Instalação do Q-Ware</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_DB_USER_QWARELOGIN" value="#{nodeBean.node.dbUserQwarelogin}" required="true" maxlength="100"  size="30" requiredMessage="O esquema do banco usado pelo Q-Ware é um campo obrigatório" />
+						<label>Esquema no Banco usado pelo Q-Ware Server do Nó</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="NO_DB_PASSWD_QWARE_LOGIN" value="#{nodeBean.node.dbPasswdQwareLogin}" required="true" maxlength="100" requiredMessage="A senha do esquema do banco usado pelo Q-Ware é um campo obrigatório"  />
+						<label>Senha do Esquema no Banco usado pelo Q-Ware Server do Nó</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputText id="NO_URI_JDBC_FOR_DB_CONECTION" value="#{nodeBean.node.uriJdbcForDbConection}" required="true" maxlength="2000" requiredMessage="A URI da conexão JDBC usado pelo Q-Ware é um campo obrigatório" />
+						<label>URI de conexão JDBC com o banco</label>
+					</h:panelGroup>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:password id="NO_QWARE_KEY_ENC" value="#{nodeBean.node.qwareKeyEnc}" required="true" maxlength="2000" requiredMessage="A chave usada pelo Q-Ware é um campo obrigatório" />
+						<label>Chave usada pelo Servidor Q-Ware</label>
+					</h:panelGroup>
+
+					<p:selectOneMenu 
+						id="NO_DEFAULT_INFOGRP_ID_FK"
+						value="#{nodeBean.node.defaultInfoGroup}" 
+						required="true"
+						 style="width:100%" 
+						effect="fade"
+						requiredMessage="Por favor escolha o grupo default">
+						<f:selectItem itemLabel="Por favor escolha o grupo default" />
+						<f:selectItems value="#{listGroupsBean.groups}" var="grupo" itemValue="#{grupo.groupId}" itemLabel="#{grupo.nome}" />
+					</p:selectOneMenu>
+					
+					<h:panelGroup styleClass="md-inputfield">
+						<p:inputTextarea id="NO_DESCRIPTION" value="#{nodeBean.node.description}" required="true" maxlength="2000" requiredMessage="A dexcrição do Nó é um campo obrigatório" cols="32" />
+						<label>Descrição do Nó</label>
+					</h:panelGroup>
+					
+					<h:inputHidden  />
+					
+					<p:commandButton value="Cadastrar" action="#{nodeBean.salvar}"  ajax="true" type="submit" icon="fa fa-fw fa-save" update="growl" />
+					
+				</p:panelGrid>
+			
+	    </p:panel>
+
+
+	</ui:define>
+</ui:composition>
+</html>

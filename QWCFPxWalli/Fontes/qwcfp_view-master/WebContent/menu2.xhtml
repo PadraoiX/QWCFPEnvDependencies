@@ -1,0 +1,197 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+<style>
+	
+	.MenuSideMainLinkMyGrupo {
+		background-color: #313b3f;
+		width:100%;
+		border:0px;
+		-webkit-transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		-ms-transition: all 0.5s ease;
+		-o-transition: all 0.5s ease;
+		transition: all 0.5s ease;
+	}
+
+
+	.ui-state-hover {
+    	box-shadow: 0 0 8px #b2b2b2, 0 1px 0 #fff inset;
+	}
+	
+	.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+	    background: #b2b2b2 -moz-linear-gradient(center top , rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)) repeat scroll 0 0;
+	    border: 1px solid #7096ab;
+	    box-shadow: 0 0 8px #85b2cb;
+	    color: #313131;
+	    font-weight: bold; 
+	}
+	
+	.corfontemenu{
+		color: #9ba5ac;
+	}
+	.menumeusgrupos{
+		height: 300px !important;
+		overflow: auto !important;
+	}
+	
+</style>
+
+		<div id="MENUSIDE" class="ps-container">
+			<div id="MENUSIDEindent">
+				<span id="LOGO" class="bordersOfMenuSide" onclick="linkVoltar()" >
+					<img src="resources/images/logo_qwcfp_off.png"/>
+					<img id="BlueLogo" src="resources/images/logo_qwcfp2.png" class="hiddenLogo" style="opacity: 0;"/>
+				</span>
+				
+				<div class="MenuSideMainLink bordersOfMenuSide">
+					<h:graphicImage library="images" name="search.png" />
+					<input id="menuSearch" class="mediumFont fontSize14 mustClose searchInput" type="text" placeholder="Search Menu"  />
+				</div>						
+
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax" >
+					<img src="resources/images/iconMyGroups_on.png"/>
+					<img class="hiddenIcons" src="resources/images/iconMyGroups_off.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Meus Grupos</span>
+				</span>
+				<div class="SubMenuLinkContainer menumeusgrupos" style="display: none;">
+					<p:growl id="treeGrowl" life="#{loginBean.messageTime}" showDetail="true" /> 
+					<p:tree value="#{treeBean.root}" var="node" dynamic="true" selectionMode="single" styleClass="MenuSideMainLinkMyGrupo" >
+					
+						<p:ajax event="select" listener="#{treeBean.onNodeSelect}" />
+					 
+				        <p:treeNode  type="#{treeBean.getCategoryGroupSubordinated()}" expandedIcon="ui-icon ui-icon-folder-open yellow i" collapsedIcon="ui-icon ui-icon-folder-collapsed yellow i" styleClass="corfontemenu"   >
+				            <h:outputText  value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        
+				        <p:treeNode type="#{treeBean.getCategoryGroupRoot()}" expandedIcon="ui-icon ui-icon-folder-open yellow" collapsedIcon="ui-icon ui-icon-folder-collapsed yellow"  styleClass="corfontemenu" >
+				            <h:outputText  value="#{node.tagetName}" style="font-size:17px;"/>
+				        </p:treeNode>
+				        
+				        <p:treeNode type="#{treeBean.getCategoryBlindNode()}" expandedIcon="ui-icon ui-icon-locked yellow" collapsedIcon="ui-icon ui-icon-locked yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        	
+				        <p:treeNode type="#{treeBean.getCategoryAreaSubordinated()}" expandedIcon="ui-icon ui-icon-copy yellow" collapsedIcon="ui-icon ui-icon-copy yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        	
+				        <p:treeNode type="#{treeBean.getCategoryAreaRoot()}" expandedIcon="ui-icon ui-icon-copy yellow" collapsedIcon="ui-icon ui-icon-copy yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>	
+				    </p:tree>			   
+				</div>
+			    
+				<!-- Gerencair Áreas -->
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax" >
+					<img src="resources/images/iconAreaOn.png"/>
+					<img class="hiddenIcons" src="resources/images/iconAreaOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Áreas</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Área" outcome="/gestor/addArea.faces" styleClass="SubMenuLink" rendered="#{loginBean.isGi()}"/>
+					<h:link value="Listar Áreas" outcome="/listArea.faces" styleClass="SubMenuLink" />					
+				</div>		
+						
+				<!-- Gerenciar Usuário -->
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconUserOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconUserOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Usuários</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Usuário" outcome="/gestor/addUsuario.faces" styleClass="SubMenuLink" rendered="#{loginBean.isGi()}"/>		
+					<h:link value="Listar Usuário" outcome="/listUser.faces" styleClass="SubMenuLink" />		
+					<h:link value="Editar meu perfil" outcome="/alterarUser.faces"  styleClass="SubMenuLink" />					
+					<h:link value="Meus Privilégios" outcome="/privilegios.faces"  styleClass="SubMenuLink" />
+				</div>	
+							
+				<!-- Gerenciar Grupos -->
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconGruposOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconGruposOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Grupos</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Grupo" outcome="/addGrupo.faces"  styleClass="SubMenuLink" />		
+					<h:link value="Listar Grupos" outcome="/listGrupos.faces"  styleClass="SubMenuLink" />			
+				</div>	
+								
+				<!-- Gerenciar Nos -->
+				<h:outputLabel rendered="#{loginBean.isGi()}">
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconNosOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconNosOff.png" style="opacity: 0;"/>			
+				<span class="MainLinkText">Nós</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Nó" outcome="/gestor/addNode.faces" styleClass="SubMenuLink" />
+					<h:link value="Listar Nós" outcome="/gestor/listNode.faces" styleClass="SubMenuLink" />
+				</div>		
+				</h:outputLabel>
+				
+				<!-- Gerenciar Volumes -->
+				<h:outputLabel rendered="#{loginBean.isGi()}">
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax" >
+				<img src="resources/images/iconVolumeOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconVolumeOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Volumes</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Volume" outcome="/gestor/addVolume.faces" styleClass="SubMenuLink"  />
+					<h:link value="Listar Volumes" outcome="/gestor/listVolume.faces" styleClass="SubMenuLink"  />
+				</div>		
+				</h:outputLabel>	
+				
+				<!-- 	CONFIGURACAO -->
+				<h:outputLabel rendered="#{loginBean.isGi()}">
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconConfigOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconConfigOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Configurações</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Criar Regra" outcome="/gestor/addRegra.faces" styleClass="SubMenuLink"/>
+					<h:link value="Listar Regras" outcome="/gestor/listRegras.faces" styleClass="SubMenuLink" />
+					<h:link value="Configurar Sistema" outcome="/gestor/configSistema.faces" styleClass="SubMenuLink2" />	
+					<h:link value="URL" outcome="/gestor/addURL.faces" styleClass="SubMenuLink2" />	
+									
+				</div>
+				</h:outputLabel>
+				
+				<!-- Historioco-->
+				<h:outputLabel rendered="#{loginBean.isGi()}">
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconHistOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconHistOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Histórico</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Pesquisar Histórico" outcome="/gestor/historico.faces" styleClass="SubMenuLink"  rendered="#{loginBean.isGi()}"/>							
+				</div>
+				</h:outputLabel>
+				
+				<!-- Relatórios-->
+				<h:outputLabel rendered="#{loginBean.isGi()}">
+				<span onclick="Showcase.openSubMenu(this);" class="MenuSideMainLink bordersOfMenuSide" id="SubMenu-Ajax">
+				<img src="resources/images/iconRelatOn.png"/>
+				<img class="hiddenIcons" src="resources/images/iconRelatOff.png" style="opacity: 0;"/>
+					<span class="MainLinkText">Relatórios</span>
+				</span>
+				<div class="SubMenuLinkContainer" style="display: none;">
+					<h:link value="Gerar Relatórios" outcome="/gestor/listRelatorios.faces" styleClass="SubMenuLink"  rendered="#{loginBean.isGi()}"/>
+				</div> 			
+				</h:outputLabel>
+			<!--       FIM DO MENU          -->
+			</div>
+		</div><!-- FIM DO MENU -->
+		
+		<p:dialog header="Alterar" widgetVar="alterarSenha" modal="false" width="600" height="200" closeOnEscape="true" styleClass="sembordas">
+				alterar senha
+		</p:dialog>
+		
+</ui:composition>
+</html>

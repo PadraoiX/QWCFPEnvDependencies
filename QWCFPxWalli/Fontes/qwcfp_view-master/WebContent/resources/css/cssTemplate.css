@@ -1,0 +1,145 @@
+body {
+	background: #f7f5f3;
+}
+
+.ui-widget-header {
+	border: none;
+}
+
+topSist {
+	width: 100%;
+	height: 75px;
+	text-align: right;
+	margin: 0px;
+	margin-top: -70px;
+}
+
+.progress {
+	position: relative;
+	width: 330px;
+	border: 1px solid #ddd;
+	padding: 1px;
+	border-radius: 3px;
+	height: 25px;
+}
+
+.bar {
+	background-color: #85b2cb;
+	width: 0%;
+	height: 25px;
+	border-radius: 3px;
+}
+
+.percent {
+	position: absolute;
+	display: inline-block;
+	top: 5px;
+	left: 48%;
+}
+
+#filedrag {
+	display: none;
+	/* font-weight: bold;
+	text-align: center;
+	padding: 1em 0;
+	margin: 1em 0;
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 7px;
+	cursor: default; */
+}
+
+#filedrag.hover {
+	/* color: #f00;
+	border-color: #f00;
+	border-style: solid; */
+	box-shadow: inset 0 3px 4px #888;
+	font-weight: bold;
+	background: rgba(220, 214, 214, 0.3);
+	/* text-align: center; */
+	/* padding: 2em 0;
+	margin: 2em 0; */
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 7px;
+	cursor: default;
+}
+
+.ui-grid-row {
+	border: none !important;
+}
+
+.notif {
+	margin-left: -10px;
+	background: #85b2cb
+		-moz-linear-gradient(center top, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0.4)) repeat scroll 0 0;
+	background: #85b2cb
+		-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+		0)), to(rgba(255, 255, 255, 0.4)));
+	font-size: 10px;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 1px solid #7096ab;
+	color: #1c4257;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+	padding: 1px 3px;
+	text-align: center;
+}
+
+.posicao {
+	float: right;
+	margin-top: -60px;
+	margin-right: 15px;
+}
+
+#conteudo {
+	background: #f7f5f3;
+}
+
+#menucfpB {
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+	background-color: #f7f5f3;
+}
+
+div#load_screen {
+	background: #f7f5f3;
+	opacity: 1;
+	position: fixed;
+	z-index: 10;
+	top: 0px;
+	width: 100%;
+	height: 1600px;
+}
+
+div#load_screen>div#loading {
+	color: #FFF;
+	width: 120px;
+	height: 24px;
+	margin: 300px auto;
+}
+
+#reaload{
+	background: transparent none repeat scroll 0% 0% !important;
+	border: none !important;
+	box-shadow: none !important;
+	
+
+}
+
+#pesquisacfp{
+    width: 200px;
+    position: absolute;
+    margin-top: -50px;
+    margin-left: 40%;
+}
+
+#imagefind{
+	width: 40px;
+	height: 40px;
+}

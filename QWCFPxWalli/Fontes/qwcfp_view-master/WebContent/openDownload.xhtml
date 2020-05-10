@@ -1,0 +1,27 @@
+<HTML xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+		<p:panel id="basic" header="Compartilhamento de Arquivos" footer="QWCFP - PIX"
+			style="margin-bottom:20px">
+			<h:inputHidden value="#{openDownload.info.link}" id="link" />
+			<h:panelGrid columns="2" cellpadding="10">
+				<p:graphicImage name="iconCFP.png" library="images" />
+				<h:outputText value="QWCFP - DOWNLOAD" />
+				<p:spacer></p:spacer>				
+				<h:outputText value="O fulano #{openDownload.info.memberOriginName} compartilhou um arquivo com você, para realizar download click no botão abaixo." />
+				<p:spacer></p:spacer>				
+				<p:commandButton value="download"  oncomplete="getFileExt()" icon="fa fa-fw fa-download"  />				
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+

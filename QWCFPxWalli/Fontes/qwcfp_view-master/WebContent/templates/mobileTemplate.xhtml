@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pm="http://primefaces.org/mobile">	
+	<h:head>	
+	  	<f:facet name="first">
+	        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	        <meta name="apple-mobile-web-app-capable" content="yes" />
+	    </f:facet>
+	    
+		<title>QWCFP - Padrão iX</title>		
+		
+		<h:outputStylesheet library="css" name="showcase.css"/>
+		<h:outputScript library="script" name="showcase.js"/>
+		<h:outputScript library="script" name="perfect-scrollbar.js"/>	 	
+	</h:head>	 
+<h:body>	
+	 <pm:page id="first">
+		<h:form id="formGeral">		
+			<!-- INICIO DO MENU -->			
+			<pm:header fixed="true"  title="Operador: #{loginBean.member.name}">
+                <p:tabMenu activeIndex="0">
+                    <p:menuitem value="Home" icon="ui-icon-home" iconPos="bottom"/>
+                    <p:menuitem value="Menu" icon="ui-icon-gear" oncomplete="PF('pnl-basic').show()"  iconPos="bottom"/>
+                    <p:menuitem value="LogOut" icon="ui-icon-power" action="mobile.faces" iconPos="bottom"/>
+                </p:tabMenu>
+            </pm:header>
+            <p:overlayPanel  widgetVar="pnl-basic" at="right" showEffect="overlay">		 
+			     <p:menu>
+			         <p:menuitem value="Listar Área"  action="listAreaM.faces" immediate="true" update="first:formGeral:formDIV" ajax="true"  />
+			         <p:menuitem value="Listar Usuário" url="#" />
+			         <p:menuitem value="Listar Grupos" url="#" />
+			     </p:menu>
+			</p:overlayPanel>
+            <!-- FIM DO    MENU -->
+            <pm:content>				
+            	<!-- INICIO DO MAIN -->	
+					<h:form id="formDIV">				
+						<div class="ContentSideSections Implementation" id="conteudo" >
+							<ui:insert name="conteudo" id="conteudo" >Página Principal</ui:insert>
+						</div>
+					</h:form>
+				<!--FIM DO MAIN -->   
+				           
+            </pm:content>            
+            <pm:footer fixed="true">
+               <div class="ContentSideSections">
+					<span class="floatLeft fontSize14 gray">
+					<a href="http://www.pix.com.br">Padrão iX Sistemas Abertos S/A</a><br />
+					, Copyright © 2015 All rights reserved.
+					</span>
+					<span class="floatRight fontSize14 gray">versão: </span>
+					<div style="clear:both"></div>
+				</div>
+            </pm:footer>
+		</h:form>	
+	</pm:page>
+</h:body>
+</html>

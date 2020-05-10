@@ -1,0 +1,266 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>	
+	<ul class="nav nav-list">
+		<li class="active">
+			<script type="text/javascript">
+				document.write('<a href="'+server+'main.faces">'+
+								'<i class="menu-icon fa fa-tachometer"></i>'+
+								'<span class="menu-text">Home</span>'+
+								'</a>');
+			</script>
+			<b class="arrow"></b>
+		</li>
+	
+		<li class=""><!-- INICIO MENU MEUS GRUPOS -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-reorder"></i>
+				<span class="menu-text">
+					Meus Grupos
+				</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<p:growl id="treeGrowl" showDetail="true" /> 
+					<p:tree value="#{treeBean.root}" var="node" dynamic="true" selectionMode="single" styleClass="" id="treecfp" >
+					
+						<p:ajax event="select" listener="#{treeBean.onNodeSelect}" />
+					 
+				        <p:treeNode  type="#{treeBean.getCategoryGroupSubordinated()}" expandedIcon="ui-icon ui-icon-folder-open yellow i" collapsedIcon="ui-icon ui-icon-folder-collapsed yellow i" styleClass="corfontemenu"   >
+				            <h:outputText  value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        
+				        <p:treeNode type="#{treeBean.getCategoryGroupRoot()}" expandedIcon="ui-icon ui-icon-folder-open yellow" collapsedIcon="ui-icon ui-icon-folder-collapsed yellow"  styleClass="corfontemenu" >
+				            <h:outputText  value="#{node.tagetName}" style="font-size:17px;"/>
+				        </p:treeNode>
+				        
+				        <p:treeNode type="#{treeBean.getCategoryBlindNode()}" expandedIcon="ui-icon ui-icon-locked yellow" collapsedIcon="ui-icon ui-icon-locked yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        	
+				        <p:treeNode type="#{treeBean.getCategoryAreaSubordinated()}" expandedIcon="ui-icon ui-icon-copy yellow" collapsedIcon="ui-icon ui-icon-copy yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>
+				        	
+				        <p:treeNode type="#{treeBean.getCategoryAreaRoot()}" expandedIcon="ui-icon ui-icon-copy yellow" collapsedIcon="ui-icon ui-icon-copy yellow"  styleClass="corfontemenu">
+				            <h:outputText value="#{node.tagetName}"/>
+				        </p:treeNode>	
+				    </p:tree>	
+				</li>
+	
+			</ul>
+		</li><!-- FIM MENU MEU GRUPOS --> 
+	
+		<li class=""> <!--	INICIO MENU AREA  -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-list-alt"></i>
+				<span class="menu-text">Áreas</span>
+	
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/addArea.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Área</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>			
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'listArea.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Área</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				</ul>
+		</li><!-- FIM MENU AREA -->
+	
+		<li class=""><!-- INICIO MENU USUARIO -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-user"></i>
+				<span class="menu-text">Usuários</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/addUsuario.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Usuário</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'listUser.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Usuários</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+	
+			</ul>
+		</li><!-- FIM MENU USUARIO -->
+	
+		<li class=""><!-- INICIO MENU GRUPOS -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-group"></i>
+				<span class="menu-text"> Grupos</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'addGrupo.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Grupo</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'listGrupos.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Grupos</a>');
+					</script>
+					<b class="arrow"></b>
+				</li> 
+			</ul>
+		</li><!-- FIM MENU GRUPOS -->
+		
+		<li class=""><!-- INICIO MENU NO -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-database"></i>
+				<span class="menu-text">Nós</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'/gestor/addNode.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Nó</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'/gestor/listNode.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Nós</a>');
+					</script>
+					<b class="arrow"></b>
+				</li> 
+			</ul>
+		</li><!-- FIM MENU NO -->
+		
+		<li class=""><!-- INICIO MENU VOLUMES -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-cubes"></i>
+				<span class="menu-text">Volume</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'/gestor/addVolume.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Volume</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'/gestor/listVolume.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Volume</a>');
+					</script>
+					<b class="arrow"></b>
+				</li> 
+			</ul>
+		</li><!-- FIM MENU VOLUMES -->
+		
+		<li class=""><!-- INICIO MENU CONFIGURACAO -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-gear"></i>
+				<span class="menu-text">
+					Configuração
+				</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/addRegra.faces"><i class="menu-icon fa fa-caret-right"></i>Criar Regra</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/listRegras.faces"><i class="menu-icon fa fa-caret-right"></i>Listar Regras</a>');
+					</script>
+					<b class="arrow"></b>
+				</li> 
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/configSistema.faces"><i class="menu-icon fa fa-caret-right"></i>Configurar Sistema</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+			</ul>
+		</li><!-- FIM MENU CONFIGRAÇÃO -->
+		
+		<li class=""><!-- INICIO MENU HISTORICO -->			
+			<script type="text/javascript">
+						document.write('<a href="'+server+'gestor/historico.faces"><i class="menu-icon fa fa-history"></i>Histórico</a>');
+					</script>
+			<b class="arrow"></b>
+		</li><!-- FIM MENU HISTORICO -->
+		
+		<li class=""><!-- INICIO MENU RELATORIOS -->
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-file-pdf-o"></i>
+				<span class="menu-text">
+					Relatórios
+				</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+			<ul class="submenu">
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="#"><i class="menu-icon fa fa-caret-right"></i>Ocupação de Espaço</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				 <li class="">
+					<script type="text/javascript">
+						document.write('<a href="#"><i class="menu-icon fa fa-caret-right"></i>Arquivos por Faixa</a>');
+					</script>
+					<b class="arrow"></b>
+				</li> 
+				 <li class="">					
+					<script type="text/javascript">
+						document.write('<a href="#"><i class="menu-icon fa fa-caret-right"></i>Tamanho de Espaço por Área</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				<li class="">
+					<script type="text/javascript">
+						document.write('<a href="#"><i class="menu-icon fa fa-caret-right"></i>Tamanho de Espaço por Grupo</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+				<li class="">					
+					<script type="text/javascript">
+						document.write('<a href="#"><i class="menu-icon fa fa-caret-right"></i>Usuários do Sistema</a>');
+					</script>
+					<b class="arrow"></b>
+				</li>
+			</ul>
+		</li>
+		
+		<li class=""><!-- INICIO MENU DOCUMENTACAO -->
+			<script type="text/javascript">
+				document.write('<a href="'+server+'documentacao.faces"><i class="menu-icon fa fa-book"></i>Documentação</a>');
+			</script>
+			<b class="arrow"></b>
+		</li>
+		
+	</ul>
+</ui:composition>
+</html>

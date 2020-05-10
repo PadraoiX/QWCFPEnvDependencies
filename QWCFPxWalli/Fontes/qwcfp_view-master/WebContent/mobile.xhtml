@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />	
+	<meta name="apple-mobile-web-app-capable" content="yes" />  	
+	<meta name="mobile-web-app-capable" content="yes" />
+	<link rel="shortcut icon" type="image/png" href="resources/images/icon_qwcfp.png"/>
+	<title >QWCFP</title>		
+	<h:outputStylesheet name="jquery-mobile.css" library="css" />	
+	<h:outputScript name="ajax.js" library="script" />	
+</h:head>
+<style>
+	.ui-block-b{
+		width: 10px;
+	}
+</style>
+
+<script>
+
+function mascara(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+
+function telefone(v){
+    v=v.replace(/\D/g,"")                 //Remove tudo o que não é dígito
+    v=v.replace(/^(\d\d)(\d)/g,"($1) $2") //Coloca parênteses em volta dos dois primeiros dígitos
+    v=v.replace(/(\d{4})(\d)/,"$1-$2")    //Coloca hífen entre o quarto e o quinto dígitos
+    return v
+}
+
+function cpf(v){
+    v=v.replace(/\D/g,"")                    //Remove tudo o que não é dígito
+    v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+    v=v.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+                                             //de novo (para o segundo bloco de números)
+    v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+    return v
+}
+
+function cep(v){
+    v=v.replace(/D/g,"")                //Remove tudo o que não é dígito
+    v=v.replace(/^(\d{5})(\d)/,"$1-$2") //Esse é tão fácil que não merece explicações
+    return v
+}
+</script>
+
+<h:body >
+	<pm:page id="main">	
+			<h:form>
+				<input type="hidden" name="hidden1" value="mobile" />
+				<p:growl id="growl" showDetail="true" life="5000"  />
+				<pm:content>
+					<pm:field>
+						<p:outputLabel for="user" value="Usuário"></p:outputLabel>
+						<p:inputText id="user" value="#{loginBean.usuario}"  />						
+					</pm:field>
+					
+					<pm:field>
+						<p:outputLabel for="pass" value="Senha"></p:outputLabel>
+						<p:password id="pass" value="#{loginBean.pass}"  />
+					</pm:field>
+					
+					<pm:field>
+						<p:panelGrid columns="1">
+							<p:commandButton value="Login" update="growl" action="#{loginBean.conectar}" ajax="true" />								
+						</p:panelGrid>						
+						<p:panelGrid columns="2">
+							<p:button value="Novo"    outcome="pm:second?transition=flip"   ajax="true" update="formCadastroUsuario" />
+							<p:button value="Lembrar" outcome="pm:terceira?transition=flip" ajax="true" update="formsenha"  />		
+							<p:graphicImage  onclick="certificado()" title="Login com Certificado Digital"  library="images" id="recCert" name="login.cert.jpg" />
+						</p:panelGrid>			
+					</pm:field>
+				</pm:content>	
+				
+				
+			</h:form>
+		<!-- <pm:footer fixed="true">
+			<p:panelGrid columns="1">
+						<p:outputLabel value="Padrão iX Sistemas Abertos S/A"/>			
+						<p:outputLabel value="Copyright © 2015 	All rights reserved."/>					
+					</p:panelGrid>
+		</pm:footer> -->
+	</pm:page>	
+	<pm:page id="second">
+		<pm:header title="Cadastro"></pm:header>
+		<h:form>
+			<input type="hidden" name="hidden1" value="mobile" />
+			<p:growl id="growl" showDetail="true" />
+			<pm:content>
+				<pm:field>
+					<p:outputLabel for="MEMBER_USER" value="Nome do Usuário:" />
+					<p:inputText id="MEMBER_USER" value="#{memberBean.member.memberName}" required="true" size="30" />
+					<p:message for="MEMBER_USER" />
+
+					<p:outputLabel for="MEMBER_CPF" value="CPF:" />
+					<p:inputText id="MEMBER_CPF" value="#{memberBean.member.loginCpfId}" autocomplete="false" onkeypress="mascara(this,cpf)" maxlength="14"  required="true" converter="converterCpf" >
+						<f:validator validatorId="validCpf"/>
+					</p:inputText>
+					<p:message for="MEMBER_CPF" showDetail="false" showSummary="true"  />
+
+					<p:outputLabel for="MEMBER_PASS" value="Senha:" />
+					<p:password 
+						id="MEMBER_PASS" 
+						value="#{memberBean.pass}" 
+						match="MEMBER_PASS2" 
+						label="Senha" 
+						required="true" 
+						promptLabel="Informe um senha."
+						feedback="true" 
+						weakLabel="Fraca" 
+						goodLabel="Razoável" 
+						strongLabel="Forte" autocomplete="false"/>
+					<p:message for="MEMBER_PASS" />
+
+					<p:outputLabel for="MEMBER_PASS2" value="Confirmar Senha:" />
+					<p:password id="MEMBER_PASS2" value="#{memberBean.member.qwarePasswordEnc}" required="true" autocomplete="false"/>
+					<p:message for="MEMBER_PASS2" />
+
+					<p:outputLabel for="MEMBER_MAIL" value="E-Mail:" />
+					<p:inputText id="MEMBER_MAIL"
+						value="#{memberBean.member.memberEmail}" required="true" size="30" />
+					<p:message for="MEMBER_MAIL" />
+					
+					<p:outputLabel for="telefone" value="Telefone:" />
+					<p:inputText id="telefone" value="#{memberBean.member.numberPhone1}" onkeypress="mascara(this,telefone)" maxlength="14" converter="converterFone" required="true" />
+					<p:message for="telefone" />
+
+					<p:outputLabel for="MEMBER_ADDRESS" value="Endereço:" />
+					<p:inputText id="MEMBER_ADDRESS"
+						value="#{memberBean.member.phisicalAddress}" required="false"
+						size="30" />
+					<p:message for="MEMBER_ADDRESS" />
+
+					<p:outputLabel for="MEMBER_CEP" value="CEP:" />
+					<p:inputText id="MEMBER_CEP" value="#{memberBean.member.zipCode}" required="true" onkeypress="mascara(this,cep)" maxlength="9" converter="converterCpf" />
+					<p:message for="MEMBER_CEP" />				
+
+           		 * Campo de preenchimento obrigatório <br />
+
+				</pm:field>
+				
+				<pm:field>
+					<p:panelGrid columns="2">
+						<p:commandButton value="Salvar" action="#{memberBean.salvar('true')}"  oncomplete="handleLoginRequest(xhr, status, args)" type="submit" icon="ui-icon-check" update="growl" immediate=""/>				
+						<p:button value="Voltar" icon="ui-icon-back" outcome="pm:main?transition=flip" />
+					</p:panelGrid>
+				</pm:field>
+			</pm:content>
+		</h:form>
+	</pm:page>
+	<pm:page id="terceira">
+		<pm:header title="Lembrar Senha"></pm:header>
+		<h:form id="formsenha">
+			<p:growl id="growl" showDetail="true" />
+		
+			<pm:content>
+				<pm:field>
+			
+				<!-- <p:outputLabel for="LOGIN_CPF" value="Login:" />
+				<p:inputText id="LOGIN_CPF" value="#{memberBean.member.loginCpfId}" autocomplete="false" onkeypress="mascara(this,cpf)" maxlength="14"  required="true" converter="converterCpf" >
+					<f:validator validatorId="validarCPF"/>
+				</p:inputText>				
+				<p:message for="LOGIN_CPF" showDetail="false" showSummary="true"  /> -->
+				
+				<p:outputLabel for="email" value="E-mail:" />
+				<p:inputText id="email" value="#{memberBean.member.memberEmail}" required="true" size="30" />
+				<p:message for="email" showDetail="true" />
+			<br />
+			<br />
+
+				<p:commandButton value="Enviar" update="growl" actionListener="#{memberBean.recuperarSenha()}" type="submit" icon="ui-icon-check" />
+
+				<p:spacer width="20" height="10" />
+				<p:button value="Voltar" icon="ui-icon-back" outcome="pm:main?transition=flip" />
+
+				
+				</pm:field>
+			</pm:content>
+		</h:form>
+	</pm:page>	
+</h:body>
+</html>

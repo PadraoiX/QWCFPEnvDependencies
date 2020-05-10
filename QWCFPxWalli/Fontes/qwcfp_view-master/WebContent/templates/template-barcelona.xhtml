@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/iconCFP.png"/>
+	</f:facet>
+	<title> <ui:insert name="title">  <h:outputText value="QWCFP - #{loginBean.teamName}"></h:outputText>  </ui:insert></title>
+	<h:outputScript name="js/nanoscroller.js" library="barcelona-layout" />
+	<h:outputScript name="js/layout.js" library="barcelona-layout" />
+	<h:outputScript name="js/ripple.js" library="barcelona-layout" />
+	<h:outputScript library="script" name="ajax.js" />
+	<ui:insert name="head" />
+
+	<h:outputScript library="script" name="showcase.js" />
+	<h:outputScript library="script" name="locale-primefaces.js" />
+	<h:outputScript library="script" name="perfect-scrollbar.js" />
+	<h:outputScript library="script" name="ajax.js" />
+	<h:outputScript library="script" name="fileUpload4.js" />
+	<h:outputScript library="script" name="downloadFile3.js" />
+
+<style>
+
+	body.main-body {
+		background-color: #ffffff;
+	}
+	#formDIV{
+		height: 100%;
+	}	
+	
+	.ui-widget-header {
+		border: none;
+	}
+	
+	topSist {
+		width: 100%;
+		height: 75px;
+		text-align: right;
+		margin: 0px;
+		margin-top: -70px;
+	}
+	
+	.progress {
+		position: relative;
+		width: 330px;
+		border: 1px solid #ddd;
+		padding: 1px;
+		border-radius: 3px;
+		height: 25px;
+	}
+	
+	.bar {
+		background-color: #85b2cb;
+		width: 0%;
+		height: 25px;
+		border-radius: 3px;
+	}
+	
+	.percent {
+		position: absolute;
+		display: inline-block;
+		top: 5px;
+		left: 48%;
+	}
+	
+	#filedrag {
+		display: none;
+	}
+	
+	.uploadMain {
+	    border-style: solid;
+	    border-color: #4284f4;
+	    background: #c6dafc;
+	} 
+	 
+	
+	/* div.hover {
+	    border-style: solid;
+	    border-color: #4284f4;
+	    background: #c6dafc;
+	} */
+	
+	#filedrag.hover {
+		box-shadow: inset 0 3px 4px #888;
+		font-weight: bold;
+		background: rgba(220, 214, 214, 0.3);
+		color: #555;
+		border: 2px dashed #555;
+		border-radius: 7px;
+		cursor: default;
+	}
+	
+	.ui-grid-row {
+		border: none !important;
+	}
+	
+	.notif {
+		margin-left: -10px;
+		background: #85b2cb
+			-moz-linear-gradient(center top, rgba(255, 255, 255, 0),
+			rgba(255, 255, 255, 0.4)) repeat scroll 0 0;
+		background: #85b2cb
+			-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+			0)), to(rgba(255, 255, 255, 0.4)));
+		font-size: 10px;
+		font-weight: bold;
+		border-radius: 5px;
+		border: 1px solid #7096ab;
+		color: #1c4257;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+		padding: 1px 3px;
+		text-align: center;
+	}
+	
+	.posicao {
+		float: right;
+		margin-top: -60px;
+		margin-right: 15px;
+	}
+	
+	
+	#menucfpB {
+		-webkit-border-radius: 0px;
+		border-radius: 0px;
+	}
+	
+	.ui-layout-unit .ui-layout-unit-content {
+		background-color: #f7f5f3;
+	}
+	
+	div#load_screen {
+		background: #f7f5f3;
+		opacity: 1;
+		position: fixed;
+		z-index: 10;
+		top: 0px;
+		width: 100%;
+		height: 1600px;
+	}
+	
+	div#load_screen>div#loading {
+		color: #FFF;
+		width: 120px;
+		height: 24px;
+		margin: 300px auto;
+	}
+	
+	
+	#reaload{
+		background: transparent none repeat scroll 0% 0% !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+</style>
+
+<script type="text/javascript">
+function myFunction() {
+    var x = document.getElementById('layout-information');
+    
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+       
+    } else {
+        x.style.display = 'none';
+     
+    }
+}
+
+
+function toggle(){
+
+	var atLeastOneIsChecked = $('#formDIV\\:checkLdap_input:checked').length > 0; ;
+
+	console.log(atLeastOneIsChecked);
+
+	if( atLeastOneIsChecked ) {
+		$("#formDIV\\:userIdLdap").css("opacity","1");
+		
+	}else{
+		$('#formDIV\\:MEMBER_LDAP').val('');
+	}
+
+	$("#formDIV\\:userIdLdap").toggle();
+
+}
+</script>
+<script type="text/javascript">
+	window.addEventListener("load", function() {
+		var load_screen = document.getElementById("load_screen");
+		document.body.removeChild(load_screen);
+	});
+	var currentEvent;
+	$(document).ready(function() {
+		PrimeFaces.widget.ContextMenu.prototype.show = function(
+		e) {
+		//hide other contextmenus if any
+		$(document.body).children(
+				'.ui-contextmenu:visible').hide();
+		currentEvent = null;
+
+		if (e) {
+			currentEvent = e;
+		}
+
+		var win = $(window), left = e.pageX, top = e.pageY, width = this.jq
+				.outerWidth(), height = this.jq
+				.outerHeight();
+
+		//collision detection for window boundaries
+		if ((left + width) > (win.width())
+				+ win.scrollLeft()) {
+			left = left - width;
+		}
+		if ((top + height) > (win.height() + win
+				.scrollTop())) {
+			top = top - height;
+		}
+
+		if (this.cfg.beforeShow) {
+			this.cfg.beforeShow.call(this);
+		}
+
+		this.jq.css({
+			'left' : left,
+			'top' : top,
+			'z-index' : ++PrimeFaces.zindex
+		}).show();
+		e.preventDefault();
+	};
+});
+	</script>
+<style>
+.layout-information {
+    position: fixed;
+    top: 60px;
+    right:0;
+    width: 260px;
+    background-color: #f5f5f5;
+    height: 100%;
+    -webkit-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 0 28px 0 rgba(0, 0, 0, 0.24), 0 25px 55px 0 rgba(0, 0, 0, 0.19);
+    z-index: 100;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
+}
+	
+</style>	
+</h:head>
+
+
+<h:body styleClass="main-body">
+
+	<div
+		class="layout-wrapper #{guestPreferences.overlayMenu ? 'layout-overlay-menu' : null} #{guestPreferences.orientationRTL ? 'layout-rtl' : null}">
+		<ui:include src="/topbar.xhtml" />
+		<ui:include src="/menu-barcelona.xhtml" />
+
+		<div class="layout-main-content">
+			<div class="layout-main">
+				<!-- <ui:insert name="conteudo"/> -->
+				<h:form id="formDIV">
+					<!-- <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+					<p:dialog id="reaload" widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false" styleClass="ajax-status">
+						<p:graphicImage library="images" name="5.gif" />
+					</p:dialog> -->
+					<div class="ContentSideSections Implementation" id="conteudo" name="conteudo">						
+						<div id="MeusGrupos" >
+							<ui:insert name="conteudo" id="conteudo">Página Principal</ui:insert>
+						</div>
+					</div>
+					<!-- <p:overlayPanel id="information" for="formTopBar:btn-basic" showEffect="blind"  showCloseIcon="true" >
+							<h:outputText value="teste" />
+						</p:overlayPanel> -->
+				<!-- <ui:include src="/information.xhtml" /> -->
+				</h:form>
+				<ui:include src="/footer.xhtml" />
+			</div>
+		</div>
+	</div>
+
+	<p:ajaxStatus
+		style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+		<f:facet name="start">
+			<i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<h:outputStylesheet name="css/nanoscroller.css" library="barcelona-layout" />
+	<h:outputStylesheet name="css/animate.css" library="barcelona-layout" />
+	<h:outputStylesheet name="css/ripple.css" library="barcelona-layout" />
+	<h:outputStylesheet name="css/layout-blue.css" library="barcelona-layout" />
+	<h:outputStylesheet name="css/geralBarcelona.css" library="barcelona-layout" />
+
+</h:body>
+
+</html>

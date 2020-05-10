@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+	
+	
+@media (min-width: 1024px) {
+	
+	.spacoFiltro{
+		    padding: 1%;
+	}
+	
+	#filtroGrupos{
+		float: left;
+		margin: -5px;
+		
+	}
+
+	#btfuncoes{
+		float: right;
+		margin-top: -5px;
+	}
+	
+	#opcoes-btn-div{
+		display: none;
+	}
+	
+	#opcoes-btns-div{
+		display: block;
+	}
+}
+
+@media (max-width: 1024px) {
+	.spacoFiltro{
+		    padding: 1%;
+	}
+	#btfuncoes {
+	    float: right;
+	    margin-top: -35px;
+	}
+	
+	#opcoes-btn-div{
+		display: block;
+	}
+	
+	#opcoes-btns-div{
+		display: none;
+	}
+	
+	body .ui-datatable .ui-datatable-header, body .ui-datatable .ui-datatable-footer {
+    	height: 50px;
+	}
+	
+	#filtroGrupos {
+    	margin: 5px;
+	}
+	
+	
+}

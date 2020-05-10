@@ -1,0 +1,156 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	
+	<style>
+		#filtro{
+			margin-bottom: 10px;
+		}
+		
+		.ui-menu.ui-menu-dynamic {
+    width: 10%;
+    position: absolute;
+    display: none;
+    z-index: 100000;
+}
+	
+	.padd15 {
+	padding-top: 15px;
+	}
+		
+		
+	</style>
+	
+	<p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />    	
+	
+		<p:panel id="panel" styleClass="card card-w-title sombraPanel"  >    	
+				<h1>Lista de Configurações do Sistema - QWCFP</h1>
+		
+			
+	      	
+				<div id="filtro"   align="right"  >
+	      			<!-- <p:commandButton id="toggler" type="button" value="Colunas"  icon="fa fa-fw fa-columns" styleClass="direitaAlinhar"  /> -->
+					<p:commandButton  oncomplete="PF('addconfig').show()"  value="Nova Configuração"  icon="fa fa-fw fa-plus" styleClass="direitaAlinhar"  />
+	      			<!-- <p:columnToggler datasource="editConfig" trigger="toggler" /> -->
+	      			<p:menuButton id="opcoes" value="Opções" styleClass="direitaAlinhar"> 
+						<p:menuitem update=":formDIV:carDetail" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit" title="Editar Configuração" value="Editar Configuração"  process="@this editConfig" rendered="#{configBean.configEdit ne null}"/>
+						<p:menuitem value="Remover Configuração" update=":formDIV:carDetail, :formDIV:editConfig"  process="@this editConfig" actionListener="#{configBean.excluir()}"   icon="fa fa-fw fa-remove" title="Excluir configuração" rendered="#{configBean.configEdit ne null}">
+            				<p:confirm header="Confirmação" message="Tem certeza?"	icon="ui-icon-alert" />
+            			</p:menuitem>
+            			<p:menuitem process="@this" value="Selecione uma configuração." rendered="#{configBean.configEdit eq null}"/>
+					</p:menuButton>
+	       		</div>
+ 
+	    <p:dataTable 
+	     	resizableColumns="true"
+	    	id="editConfig" 
+	    	border="1" 
+	    	cellspacing="0"
+	    	cellpadding="2"
+	    	selectionMode="single"
+    		rowKey="#{car.key}"
+   			selection="#{configBean.configEdit}"	
+	    	var="car" 
+	    	value="#{configBean.configs}" 
+	    	rows="10"
+	    	rowsPerPageTemplate="10,15,20,25,50,100" 
+	    	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+			currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Configurações)" 
+	    	paginatorPosition="bottom"
+	    	paginator="true" >    
+	 
+			 <p:ajax event="rowSelect" update=":formDIV:opcoes" />
+			 <p:ajax event="contextMenu" update=":formDIV:opcoes" />
+	 
+	        <p:column headerText="Configuração " style="font-weight: bold" >
+	            <h:outputText value="#{car.key}"  style="font-weight: normal"/>
+	        </p:column>
+	        
+	        <p:column headerText="Valor" style="font-weight: bold">
+	            <h:outputText value="#{car.value}"  style="font-weight: normal" /> 
+	        </p:column>
+	        
+	        <p:column headerText="Contexto" style="font-weight: bold">
+	            <h:outputText value="#{car.context}"  style="font-weight: normal"/>
+	        </p:column>
+	    </p:dataTable>	
+	    </p:panel>
+	    
+	    <p:contextMenu style="width: 10.7%;" for="editConfig" id="ctxMenuListConfigId" widgetVar="ctxMenuListConfig">
+			<p:menuitem update=":formDIV:carDetail" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-edit" title="Editar Configuração" value="Editar Configuração"  process="@this editConfig" />
+			 <p:menuitem value="Remover Configuração" update=":formDIV:editConfig, :formDIV:msgs"    process="@this editConfig" actionListener="#{configBean.excluir()}"   icon="fa fa-fw fa-remove" title="Excluir configuração" >
+            	<p:confirm header="Confirmação" message="Tem certeza?"	icon="ui-icon-alert" />
+            </p:menuitem>
+		</p:contextMenu>
+	    
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	
+	     <p:dialog header="Nova Configuração"  id="addCfgDlg"  widgetVar="addconfig" modal="false" resizable="false" draggable="false" responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield" >
+	                	<p:inputText value="#{configBean.configSave.key}" style="width: 100%" maxlength="1024" required="true" requiredMessage="A chave da configuração é um campo obrigatório" />
+	                	<label>Configuração</label>
+	                </h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					  <h:panelGroup styleClass="md-inputfield" >	 					
+	                	<p:inputText value="#{configBean.configSave.value}" style="width: 100%" maxlength="4000"  required="true" requiredMessage="A valor da configuração é um campo obrigatório"  />
+	                	<label>Valor</label>
+	                </h:panelGroup> 
+				</div>
+				<div class="ui-g-12">
+	                <h:panelGroup styleClass="md-inputfield" >	 
+	                	<p:inputText value="#{configBean.configSave.context}" style="width: 100%"  maxlength="50" required="true" requiredMessage="O contexto da configuração é um campo obrigatório"  />
+	                	<label>Contexto</label>
+	                </h:panelGroup>
+				</div>
+				
+			</div>
+
+			<f:facet name="footer">
+	            <p:commandButton id="salvarNewConfig" value="Salvar" icon="fa fa-fw fa-save" action="#{configBean.salvar()}"  process="addCfgDlg"  update=":formDIV:addCfgDlg, :formDIV:msgs"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addconfig').hide()" />
+			</f:facet>
+		</p:dialog>
+	    
+	    
+	    
+	    <p:dialog header="Editar Configuração"  id="carDetail"  widgetVar="carDialog" resizable="false" draggable="false"  responsive="true" hideEffect="scale">
+			<div class="ui-g form-group" style="margin-bottom: 16px;">
+				<div class="ui-g-12">
+					<h:panelGroup styleClass="md-inputfield">	 
+	                	<p:inputText value="#{configBean.configEdit.key}" style="width: 100%"  disabled="true"/>
+	                	<label>Configuração</label>
+	                </h:panelGroup>
+				</div>
+				<div class="ui-g-12">
+					  <h:panelGroup styleClass="md-inputfield">	 
+	               		<p:inputText value="#{configBean.configEdit.value}" style="width: 100%" maxlength="4000" required="true" requiredMessage="A valor da configuração é um campo obrigatório"  />
+	                	<label>Valor</label>
+	                </h:panelGroup>	 
+				</div>
+				<div class="ui-g-12">
+				 	<h:panelGroup styleClass="md-inputfield" >	 
+	                	<p:inputText value="#{configBean.configEdit.context}" disabled="true" style="width: 100%"/>
+	                	<label>Contexto</label>
+	                </h:panelGroup>
+				</div>
+				
+			</div>
+
+			<f:facet name="footer">
+ 				<p:defaultCommand target="salvarConfig"></p:defaultCommand>
+	            <p:commandButton id="salvarConfig" value="Salvar" icon="fa fa-fw fa-save" action="#{configBean.editar()}" process="@this carDetail" update=":formDIV:editConfig, :formDIV:msgs"   oncomplete="if (args &amp;&amp; !args.validationFailed) PF('carDialog').hide()" />
+			</f:facet>
+		</p:dialog>
+ 
+	</ui:define>
+</ui:composition>
+</html>

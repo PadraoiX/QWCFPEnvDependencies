@@ -1,0 +1,118 @@
+<HTML 	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core" 
+		>
+		
+<ui:composition template="/templates/template-barcelona.xhtml">
+	<ui:define name="conteudo">
+	    
+	    <style>
+	    			#filtro{
+			margin-bottom: 10px;
+		}
+	    </style>	
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+	    
+	   <p:panel id="panel" styleClass="card card-w-title sombraPanel" >
+		<h1>Lista de Usuários da área <h:outputText value="#{listMembersByAreas.selectedArea.nome}" style="color:#25aae1" styleClass="logoBlueLink" /></h1>
+
+				<div id="filtro" align="right" >
+					<p:commandButton id="toggler" type="button" value="Colunas"
+						icon="fa fa-fw fa-columns" styleClass="direitaAlinhar" />
+					<p:columnToggler datasource="editUsuario" trigger="toggler" />
+				</div>
+	
+		
+		<p:remoteCommand id="updateTableAreaMembers" name="updateTableAreaMembers" actionListener="#{listMembersByAreas.updateList()}"
+			update=":formDIV:editUsuario" />
+		
+		 <p:growl id="msgs" life="#{loginBean.messageTime}" showDetail="true" />    		
+		<p:dataTable 
+		id="editUsuario"
+		var="car"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		currentPageReportTemplate="(Pág. {currentPage}/{totalPages} - {totalRecords} Usuários)"
+		value="#{listMembersByAreas.listMember}" 
+		paginatorPosition="bottom"
+		emptyMessage="Área sem membros"
+		rowsPerPageTemplate="10,15,20,25,50,100"  rows="10" paginator="true">
+
+			<p:column style="font-weight: bold;" filterBy="#{car.memberName}">
+				<h:outputText value="#{car.memberName}" style="font-weight: normal;" />
+			</p:column>
+
+			<p:column headerText="Email" style="font-weight: bold" sortBy="">
+				<h:outputText value="#{car.memberEmail}"
+					style="font-weight: normal;" />
+			</p:column>
+
+			<!-- <p:column headerText="CPF" style="font-weight: bold">
+				<h:outputText value="#{car.loginCpfId}" style="font-weight: normal;"
+					converter="converterCpf" />
+			</p:column> -->
+
+			<p:column headerText="Telefone"
+				style="font-weight: bold; width:150px">
+				<h:outputText value="#{car.numberPhone1}"
+					style="font-weight: normal;"  converter="converterFone" />
+			</p:column>
+
+			<p:column headerText="Status" style="font-weight: bold; width:100px; text-align: center">
+				<h:outputText
+					value="#{car.statusMemberDomFk}" converter="#{converterDomain}"
+					style="font-weight: normal;" />
+			</p:column>
+			
+			<p:column headerText="Ações" style="font-weight: bold; width:100px; text-align: center" rendered="#{loginBean.isGi()}">
+				<p:commandButton update=":formDIV:privDialogo, :formDIV:editUsuario" oncomplete="PF('privDialogo').show()" action="#{notiBean.fillPrivsArea(car.memberId)}" icon="fa fa-fw fa-edit" title="Privilégios">
+					<f:setPropertyActionListener value="#{car}"	target="#{notiBean.member}" />
+				</p:commandButton>
+				<p:commandButton update="formDIV:editUsuario, formDIV:msgs" action="#{notiBean.removeMemberArea(car)}" icon="fa fa-fw fa-remove" title="Remover Usuário da Área" oncomplete="updateTableAreaMembers();" process="@this :formDIV:editUsuario">
+					<p:confirm header="Confirmação" message="Tem certeza?"	icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+		</p:panel>
+		<p:dialog 
+					header="Gerênciar Privilégio do Usuário no Grupo - QWCFP"
+					widgetVar="privDialogo"
+					width="700px" dynamic="true" >
+				<p:outputPanel id="privDialogo">
+					<f:facet name="header">
+						<p:outputLabel value="Gerênciar Privilégio do Usuário - QWCFP" />
+					</f:facet>
+					 
+					 <p:dataTable id="privMemberTable" var="priv" value="#{notiBean.wrappedPrivs}" emptyMessage="O usuário não tem privilégios">
+					 	
+					 	<p:column headerText="Nome" >
+							<h:outputText value="#{priv.desc}"   style="font-weight: normal;" />
+						</p:column>
+						
+					 	<p:column headerText="Origem" >
+							<h:outputText value="#{priv.tipo}"   style="font-weight: normal;" />
+						</p:column>
+						
+					 	<p:column headerText="Data de expiração" >
+							<h:outputText value="#{priv.priv.expDate}"   style="font-weight: normal;"  converter="converteData"/>
+						</p:column>
+						
+						<p:column headerText="Ações" style="width:40px;text-align: center" rendered="#{loginBean.isGi()}">
+							<p:commandButton update="formDIV:editUsuario, formDIV:privMemberTable, formDIV:msgs"  action="#{notiBean.revogarPrivArea(priv.priv)}"  icon="fa fa-fw fa-remove" title="Remover Privilégio"   process="@this :formDIV:editUsuario :formDIV:privMemberTable" />
+						</p:column>
+					</p:dataTable>
+					</p:outputPanel> 
+		
+				</p:dialog>
+	</ui:define>
+</ui:composition>
+</HTML>
+
+
+
+
