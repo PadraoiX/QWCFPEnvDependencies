@@ -1,8 +1,8 @@
 {
-  "id": "dev",
-  "realm": "dev",
-  "displayName": "Domínio ou ecossistemas de Sistemas da PIX",
-  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Dom&#237;nio PIX</span></div>",
+  "id": "pixdev",
+  "realm": "pixdev",
+  "displayName": "Domínio ou ecossistemas de Sistemas da PIX (Desenvolvimento)",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Dom&#237;nio PIX (Desenvolvimento)</span></div>",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS512",
   "revokeRefreshToken": false,
